@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../helpers/layout';
 import { api, handleError } from '../../helpers/api';
 import User from '../shared/models/User';
-import { withRouter } from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import { Button } from '../../views/design/Button';
 
 const FormContainer = styled.div`
@@ -56,6 +56,12 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
+const StyledLink = styled(Link)`
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+`;
+
 /**
  * Classes in React allow you to have an internal state within the class and to have the React life-cycle for your component.
  * You should have a class (instead of a functional component) when:
@@ -75,8 +81,8 @@ class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: null,
-      username: null
+      username: null,
+      password: null
     };
   }
   /**
@@ -86,20 +92,23 @@ class Login extends React.Component {
    */
   async login() {
     try {
-      const requestBody = JSON.stringify({
-        username: this.state.username,
-        name: this.state.name
-      });
-      const response = await api.post('/users', requestBody);
+      const response = await api.get('/users');
+      const arrayLength = response.data.length;
+      for (var i = 0; i < arrayLength; i++) {
+        if (response.data[i].username  == this.state.username){
+          if (response.data[i].password == this.state.password){
 
-      // Get the returned user and update a new object.
-      const user = new User(response.data);
+            localStorage.setItem('token', response.data[i].token);
+            this.props.history.push(`/game`);
+          }
+          else{
+            //
+          }
+        }
+      }
 
-      // Store the token into the local storage.
-      localStorage.setItem('token', user.token);
 
-      // Login successfully worked --> navigate to the route /game in the GameRouter
-      this.props.history.push(`/game`);
+
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
@@ -137,16 +146,16 @@ class Login extends React.Component {
                 this.handleInputChange('username', e.target.value);
               }}
             />
-            <Label>Name</Label>
+            <Label>Password</Label>
             <InputField
               placeholder="Enter here.."
               onChange={e => {
-                this.handleInputChange('name', e.target.value);
+                this.handleInputChange('password', e.target.value);
               }}
             />
             <ButtonContainer>
               <Button
-                disabled={!this.state.username || !this.state.name}
+                disabled={!this.state.username || !this.state.password}
                 width="50%"
                 onClick={() => {
                   this.login();
@@ -155,6 +164,7 @@ class Login extends React.Component {
                 Login
               </Button>
             </ButtonContainer>
+            <StyledLink to='/register' > Don't have an account yet? Click here </StyledLink>
           </Form>
         </FormContainer>
       </BaseContainer>
