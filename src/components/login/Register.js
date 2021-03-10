@@ -96,6 +96,7 @@ class Register extends React.Component {
                 username: this.state.username,
                 password: this.state.password
             });
+            console.log(requestBody);
             const response = await api.post('/users', requestBody);
 
             // Get the returned user and update a new object.
@@ -120,6 +121,12 @@ class Register extends React.Component {
         // Example: if the key is username, this statement is the equivalent to the following one:
         // this.setState({'username': value});
         this.setState({ [key]: value });
+    }
+
+    handleKeypress(e){
+        if (e.which===13){
+            this.login();
+        }
     }
 
     /**
@@ -148,6 +155,9 @@ class Register extends React.Component {
                             placeholder="Enter here.."
                             onChange={e => {
                                 this.handleInputChange('password', e.target.value);
+                            }}
+                            onKeyPress={e => {
+                                this.handleKeypress(e);
                             }}
                         />
                         <ButtonContainer>

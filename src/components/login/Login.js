@@ -92,23 +92,17 @@ class Login extends React.Component {
    */
   async login() {
     try {
-      const response = await api.get('/users');
-      const arrayLength = response.data.length;
-      for (var i = 0; i < arrayLength; i++) {
-        if (response.data[i].username  == this.state.username){
-          if (response.data[i].password == this.state.password){
+      const requestBody = JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      });
+      const response = await api.post('/login', requestBody);
 
-            localStorage.setItem('token', response.data[i].token);
-            this.props.history.push(`/game`);
-          }
-          else{
-            //
-          }
-        }
-      }
+      // Store the token into the local storage.
+      localStorage.setItem('token', response.data.token);
 
-
-
+      // Registration successfully worked --> navigate to the route /game in the GameRouter
+      this.props.history.push(`/game`);
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
@@ -123,6 +117,12 @@ class Login extends React.Component {
     // Example: if the key is username, this statement is the equivalent to the following one:
     // this.setState({'username': value});
     this.setState({ [key]: value });
+  }
+
+  handleKeypress(e){
+    if (e.which===13){
+      this.login();
+    }
   }
 
   /**
@@ -145,12 +145,16 @@ class Login extends React.Component {
               onChange={e => {
                 this.handleInputChange('username', e.target.value);
               }}
+
             />
             <Label>Password</Label>
             <InputField
               placeholder="Enter here.."
               onChange={e => {
                 this.handleInputChange('password', e.target.value);
+              }}
+              onKeyPress={e => {
+                this.handleKeypress(e);
               }}
             />
             <ButtonContainer>
