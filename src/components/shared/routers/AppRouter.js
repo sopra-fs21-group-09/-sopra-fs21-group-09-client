@@ -37,7 +37,8 @@ class AppRouter extends React.Component {
                   <Login />
                 </LoginGuard>
               )}
-            /><Route
+            />
+            <Route
               path="/register"
               exact
               render={() => (

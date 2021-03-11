@@ -30,7 +30,7 @@ const Id = styled.div`
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Player = ({ user }) => {
+const ProfileAttribute = ({ user }) => {
   return (
     <Container>
       <UserName>{user.username}</UserName>
@@ -39,4 +39,4 @@ const Player = ({ user }) => {
   );
 };
 
-export default Player;
+export default ProfileAttribute;

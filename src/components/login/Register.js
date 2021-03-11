@@ -96,7 +96,7 @@ class Register extends React.Component {
                 username: this.state.username,
                 password: this.state.password
             });
-            console.log(requestBody);
+
             const response = await api.post('/users', requestBody);
 
             // Get the returned user and update a new object.
@@ -125,7 +125,7 @@ class Register extends React.Component {
 
     handleKeypress(e){
         if (e.which===13){
-            this.login();
+            this.register();
         }
     }
 
@@ -152,6 +152,7 @@ class Register extends React.Component {
                         />
                         <Label>Password</Label>
                         <InputField
+                            type = "password"
                             placeholder="Enter here.."
                             onChange={e => {
                                 this.handleInputChange('password', e.target.value);

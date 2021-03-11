@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+
 const Container = styled.div`
   margin: 6px 0;
+  height: 200px;
   width: 280px;
   padding: 10px;
   border-radius: 6px;
@@ -11,12 +13,19 @@ const Container = styled.div`
   border: 1px solid #ffffff26;
 `;
 
-const UserName = styled.div`
+const AttributeContainer = styled.div`
+    float:left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Attribute = styled.div`
   font-weight: lighter;
   margin-left: 5px;
 `;
 
-const Id = styled.div`
+const Value = styled.div`
   margin-left: auto;
   margin-right: 10px;
   font-weight: bold;
@@ -30,13 +39,15 @@ const Id = styled.div`
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Player = ({ user }) => {
+const Profile = ({ user }) => {
   return (
     <Container>
-      <UserName>{user.username}</UserName>
-      <Id>Id: {user.id}</Id>
+       <AttributeContainer><Attribute>Username:</Attribute><Value>{user.username}</Value></AttributeContainer>
+        <AttributeContainer><Attribute>Online status:</Attribute><Value>{user.status}</Value></AttributeContainer>
+        <AttributeContainer><Attribute>Creation date:</Attribute><Value>{user.creationDate}</Value></AttributeContainer>
+        <AttributeContainer><Attribute>Birthday:</Attribute><Value>{user.birthday}</Value></AttributeContainer>
     </Container>
   );
 };
 
-export default Player;
+export default Profile;
