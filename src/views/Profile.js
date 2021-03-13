@@ -13,22 +13,19 @@ const Container = styled.div`
   border: 1px solid #ffffff26;
 `;
 
-const AttributeContainer = styled.div`
-    float:left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+
+const Table = styled.table`
+  width:100%;
+  height:100%;
 `;
 
-const Attribute = styled.div`
-  font-weight: lighter;
-  margin-left: 5px;
+const Row = styled.tr`
+  text-align:left;
 `;
 
-const Value = styled.div`
-  margin-left: auto;
-  margin-right: 10px;
-  font-weight: bold;
+const Fat = styled.td`
+ font-weight:bold;
+
 `;
 
 /**
@@ -39,15 +36,33 @@ const Value = styled.div`
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
+
+
 const Profile = ({ user }) => {
   return (
     <Container>
-       <AttributeContainer><Attribute>Username:</Attribute><Value>{user.username}</Value></AttributeContainer>
-        <AttributeContainer><Attribute>Online status:</Attribute><Value>{user.status}</Value></AttributeContainer>
-        <AttributeContainer><Attribute>Creation date:</Attribute><Value>{user.creationDate}</Value></AttributeContainer>
-        <AttributeContainer><Attribute>Birthday:</Attribute><Value>{user.birthday}</Value></AttributeContainer>
+        <Table>
+            <Row>
+                <Fat>Username</Fat>
+                <td>{user.username}</td>
+            </Row>
+            <Row>
+                <Fat>Status</Fat>
+                <td>{user.status}</td>
+            </Row>
+            <Row>
+                <Fat>Creation Date</Fat>
+                <td>{user.creationDate}</td>
+            </Row>
+            <Row>
+                <Fat>Birthday</Fat>
+                <td>{user.birthday}</td>
+            </Row>
+
+        </Table>
     </Container>
   );
 };
 
 export default Profile;
+

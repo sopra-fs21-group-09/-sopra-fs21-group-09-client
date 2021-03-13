@@ -13,16 +13,34 @@ const Container = styled(BaseContainer)`
   text-align: center;
 `;
 
-const ProfileBox = styled.ul`
-  list-style: none;
-  padding-left: 0;
-`;
-
-const ProfileBoxContainer = styled.li`
+const FormContainer = styled.div`
+  margin-top: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 300px;
   justify-content: center;
+`;
+
+const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 375px;
+  font-size: 16px;
+  font-weight: 300;
+  padding-left: 37px;
+  padding-right: 37px;
+  border-radius: 5px;
+  background: linear-gradient(rgb(27, 124, 186), rgb(2, 46, 101));
+  transition: opacity 0.5s ease, transform 0.5s ease;
+`;
+
+const Title = styled.h2`
+  text-align: center;
+  color: white;
+  margin-left:25px;
 `;
 
 class UserProfile extends React.Component {
@@ -76,35 +94,39 @@ class UserProfile extends React.Component {
     render() {
         return (
             <Container>
-                <h2>Profile</h2>
+                <Title>Profile</Title>
                 {!this.state.user ? (
                     <Spinner />
                 ) : (
                     <div>
-                        <ProfileBox>
-                            <Profile user = {this.state.user}/>
-                        </ProfileBox>
-                        <Button
-                            width="100%"
-                            onClick={() => {
-                                this.toDashboard();
-                            }}
-                        >
-                            Go back
-                        </Button>
-                        <p></p>
-                        {this.state.token === localStorage.getItem("token") ? (
-                            <Button
-                                width="100%"
-                                onClick={() => {
-                                    this.toEdit();
-                                }}
-                            >
-                                Edit
-                            </Button>
-                            ):(
-                            <p></p>
-                        )}
+                        <FormContainer>
+                            <Form>
+                                <Profile user={this.state.user}/>
+                                <p></p>
+                                <Button
+                                    width="100%"
+                                    onClick={() => {
+                                        this.toDashboard();
+                                    }}
+                                >
+                                    Go back
+                                </Button>
+                                <p></p>
+                                {this.state.token === localStorage.getItem("token") ? (
+                                    <Button
+                                        width="100%"
+                                        onClick={() => {
+                                            this.toEdit();
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                ):(
+                                    <p></p>
+                                )}
+                            </Form>
+                        </FormContainer>
+
                     </div>
                 )}
             </Container>

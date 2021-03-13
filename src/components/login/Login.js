@@ -62,6 +62,11 @@ const StyledLink = styled(Link)`
   margin-top: 20px;
 `;
 
+const Title = styled.h2`
+  text-align: center;
+  color: white;
+`;
+
 /**
  * Classes in React allow you to have an internal state within the class and to have the React life-cycle for your component.
  * You should have a class (instead of a functional component) when:
@@ -140,6 +145,7 @@ class Login extends React.Component {
       <BaseContainer>
         <FormContainer>
           <Form>
+            <Title>Login</Title>
             <Label>Username</Label>
             <InputField
               placeholder="Enter here.."

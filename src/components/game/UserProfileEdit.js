@@ -13,7 +13,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  min-height: 300px;
+  min-height: 250px;
   justify-content: center;
 `;
 
@@ -21,11 +21,12 @@ const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 80%;
-  height: 375px;
+  width: 120%;
+  height: 350px;
   font-size: 16px;
   font-weight: 300;
   padding-left: 37px;
+  margin-left: -40px;
   padding-right: 37px;
   border-radius: 5px;
   background: linear-gradient(rgb(27, 124, 186), rgb(2, 46, 101));
@@ -51,12 +52,6 @@ const Label = styled.label`
   width: 20%;
   color: white;
   margin-bottom: 10px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
 `;
 
 /**
@@ -108,6 +103,16 @@ class UserProfileEdit extends React.Component {
     this.setState({ [key]: value });
   }
 
+  toProfile(){
+    this.props.history.push({
+      pathname: `${this.props.base}`,
+      state: {
+        user: this.props.location.state.user,
+        base: "/game/userProfile"
+      }
+    })}
+
+
   /**
    * componentDidMount() is invoked immediately after a component is mounted (inserted into the tree).
    * Initialization that requires DOM nodes should go here.
@@ -133,24 +138,31 @@ class UserProfileEdit extends React.Component {
             <Label>Birthday</Label>
             <InputField
             type="date"
-            value="2021-03-13"
             min="1900-01-01"
             max="2021-01-01"
                 onChange={e => {
                   this.handleInputChange('birthday', e.target.value);
                 }}
             />
-            <ButtonContainer>
               <Button
                   disabled={!this.state.username && !this.state.birthday}
-                  width="50%"
+                  width="100%"
                   onClick={() => {
                     this.edit();
                   }}
               >
                 Edit
               </Button>
-              </ButtonContainer>
+            <p></p>
+            <Button
+                width="100%"
+                onClick={() => {
+                  this.toProfile();
+                }}
+            >
+              Go back
+            </Button>
+            <p></p>
           </Form>
         </FormContainer>
       </BaseContainer>
