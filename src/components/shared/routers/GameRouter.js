@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Redirect, Route } from "react-router-dom";
 import Game from "../../game/Game";
 import UserProfile from "../../game/UserProfile";
+import UserProfileEdit from "../../game/UserProfileEdit";
 
 const Container = styled.div`
   display: flex;
@@ -31,13 +32,13 @@ class GameRouter extends React.Component {
       <Route
           exact
           path={`${this.props.base}/userProfile/edit`}
-          render={() => <UserProfile base = {"/game/userProfile"}/>} //TODO: change to UserProfileEdit
+          render={() => <UserProfileEdit base = {"/game/userProfile"}/>}
       />
 
         <Route
           exact
           path={`${this.props.base}`}
-          render={() => <Redirect to={`${this.props.base}/dashboard`} />}
+          render={() => <Redirect to={`${this.props.base}/dashboard`}/>}/>}
         />
 
       </Container>

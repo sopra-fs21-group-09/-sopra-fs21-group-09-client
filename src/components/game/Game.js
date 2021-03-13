@@ -28,13 +28,24 @@ class Game extends React.Component {
   constructor() {
     super();
     this.state = {
+      user: null,
       users: null
     };
   }
 
-  logout() {
-    localStorage.removeItem('token');
-    this.props.history.push('/login');
+  async logout() {
+    try {
+      const requestBody = JSON.stringify({
+        status: "OFFLINE"
+      });
+      await api.put(`/users/${localStorage.getItem("id")}`, requestBody);
+
+      localStorage.clear();
+      this.props.history.push('/login');
+
+    } catch (error) {
+      alert(`Something went wrong during the logout: \n${handleError(error)}`);
+    }
   }
 
   async componentDidMount() {

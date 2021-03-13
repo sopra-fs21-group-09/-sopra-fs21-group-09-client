@@ -38,9 +38,14 @@ class UserProfile extends React.Component {
         this.props.history.push('/game');
     }
 
-    edit(){
-        this.props.history.push(`${this.props.base}/edit`);
-    }
+    toEdit(){
+        this.props.history.push({
+            pathname: `${this.props.base}/edit`,
+            state: {
+                user: this.state.user,
+                base: "/game/userProfile"
+            }
+    })}
 
     async componentDidMount() {
         try {
@@ -85,14 +90,14 @@ class UserProfile extends React.Component {
                                 this.toDashboard();
                             }}
                         >
-                            Logout
+                            Go back
                         </Button>
                         <p></p>
                         {this.state.token === localStorage.getItem("token") ? (
                             <Button
                                 width="100%"
                                 onClick={() => {
-                                    this.edit();
+                                    this.toEdit();
                                 }}
                             >
                                 Edit
