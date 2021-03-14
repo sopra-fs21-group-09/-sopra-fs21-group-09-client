@@ -68,9 +68,7 @@ class UserProfile extends React.Component {
     async componentDidMount() {
         try {
             const response = await api.get(`/users/${this.props.location.state.user.id}`);
-            // delays continuous execution of an async operation for 1 second.
-            // This is just a fake async call, so that the spinner can be displayed
-            // feel free to remove it :)
+
             await new Promise(resolve => setTimeout(resolve, 1000));
 
             // Get the returned users and update the state.
