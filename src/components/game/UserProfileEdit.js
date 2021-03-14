@@ -54,15 +54,6 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-/**
- * Classes in React allow you to have an internal state within the class and to have the React life-cycle for your component.
- * You should have a class (instead of a functional component) when:
- * - You need an internal state that cannot be achieved via props from other parent components
- * - You fetch data from the server (e.g., in componentDidMount())
- * - You want to access the DOM via Refs
- * https://reactjs.org/docs/react-component.html
- * @Class
- */
 class UserProfileEdit extends React.Component {
   constructor() {
     super();
@@ -72,6 +63,10 @@ class UserProfileEdit extends React.Component {
     };
   }
 
+  /**
+   * send a put request with the edited properties and return to the profile page
+   * @returns {Promise<void>}
+   */
   async edit() {
     try {
       const requestBody = JSON.stringify({
@@ -88,7 +83,7 @@ class UserProfileEdit extends React.Component {
         }})
 
     } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
+      alert(`Something went wrong during the edit: \n${handleError(error)}`);
     }
   }
 
@@ -112,15 +107,6 @@ class UserProfileEdit extends React.Component {
       }
     })}
 
-
-  /**
-   * componentDidMount() is invoked immediately after a component is mounted (inserted into the tree).
-   * Initialization that requires DOM nodes should go here.
-   * If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
-   * You may call setState() immediately in componentDidMount().
-   * It will trigger an extra rendering, but it will happen before the browser updates the screen.
-   */
-  componentDidMount() {}
 
   render() {
     return (

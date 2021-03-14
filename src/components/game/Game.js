@@ -33,6 +33,12 @@ class Game extends React.Component {
     };
   }
 
+  /**
+   * sends a put request to the backend to set the status to offline
+   * and delete the items in the localstorage
+   * then the user is returned to the login page
+   * @returns {Promise<void>}
+   */
   async logout() {
     try {
       const requestBody = JSON.stringify({
@@ -48,6 +54,11 @@ class Game extends React.Component {
     }
   }
 
+  /**
+   * get all users from the backend, change the state and let it render again -->
+   * the users are represented
+   * @returns {Promise<void>}
+   */
   async componentDidMount() {
     try {
       const response = await api.get('/users');
@@ -95,7 +106,7 @@ class Game extends React.Component {
                           }
                         })
                       }}key={user.id}>
-                    <Player user={user} />
+                    <Player user={user}/>
                   </PlayerContainer>
                 );
               })}

@@ -91,8 +91,8 @@ class Login extends React.Component {
     };
   }
   /**
-   * HTTP POST request is sent to the backend.
-   * If the request is successful, a new user is returned to the front-end
+   * HTTP put request is sent to the backend.
+   * If the request is successful, the user is set online
    * and its token is stored in the localStorage.
    */
   async login() {
@@ -125,20 +125,15 @@ class Login extends React.Component {
     this.setState({ [key]: value });
   }
 
+  /**
+   * login when the enter key is pressed
+   * @param e
+   */
   handleKeypress(e){
     if (e.which===13){
       this.login();
     }
   }
-
-  /**
-   * componentDidMount() is invoked immediately after a component is mounted (inserted into the tree).
-   * Initialization that requires DOM nodes should go here.
-   * If you need to load data from a remote endpoint, this is a good place to instantiate the network request.
-   * You may call setState() immediately in componentDidMount().
-   * It will trigger an extra rendering, but it will happen before the browser updates the screen.
-   */
-  componentDidMount() {}
 
   render() {
     return (

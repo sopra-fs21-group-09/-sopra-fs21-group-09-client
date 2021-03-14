@@ -65,6 +65,11 @@ class UserProfile extends React.Component {
             }
     })}
 
+    /**
+     * get the user from the backend, change the state and let it render again -->
+     * the user is represented
+     * @returns {Promise<void>}
+     */
     async componentDidMount() {
         try {
             const response = await api.get(`/users/${this.props.location.state.user.id}`);
@@ -85,7 +90,7 @@ class UserProfile extends React.Component {
             // See here to get more data.
             console.log(response);
         } catch (error) {
-            alert(`Something went wrong while fetching the users: \n${handleError(error)}`);
+            alert(`Something went wrong while fetching the user: \n${handleError(error)}`);
         }
     }
 
@@ -110,6 +115,7 @@ class UserProfile extends React.Component {
                                     Go back
                                 </Button>
                                 <p></p>
+                                {/* the edit button is only shown when the local token is the same as the users token*/}
                                 {this.state.token === localStorage.getItem("token") ? (
                                     <Button
                                         width="100%"

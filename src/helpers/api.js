@@ -19,7 +19,7 @@ export const handleError = error => {
       info += `\nerror message: ${response.data.message}`;
     } else {
       info += `\nstatus code: ${response.status}`;
-      info += `\nerror message:\n${response.data}`;
+      info += `\nerror message:\n${response.data.message}`;
     }
 
     console.log('The request was made and answered but was unsuccessful.', error.response);
