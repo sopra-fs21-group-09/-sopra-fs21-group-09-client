@@ -3,7 +3,7 @@
 ## Project Idea
 
 During the first couple of weeks this semester the members of our group recognized that it is often overwhelming to get a hold of all the deadlines from the different modules we booked. We think all this energy of planning the semester could be simplified.
-For this reason, we want to build an app which shows your timetable and where you can set reminders for all the deadlines in a semester. The idea is that you can share these deadlines with all the other people in the respective module. Your peers can now accept the reminder and don’t have to set it themselves. This way only one student needs to set reminders for all his peers. Additionally, we want peers to be able to chat and share their experiences with each other on the platform.
+For this reason, we want to build an interactive application, where users can communicate with each other in small groups and handle all their personal or shared tasks in a simple and intuitive way. Information about various modules, tasks you need to work on and collaborations with other students is centralized in one application. A well designed homepage delivers all the information you need to know about the current week lectures, tasks, exercises, deadlines and meetings that are coming up.
 
 ## Component Diagram
 ![Kopie von SOPRA Component diagram](https://user-images.githubusercontent.com/71380307/112836531-06012100-909b-11eb-9229-60ce1b352361.png)
