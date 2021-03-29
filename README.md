@@ -9,16 +9,17 @@ For this reason, we want to build an app which shows your timetable and where yo
 ![Kopie von SOPRA Component diagram](https://user-images.githubusercontent.com/71380307/112836531-06012100-909b-11eb-9229-60ce1b352361.png)
 
 ## Activity Diagram 
-![Kopie von ActivityDiagram](https://user-images.githubusercontent.com/71380307/112836788-54162480-909b-11eb-9b7c-abe9d3002246.png)
+![Kopie von ActivityDiagram (1)](https://user-images.githubusercontent.com/71380307/112837804-9ee46c00-909c-11eb-8e4f-f858eb518e78.png)
 
 ## User Interface Mock-up
-[ux-home.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221697/ux-home.pdf)
-[ux-group-detail.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221698/ux-group-detail.pdf)
-[ux-create-group.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221703/ux-create-group.pdf)
-[ux-module-detail.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221700/ux-module-detail.pdf)
-[ux-tasks.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221702/ux-tasks.pdf)
-[ux-profile.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221701/ux-profile.pdf)
-[ux-login.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221699/ux-login.pdf)
+![ux-home-1](https://user-images.githubusercontent.com/71380307/112837829-a60b7a00-909c-11eb-8085-125d840ee7ff.png)
+![ux-create-group-1](https://user-images.githubusercontent.com/71380307/112837841-a9066a80-909c-11eb-834a-85de0817d02b.png)
+![ux-group-detail-1](https://user-images.githubusercontent.com/71380307/112837842-a99f0100-909c-11eb-86d3-4fb6fe8bad98.png)
+![ux-tasks-1](https://user-images.githubusercontent.com/71380307/112837853-ae63b500-909c-11eb-9cb6-d74d41bc508e.png)
+![ux-module-detail-1](https://user-images.githubusercontent.com/71380307/112837866-b28fd280-909c-11eb-8fd7-a1f2f713be31.png)
+![ux-profile-1](https://user-images.githubusercontent.com/71380307/112837849-ad328800-909c-11eb-8a13-353dde27e9b3.png)
+![ux-login-1](https://user-images.githubusercontent.com/71380307/112837856-b02d7880-909c-11eb-8ee1-fab7906ed44e.png)
+
 
 
 
