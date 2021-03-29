@@ -1,58 +1,24 @@
-# SoPra FS21 - Client Template
+# SoPra FS21 - BROLAT
 
-## Getting started with React
+## Project Idea
 
-Read and go through those Tutorials, It will make your life easier!
+During the first couple of weeks this semester the members of our group recognized that it is often overwhelming to get a hold of all the deadlines from the different modules we booked. We think all this energy of planning the semester could be simplified.
+For this reason, we want to build an app which shows your timetable and where you can set reminders for all the deadlines in a semester. The idea is that you can share these deadlines with all the other people in the respective module. Your peers can now accept the reminder and don’t have to set it themselves. This way only one student needs to set reminders for all his peers. Additionally, we want peers to be able to chat and share their experiences with each other on the platform.
 
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](http://localhost:3000) and [HTML](https://www.w3schools.com/html/html_intro.asp)!
+## Component Diagram
+![Kopie von SOPRA Component diagram](https://user-images.githubusercontent.com/71380307/112836531-06012100-909b-11eb-9229-60ce1b352361.png)
 
-Once you have done all of this, in the template there are two main external dependencies that you should look at:
+## Activity Diagram 
+![Kopie von ActivityDiagram](https://user-images.githubusercontent.com/71380307/112836788-54162480-909b-11eb-9b7c-abe9d3002246.png)
 
-- [styled-components](https://www.styled-components.com/docs)
-  It removes the mapping between components and styles (i.e. external css files). This means that when you're defining your styles, you're actually creating a normal React component, that has your styles attached to it
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) Declarative routing for React being a collection of navigational components that compose declaratively with your application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) Let's you access the state of the router and perform navigation from inside your components.
-
-
-
-## Prerequisites and Installation
-
-For your local development environment you'll need Node.js >= 8.10. You can download it [here](https://nodejs.org). All other dependencies including React get installed with:
-
-### `npm install`
-
-This has to be done before starting the application for the first time (only once).
-
-### `npm run dev`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console (use Google Chrome!).
-
-### `npm run test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into an 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## User Interface Mock-up
+[ux-home.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221697/ux-home.pdf)
+[ux-group-detail.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221698/ux-group-detail.pdf)
+[ux-create-group.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221703/ux-create-group.pdf)
+[ux-module-detail.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221700/ux-module-detail.pdf)
+[ux-tasks.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221702/ux-tasks.pdf)
+[ux-profile.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221701/ux-profile.pdf)
+[ux-login.pdf](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/files/6221699/ux-login.pdf)
 
 
->Thanks to Lucas Pelloni for the template
+
