@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "./views/Header";
+import Header from "./viewsOldVersion/Header";
 import AppRouter from "./componentsOldVersion/shared/routers/AppRouter";
 
 /**

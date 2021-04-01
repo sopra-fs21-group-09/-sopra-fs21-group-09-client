@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../helpers/layout';
 import { api, handleError } from '../../helpers/api';
-import Player from '../../views/Player';
-import { Spinner } from '../../views/design/Spinner';
-import { Button } from '../../views/design/Button';
+import Player from '../../viewsOldVersion/Player';
+import { Spinner } from '../../viewsOldVersion/design/Spinner';
+import { Button } from '../../viewsOldVersion/design/Button';
 import { withRouter } from 'react-router-dom';
 
 const Container = styled(BaseContainer)`

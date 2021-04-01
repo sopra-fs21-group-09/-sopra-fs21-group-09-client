@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../helpers/layout';
 import { api, handleError } from '../../helpers/api';
-import ProfileAttribute from '../../views/ProfileAttribute';
-import { Spinner } from '../../views/design/Spinner';
-import { Button } from '../../views/design/Button';
+import ProfileAttribute from '../../viewsOldVersion/ProfileAttribute';
+import { Spinner } from '../../viewsOldVersion/design/Spinner';
+import { Button } from '../../viewsOldVersion/design/Button';
 import { withRouter } from 'react-router-dom';
-import Profile from "../../views/Profile";
+import Profile from "../../viewsOldVersion/Profile";
 
 const Container = styled(BaseContainer)`
   color: white;

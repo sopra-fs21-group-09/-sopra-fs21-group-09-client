@@ -4,7 +4,7 @@ import { BaseContainer } from '../../helpers/layout';
 import { api, handleError } from '../../helpers/api';
 import User from '../shared/models/User';
 import {Link, withRouter} from 'react-router-dom';
-import { Button } from '../../views/design/Button';
+import { Button } from '../../viewsOldVersion/design/Button';
 
 const FormContainer = styled.div`
   margin-left: 0px;
