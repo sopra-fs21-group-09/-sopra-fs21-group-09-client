@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import Header from "./viewsOldVersion/Header";
-import AppRouter from "./componentsOldVersion/shared/routers/AppRouter";
+import Header from "./viewsOldVersion/Header";//TODO: update with new header
+import AppRouter from "./helpers/Routing/routers/AppRouter";
 
-/**
- * Happy coding!
- * React Template by Lucas Pelloni
- */
+
 class App extends Component {
   render() {
     return (

@@ -11,4 +11,3 @@ const WeekdayContainer = styled.div`
   border: 1px solid #ffffff26;
 `;
 
-//test3

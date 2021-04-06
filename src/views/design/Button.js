@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import COLOR8 from "./colors.js";
 
+//TODO: replace color with COLOR8
 export const Button = styled.button`
   &:hover {
     transform: translateY(-2px);
@@ -9,13 +11,13 @@ export const Button = styled.button`
   text-transform: uppercase;
   font-size: 13px;
   text-align: center;
-  color: rgba(255, 255, 255, 1);
+  color: rgba(255, 255, 255, 1); 
   width: ${props => props.width || null};
   height: 35px;
   border: none;
   border-radius: 20px;
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
-  background: rgb(16, 89, 255);
+  background: rgb(16, 89, 255)
   transition: all 0.3s ease;
 `;
