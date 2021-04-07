@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import Home from "../../../components/home/Home";
+import {HomeGuard} from "../routeProtectors/HomeGuard";
 
 
 
@@ -22,11 +24,12 @@ class AppRouter extends React.Component {
             <Route
               path="/home"
               render={() => (
-
-                <Redirect to={"/home"}/>
-
+                  <HomeGuard>
+                    <Home />
+                  </HomeGuard>
               )}
             />
+              <Route path="/" exact render={() => <Redirect to={"/home"} />} />
           </div>
         </Switch>
       </BrowserRouter>
