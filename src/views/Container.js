@@ -1,7 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 
-const GroupContainer = styled.div`
+export const GroupContainer = styled.div`
+  margin: 6px 0;
+  border-radius: 6px;
+  align-items: center;
+  width: 15%;
+  height: 0;
+  padding-top: 15%;
+  padding-left: 15%;
+  border: 1px solid #018692;
+  background-color: #018692;
+`;
+
+export const TaskContainer = styled.div`
   margin: 6px 0;
   width: 280px;
   padding: 10px;
@@ -11,7 +23,7 @@ const GroupContainer = styled.div`
   border: 1px solid #ffffff26;
 `;
 
-const TaskContainer = styled.div`
+export const WeekdayContainer = styled.div`
   margin: 6px 0;
   width: 280px;
   padding: 10px;
@@ -21,17 +33,7 @@ const TaskContainer = styled.div`
   border: 1px solid #ffffff26;
 `;
 
-const WeekdayContainer = styled.div`
-  margin: 6px 0;
-  width: 280px;
-  padding: 10px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  border: 1px solid #ffffff26;
-`;
-
-const CalendarEntryContainer = styled.div`
+export const CalendarEntryContainer = styled.div`
   margin: 6px 0;
   width: 280px;
   padding: 10px;
