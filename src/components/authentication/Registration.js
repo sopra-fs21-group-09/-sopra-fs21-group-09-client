@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HomeContainer } from '../../views/layout';
+import { BaseContainer } from '../../views/layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import BrolatLogo from "../../views/design/BrolatLogo.png";
@@ -94,7 +94,7 @@ class Registration extends React.Component {
 
     render() {
         return (
-            <HomeContainer>
+            <BaseContainer>
                 <LogoContainer>
                     <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
                 </LogoContainer>
@@ -142,7 +142,7 @@ class Registration extends React.Component {
                         </RectButton>
                     </ButtonContainer>
                 </LoginMainContainer>
-            </HomeContainer>
+            </BaseContainer>
         )
     }
 }

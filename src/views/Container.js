@@ -129,6 +129,9 @@ export const CalendarContainer = styled.div`
   display: flex;
   width: 70%;
   height: 816px; 
+  padding-left: 100px;
+  padding-right: 15px;
+  padding-top: 75px;
   justify-content : space-around
 `;
 
