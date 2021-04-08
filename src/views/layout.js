@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {DARK_GREY, LIGHT_GREY, COLOR3} from "./design/colors";
+import {DARK_GREY, COLOR3} from "./design/colors";
 
 export const DESKTOP_WIDTH = 1160;
 export const SMALL_LAPTOPS_WIDTH = 970;
