@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "../../../components/home/Home";
 import {HomeGuard} from "../routeProtectors/HomeGuard";
+import {RegistrationGuard} from "../routeProtectors/RegistrationGuard";
+import Registration from "../../../components/authentication/Registration";
 
 
 
@@ -21,6 +23,14 @@ class AppRouter extends React.Component {
         <Switch>
           <div>
             <Route
+              path="/registration"
+              render={() => (
+                  <RegistrationGuard>
+                      <Registration />
+                  </RegistrationGuard>
+              )}
+            />
+            <Route
               path="/home"
               render={() => (
                   <HomeGuard>
@@ -28,7 +38,7 @@ class AppRouter extends React.Component {
                   </HomeGuard>
               )}
             />
-              <Route path="/" exact render={() => <Redirect to={"/home"} />} />
+            <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>
       </BrowserRouter>
