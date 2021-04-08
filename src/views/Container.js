@@ -62,6 +62,7 @@ export const LoginMainContainer = styled.div`
   justify-content: center;
   align-items: left;
   margin-top: 2%;
+  margin-bottom: 4%;
   background: #E5E5E5;
   margin-left: 30%;
   padding-left: 15px;

@@ -5,14 +5,15 @@ import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import BrolatLogo from "../../views/design/BrolatLogo.png";
 import { LogoContainer, LoginMainContainer} from "../../views/Container";
-import { RectButton } from '../../views/design/Button';
+import { RectButton } from '../../views/Button';
+import User from "../profile/User";
 
 //Change the whole background for just this file
 document.body.style = 'background: #4F4F4F;';
 
 const Label = styled.label`
   color: black;
-  margin-top: 2%;
+  margin-top: 3%;
   margin-bottom: 2%;
   margin-left: 7%;
   margin-right: 7%;
@@ -44,11 +45,41 @@ class Registration extends React.Component {
     constructor() {
         super();
         this.state = {
+            username: null,
+            password: null,
+            token: null,
+            date: null
         };
     }
 
-    componentDidMount() {
+    /**
+     * HTTP POST request is sent to the backend.
+     * If the request is successful, a new user is returned to the front-end
+     * and its token is stored in the localStorage.
+     */
+    async registration() {
+        try {
+            const requestBody = JSON.stringify({
+                name: this.state.name,
+                username: this.state.username,
+                password: this.state.password
+            });
+            const response = await api.post('/users', requestBody);
+            // Get the returned user and update a new object.
+            const user = new User(response.data);
+
+            // Store the token into the local storage.
+            localStorage.setItem('token', user.token);
+            console.log(localStorage);
+
+            // Login successfully worked --> navigate to the route /game in the GameRouter
+            this.props.history.push(`/home`);
+        } catch (error) {
+            alert(`Something went wrong during the registration: \n${handleError(error)}`);
+        }
     }
+
+    componentDidMount() {}
 
     /**
      *  Every time the user enters something in the input field, the state gets updated.
@@ -94,7 +125,7 @@ class Registration extends React.Component {
                             disabled={!this.state.name || !this.state.username || !this.state.password}
                             width="60%"
                             onClick={() => {
-                                this.login();
+                                this.registration();
                             }}
                         >
                             Create Account!
@@ -104,7 +135,7 @@ class Registration extends React.Component {
                         <RectButton
                             width="60%"
                             onClick={() => {
-                                this.props.history.push(`/loginForUser`);
+                                this.props.history.push(`/login`);
                             }}
                         >
                             Already have an account? Login here!

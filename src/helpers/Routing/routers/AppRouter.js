@@ -3,7 +3,9 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Home from "../../../components/home/Home";
 import {HomeGuard} from "../routeProtectors/HomeGuard";
 import {RegistrationGuard} from "../routeProtectors/RegistrationGuard";
+import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Registration from "../../../components/authentication/Registration";
+import Login from "../../../components/authentication/Login";
 
 
 
@@ -28,6 +30,14 @@ class AppRouter extends React.Component {
                   <RegistrationGuard>
                       <Registration />
                   </RegistrationGuard>
+              )}
+            />
+            <Route
+              path="/login"
+              render={() => (
+                   <LoginGuard>
+                       <Login />
+                   </LoginGuard>
               )}
             />
             <Route

@@ -40,4 +40,6 @@ export const RectButton = styled.button`
   transition: all 0.3s ease;
   background: #11244E;
   border-radius: 20px;
+  color: white;
+  margin-bottom: 4%;
 `;
