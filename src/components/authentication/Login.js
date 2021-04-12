@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BaseContainer } from '../../helpers/layout';
+import { BaseContainer } from '../../views/layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import BrolatLogo from "../../views/design/BrolatLogo.png";

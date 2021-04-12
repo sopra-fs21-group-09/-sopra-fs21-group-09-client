@@ -19,10 +19,10 @@ export const CircleButton = styled.button`
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
   position: absolute;
-  left: 3.8%;
+  left: 1.8%;
   right: 92.2%;
-  top: 5.1%;
-  bottom: 88.9%;
+  top: 2.1%;
+  bottom: 93.9%;
   background: #FFFFFF;
   width: 60px;
   height: 60px;
