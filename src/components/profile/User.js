@@ -10,11 +10,12 @@ class User {
     this.status = null;
     this.password = null;
     this.matrikel_nr = null;
-    this.color_coding = null
+    this.color_coding = null;
 
-    // These are not necessary at the moment
+/*  These are not necessary at the moment
     this.creationDate = null;
     this.birthday = null;
+*/
 
     Object.assign(this, data);
   }
