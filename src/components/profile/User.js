@@ -7,17 +7,12 @@ class User {
     this.id = null;
     this.username = null;
     this.token = null;
-    this.status = null;
+    this.name = null;
     this.password = null;
-    this.matrikel_nr = null;
     this.color_coding = null;
 
-/*  These are not necessary at the moment
-    this.creationDate = null;
-    this.birthday = null;
-*/
-
     Object.assign(this, data);
+
   }
 }
 export default User;
