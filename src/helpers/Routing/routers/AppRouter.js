@@ -6,6 +6,7 @@ import {RegistrationGuard} from "../routeProtectors/RegistrationGuard";
 import {LoginGuard} from "../routeProtectors/LoginGuard";
 import Registration from "../../../components/authentication/Registration";
 import Login from "../../../components/authentication/Login";
+import Profile from "../../../components/profile/Profile";
 
 
 
@@ -46,6 +47,12 @@ class AppRouter extends React.Component {
                   <HomeGuard>
                     <Home />
                   </HomeGuard>
+              )}
+            />
+            <Route
+              path="/profile"
+              render={() => (
+                      <Profile />
               )}
             />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />

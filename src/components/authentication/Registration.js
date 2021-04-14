@@ -9,8 +9,9 @@ import { RectButton } from '../../views/Button';
 import User from "../profile/User";
 
 //Change the whole background for just this file
-document.body.style = 'background: #4F4F4F;';
+document.body.style = 'background: #646464;';
 
+//Constants we need for this page
 const Label = styled.label`
   color: black;
   margin-top: 3%;
