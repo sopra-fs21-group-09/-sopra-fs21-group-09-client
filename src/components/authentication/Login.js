@@ -7,9 +7,10 @@ import BrolatLogo from "../../views/design/BrolatLogo.png";
 import { LogoContainer, LoginMainContainer} from "../../views/Container";
 import { RectButton } from '../../views/Button';
 import User from "../profile/User";
+import {COLOR10, COLOR13} from "../../views/design/colors";
 
 //Change the whole background for just this file
-document.body.style = 'background: #646464;';
+document.body.style.backgroundColor = COLOR13;
 
 //Constants we need for this page
 const Label = styled.label`
@@ -23,7 +24,7 @@ const Label = styled.label`
 
 const InputField = styled.input`
   &::placeholder {
-    color: #4F4F4F;
+    color: ${COLOR10};
   }
   height: 35px;
   padding-left: 15px;

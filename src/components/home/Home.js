@@ -6,8 +6,9 @@ import {CircleButton} from "../../views/Button";
 import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline, UpcomingContainer, Upcoming} from "../../views/Container";
 import HamburgerMenu from "../../views/HamburgerMenu"
 import {Label, DateLabel} from "../../views/layout"
-import {} from "../../views/design/colors";
+import { COLORS } from "../../views/design/colors";
 import ShadowScrollbars from "../../views/design/Scrollbars"
+import {Navbar} from "../navigation/navbar/index.jsx"
 
 class Home extends React.Component {
     constructor() {
@@ -43,6 +44,7 @@ class Home extends React.Component {
                         animationDuration={0.4}
                     />
                 </CircleButton>
+                <Navbar/>
                 <CalendarContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>MON</WeekDayLabel>
@@ -146,6 +148,7 @@ class Home extends React.Component {
                         </ShadowScrollbars>
                     </TaskContainer>
                 </SideBar>
+
             </HomeContainer>
         )
     }

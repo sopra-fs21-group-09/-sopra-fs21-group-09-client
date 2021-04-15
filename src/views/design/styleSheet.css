@@ -43,3 +43,10 @@
 button{
     border: none;
 }
+
+li{
+    list-style-type: none;
+    height: 100%;
+}
+
+
