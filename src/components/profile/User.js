@@ -10,6 +10,8 @@ class User {
     this.name = null;
     this.password = null;
     this.color_coding = null;
+    this.birthday = null;
+    this.matrikel_nr = null;
 
     Object.assign(this, data);
 

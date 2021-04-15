@@ -24,8 +24,8 @@ export const CircleButton = styled.button`
   top: 20px;
   left: 20px;
   background: #FFFFFF;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
 `;
 

@@ -188,7 +188,12 @@ export const LoginMainContainer = styled.div`
   border-radius: 20px;
 `;
 
-
-
-
-
+// Title of all the pages like Home, Brofile, MyGroups etc.
+export const PageTitle = styled.h1`
+  color: #4F4F4F;
+  font-size: 50px;
+  margin-top: -4%;
+  margin-bottom: 2%;
+  margin-left: 4%;
+  text-transform: uppercase;
+`;
