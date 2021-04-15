@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {COLOR8} from "../views/design/colors";
+import { COLORS } from "../views/design/colors"
 import React, {Component} from "react";
 import "./design/styleSheet.css"
 
@@ -9,10 +9,9 @@ import "./design/styleSheet.css"
 export const CircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
-    background: #0f224b;
+    background: ${COLORS.BUTTONS};
     color: white;
   }
-  padding: 6px;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 12px;
@@ -23,7 +22,7 @@ export const CircleButton = styled.button`
   position: fixed;
   top: 20px;
   left: 20px;
-  background: #FFFFFF;
+  background: white;
   width: 55px;
   height: 55px;
   border-radius: 50%;
@@ -38,10 +37,11 @@ export const RectButton = styled.button`
   text-transform: uppercase;
   font-size: 13px;
   text-align: center;
+  align-items: center;
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
-  background: ${COLOR8};
+  background: ${COLORS.BUTTON};
   border-radius: 20px;
   color: white;
   margin-bottom: 4%;

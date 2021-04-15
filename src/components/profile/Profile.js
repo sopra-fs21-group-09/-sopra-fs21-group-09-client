@@ -5,7 +5,7 @@ import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import {CircleButton, RectButton} from '../../views/Button';
 import {PageTitle} from '../../views/Container';
-import {COLOR3, COLOR10, COLOR12} from "../../views/design/colors";
+import { COLORS } from "../../views/design/colors";
 
 //Change the whole background for just this file
 document.body.style = 'background: #F5F5F5;';
@@ -49,7 +49,7 @@ const InputField = styled.input`
   margin-right: 7%;
   margin-top: 2.5%;
   border: none;
-  background: ${COLOR12};
+  background: ${COLOR[12]};
   border-radius: 20px;
   float: right;
 `;

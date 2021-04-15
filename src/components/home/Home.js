@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { SideBar, HomeContainer } from '../../views/layout';
 import {withRouter} from "react-router-dom";
 import {CircleButton} from "../../views/Button";
-import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry} from "../../views/Container";
+import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline, UpcomingContainer, Upcoming} from "../../views/Container";
 import HamburgerMenu from "../../views/HamburgerMenu"
 import {Label, DateLabel} from "../../views/layout"
+import { COLORS } from "../../views/design/colors";
+import ShadowScrollbars from "../../views/design/Scrollbars"
 import {Navbar} from "../navigation/navbar/index.jsx"
 
 class Home extends React.Component {
@@ -29,59 +31,121 @@ class Home extends React.Component {
     render() {
         return (
             <HomeContainer>
+                <CircleButton>
+                    <HamburgerMenu
+                        isOpen={this.state.open[0]}
+                        menuClicked={this.handleClick.bind(this, 0)}
+                        width={40}
+                        height={30}
+                        strokeWidth={3}
+                        rotate={0}
+                        color='black'
+                        borderRadius={10}
+                        animationDuration={0.4}
+                    />
+                </CircleButton>
                 <Navbar/>
                 <CalendarContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>MON</WeekDayLabel>
+                        <DeadlineContainer></DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>TUE</WeekDayLabel>
+                        <DeadlineContainer></DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>WED</WeekDayLabel>
+                        <DeadlineContainer></DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>THU</WeekDayLabel>
+                        <DeadlineContainer></DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>FRI</WeekDayLabel>
+                        <DeadlineContainer></DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>SAT</WeekDayLabel>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry title='SOFTCON' description='' start='0800' end='1000'></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>SUN</WeekDayLabel>
+                        <DeadlineContainer>
+                            <ShadowScrollbars style={{ height: 70 }}>
+                                <Deadline>Assignment</Deadline>
+                                <Deadline>Paper</Deadline>
+                                <Deadline>Assignment</Deadline>
+                                <Deadline>Paper</Deadline>
+                            </ShadowScrollbars>
+                        </DeadlineContainer>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                 </CalendarContainer>
                 <SideBar>
+                    <UpcomingContainer>
+                        <Label>Upcoming</Label>
+                        <ShadowScrollbars  style={{ height: 370 }}>
+                            <DateLabel>Today</DateLabel>
+                            <Upcoming>Software Engineering</Upcoming>
+                            <Upcoming>SOPRA</Upcoming>
+                            <Upcoming>SWE Midterm</Upcoming>
+                            <DateLabel>Tomorrow</DateLabel>
+                            <Upcoming>Software Engineering</Upcoming>
+                            <Upcoming>SOPRA</Upcoming>
+                            <Upcoming>SWE Midterm</Upcoming>
+                            <DateLabel>23.08.2021</DateLabel>
+                            <Upcoming>Software Engineering</Upcoming>
+                            <Upcoming>SOPRA</Upcoming>
+                            <Upcoming>SWE Midterm</Upcoming>
+                            <DateLabel>24.08.2021</DateLabel>
+                            <Upcoming>Software Engineering</Upcoming>
+                            <Upcoming>SOPRA</Upcoming>
+                            <Upcoming>SWE Midterm</Upcoming>
+                        </ShadowScrollbars>
+                    </UpcomingContainer>
+                    <hr width="95%"/>
                     <TaskContainer>
                         <Label>TO-DO</Label>
-                        <DateLabel>Today</DateLabel>
-                        <Task>Assignment</Task>
-                        <Task>Paper</Task>
-                        <DateLabel>Tomorrow</DateLabel>
-                        <Task>Study</Task>
+                        <ShadowScrollbars style={{ height: 380 }}>
+                            <DateLabel>Today</DateLabel>
+                            <Task>Assignment</Task>
+                            <Task>Paper</Task>
+                            <DateLabel>Tomorrow</DateLabel>
+                            <Task>Study</Task>
+                            <DateLabel>22.08.2021</DateLabel>
+                            <Task>Assignment</Task>
+                            <Task>Paper</Task>
+                            <DateLabel>23.08.2021</DateLabel>
+                            <Task>Study</Task>
+                            <Task>Assignment</Task>
+                            <Task>Paper</Task>
+                            <DateLabel>24.08.2021</DateLabel>
+                            <Task>Study</Task>
+                            <Task>Assignment</Task>
+                            <Task>Paper</Task>
+                            <DateLabel>25.08.2021</DateLabel>
+                            <Task>Study</Task>
+                        </ShadowScrollbars>
                     </TaskContainer>
                 </SideBar>
 

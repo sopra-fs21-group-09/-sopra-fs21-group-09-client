@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {DARK_GREY, COLOR3} from "./design/colors";
+import { COLORS } from "./design/colors";
 
 export const DESKTOP_WIDTH = 1160;
 export const SMALL_LAPTOPS_WIDTH = 970;
@@ -19,9 +19,10 @@ export const SideBar = styled.div`
   z-index: 1; /* Stay on top */
   top: 0; /* Stay at the top */
   right: 0;
-  padding-top: 100px;
-  background-color: ${COLOR3};
-  overflow-x: hidden; /* Disable horizontal scroll */
+  padding: 20px;
+  justify-content: center;
+  background-color: ${COLORS.DARK_GREY}; 
+  overflow: hidden; /* Disablex horizontal scroll */
 `;
 
 export const BaseContainer = styled.div`
@@ -36,7 +37,7 @@ export const Label = styled.label`
   display: flex;
   color: white;
   text-transform: uppercase;
-  margin: 0px;
+  margin-bottom: 10px;
   padding: 0px;     
 `;
 
