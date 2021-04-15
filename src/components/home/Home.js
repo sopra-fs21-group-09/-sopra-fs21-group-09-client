@@ -6,6 +6,7 @@ import {CircleButton} from "../../views/Button";
 import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry} from "../../views/Container";
 import HamburgerMenu from "../../views/HamburgerMenu"
 import {Label, DateLabel} from "../../views/layout"
+import {Navbar} from "../navigation/navbar/index.jsx"
 
 class Home extends React.Component {
     constructor() {
@@ -28,19 +29,7 @@ class Home extends React.Component {
     render() {
         return (
             <HomeContainer>
-                <CircleButton>Home
-                    {/* <HamburgerMenu
-                        isOpen={this.state.open[1]}
-                        menuClicked={this.handleClick.bind(this, 1)}
-                        width={50}
-                        height={40}
-                        strokeWidth={3}
-                        rotate={0}
-                        color='black'
-                        borderRadius={5}
-                        animationDuration={0.4}
-                    /> */}
-                </CircleButton>
+                <Navbar/>
                 <CalendarContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>MON</WeekDayLabel>
@@ -95,6 +84,7 @@ class Home extends React.Component {
                         <Task>Study</Task>
                     </TaskContainer>
                 </SideBar>
+
             </HomeContainer>
         )
     }
