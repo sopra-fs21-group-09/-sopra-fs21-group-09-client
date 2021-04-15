@@ -8,7 +8,6 @@ export const SMALL_WIDTH = 768;
 
 export const HomeContainer = styled.div`
   max-width: ${DESKTOP_WIDTH}px;
-  max-height: 100%; 
   display: flex; 
   margin: 0;
 `;
