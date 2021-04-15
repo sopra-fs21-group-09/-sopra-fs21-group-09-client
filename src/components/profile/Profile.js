@@ -49,7 +49,7 @@ const InputField = styled.input`
   margin-right: 7%;
   margin-top: 2.5%;
   border: none;
-  background: ${COLOR[12]};
+  background: ${COLORS[12]};
   border-radius: 20px;
   float: right;
 `;
@@ -137,7 +137,7 @@ class Profile extends React.Component {
                         }}></ColorSquare><br />
                     <Label2>Exercises</Label2>
                     <ColorSquare style={{
-                        backgroundColor: COLOR10,
+                        backgroundColor: COLORS.COLOR10,
                     }}></ColorSquare><br />
                     <Label2>Deadlines</Label2>
                     <ColorSquare style={{
@@ -149,7 +149,7 @@ class Profile extends React.Component {
                     }}></ColorSquare><br />
                     <Label2>Events</Label2>
                     <ColorSquare style={{
-                        backgroundColor: COLOR3,
+                        backgroundColor: COLORS.EXERCISES,
                     }}></ColorSquare>
                     <ButtonContainer>
                         <RectButton
