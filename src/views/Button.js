@@ -9,25 +9,24 @@ import "./design/styleSheet.css"
 export const CircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
+    background: #0f224b;
+    color: white;
   }
   padding: 6px;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 9px;
+  font-size: 12px;
   text-align: center;
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
-  position: absolute;
-  left: 1.8%;
-  right: 92.2%;
-  top: 2.1%;
-  bottom: 93.9%;
+  position: fixed;
+  top: 20px;
+  left: 20px;
   background: #FFFFFF;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 1px solid #E5E5E5;
 `;
 
 export const RectButton = styled.button`

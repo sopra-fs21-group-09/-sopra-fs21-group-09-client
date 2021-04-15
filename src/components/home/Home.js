@@ -1,26 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SideBar, HomeContainer } from '../../views/layout';
-import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import {Button, RectButton, CircleButton, RoundButton, RectangleButton} from "../../views/Button";
-import {TaskContainer, CalendarContainer, Group, Weekday, WeekDayLabel, CalendarEntryContainer, GroupContainer, Task, WeekdayContainer, CalendarEntryTitle, CalendarEntry} from "../../views/Container";
-
-const Label = styled.label`
-  color: white;
-  text-transform: uppercase;
-  margin: 0px;
-  padding: 0px;     
-
-  
-`;
+import {CircleButton} from "../../views/Button";
+import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry} from "../../views/Container";
+import HamburgerMenu from "../../views/HamburgerMenu"
+import {Label, DateLabel} from "../../views/layout"
 
 class Home extends React.Component {
     constructor() {
         super();
         this.state = {
+            open: [false, true, false, true]
         };
     }
+
+    handleClick(id) {
+		let { open } = this.state;
+        this.setState({
+			open: [...open.slice(0, id), !open[id], ...open.slice(id + 1)]
+		});
+	}
 
     componentDidMount() {
     }
@@ -28,40 +28,58 @@ class Home extends React.Component {
     render() {
         return (
             <HomeContainer>
-                <CircleButton>MENU</CircleButton>
+                <CircleButton>Home
+                    {/* <HamburgerMenu
+                        isOpen={this.state.open[1]}
+                        menuClicked={this.handleClick.bind(this, 1)}
+                        width={50}
+                        height={40}
+                        strokeWidth={3}
+                        rotate={0}
+                        color='black'
+                        borderRadius={5}
+                        animationDuration={0.4}
+                    /> */}
+                </CircleButton>
                 <CalendarContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>MON</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>TUE</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>WED</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>THU</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>FRI</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
                     <WeekdayContainer>
-                        <WeekDayLabel>Monday</WeekDayLabel>
+                        <WeekDayLabel>SAT</WeekDayLabel>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </WeekdayContainer>
+                    <WeekdayContainer>
+                        <WeekDayLabel>SUN</WeekDayLabel>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
@@ -70,17 +88,13 @@ class Home extends React.Component {
                 <SideBar>
                     <TaskContainer>
                         <Label>TO-DO</Label>
-                        <Task>
-                        </Task>
-                        <Task>
-                        </Task>
-                        <Task>
-                        </Task>
+                        <DateLabel>Today</DateLabel>
+                        <Task>Assignment</Task>
+                        <Task>Paper</Task>
+                        <DateLabel>Tomorrow</DateLabel>
+                        <Task>Study</Task>
                     </TaskContainer>
-
                 </SideBar>
-
-
             </HomeContainer>
         )
     }

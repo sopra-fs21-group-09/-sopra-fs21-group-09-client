@@ -40,38 +40,28 @@ export class Group extends Component {
 
 //TASK
 export const TaskContainer = styled.div`
+  margin-right: 5px;
 `;
 
 export const Task = styled.div`
-  margin: 6px 0;
-  width: 280px;
+  margin: 5px 0px 0px 0px;
+  width: 100%;
   padding: 10px;
-  border-radius: 6px;
   display: flex;
   align-items: center;
-  width: 517px;
-  height: 48px;
-  left: 113px;
-  top: 432px;
   background: #E5E5E5;
   border: 3px solid #018692;
   border-radius: 45px;
-  box-sizing: border-box;
 `;
-
-
-
 
 //WEEKDAY
 export const WeekdayContainer = styled.div`
   align-items: center;
-  width: 15%;
-  height: 816px; 
-  padding: 20px 0px 0px 0px;
+  height: 100%;
+  margin-right: 5px;
+  padding: 5px 5px 0px 5px;
   background: #FEFEFE;
-  border-radius: 30px;
-  position: relative;
-  z-index: -1;
+  border-radius: 20px;
   text-align: center;
 `;
 
@@ -93,14 +83,17 @@ export class Weekday extends Component {
 
 //CALENDAR ENTRY
 export const CalendarEntryContainer = styled.div`
+  &:hover {
+    transform: translateY(-2px);
+    background: #EB8769;
+  }
   margin: 6px 0;
   width: 100%;
   height: 80px;
   padding: 10px;
-  border-radius: 6px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  border: 1px solid #ffffff26;
   background-color: #E86539; 
 `;
 
@@ -117,22 +110,19 @@ export class CalendarEntry extends Component {
     render() {
         return (<CalendarEntryContainer>
                 <CalendarEntryTitle>Title</CalendarEntryTitle>
-                <div className="new_line"/>
                 <CalendarEntryDescription>Description</CalendarEntryDescription>
             </CalendarEntryContainer>
         )
     }
 }
 
-//CALENDAR TODO: find out why Calendar Entries do not appear in front
 export const CalendarContainer = styled.div`
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  height: 80%;
   display: flex;
-  width: 70%;
-  height: 816px; 
-  padding-left: 100px;
-  padding-right: 15px;
-  padding-top: 75px;
-  justify-content : space-around
+  justify-content : space-around;
 `;
 
 export class Calendar extends Component {
