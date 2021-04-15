@@ -21,7 +21,7 @@ export const SideBar = styled.div`
   top: 0; /* Stay at the top */
   right: 0;
   padding-top: 100px;
-  background-color: ${COLOR3} /* does not work*/
+  background-color: ${COLOR3};
   overflow-x: hidden; /* Disable horizontal scroll */
 `;
 

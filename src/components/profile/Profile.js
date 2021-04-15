@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import { CircleButton } from '../../views/Button';
+import {CircleButton, RectButton} from '../../views/Button';
 import {PageTitle} from '../../views/Container';
+import {COLOR3, COLOR10, COLOR12} from "../../views/design/colors";
 
 //Change the whole background for just this file
 document.body.style = 'background: #F5F5F5;';
 
 //Constants we need for this page
-const TopLeftContainer = styled.div`
+const BigContainer = styled.div`
   height: 50%;
   width: 55%;
   padding-left: 15px;
@@ -28,44 +29,46 @@ const Label = styled.label`
   line-height:400%;
 `;
 
+const Label2 = styled.label`
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  text-transform: uppercase;
+  line-height:200%;
+`;
+
 const InputField = styled.input`
   &::placeholder {
     color: #4F4F4F;
-    font-size: 0.9vw;
+    font-size: 1vw;
   }
   height: 35px;
+  width: 250px;
   padding-left: 15px;
   margin-left: 7%;
   margin-right: 7%;
-  margin-top: 3%;
+  margin-top: 2.5%;
   border: none;
-  background: #C4C4C4;
+  background: ${COLOR12};
   border-radius: 20px;
   float: right;
 `;
 
-const ChangeButton = styled.button` 
-  &:hover {
-    transform: translateY(-2px);
-  }
-  padding: 6px;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 9px;
-  text-align: center;
-  cursor: ${props => (props.disabled ? "default" : "pointer")};
-  opacity: ${props => (props.disabled ? 0.4 : 1)};
-  transition: all 0.3s ease;
-  position: absolute;
-  left: 3%;
-  right: 92.2%;
-  top: 5%;
-  bottom: 93.9%;
-  background: #FFFFFF;
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  border: 1px solid #E5E5E5;
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-left: 0%;
+  margin-top: 30px;
+  margin-bottom: -5%;
+`;
+
+const ColorSquare = styled.div`
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  margin-left: 25%;
+  margin-top: -5.5%;
+  border-radius: 20%;
+  border: black;
 `;
 
 class Profile extends React.Component {
@@ -93,12 +96,18 @@ class Profile extends React.Component {
 
     componentDidMount() {}
 
+    handleInputChange(key, value) {
+        // Example: if the key is username, this statement is the equivalent to the following one:
+        // this.setState({'username': value});
+        this.setState({ [key]: value });
+    }
+
     render() {
         return (
             <BaseContainer>
                 <CircleButton></CircleButton>
                 <PageTitle>Brofile</PageTitle>
-                <TopLeftContainer>
+                <BigContainer>
                     <h1>Name</h1>
                     <Label>Username</Label>
                     <InputField
@@ -111,17 +120,48 @@ class Profile extends React.Component {
                     <InputField
                         placeholder="Birthday displayed here"
                         onChange={e => {
-                            this.handleInputChange('username', e.target.value);
+                            this.handleInputChange('birthday', e.target.value);
                         }}
                     /><br />
                     <Label>Matrikelnumber</Label>
                     <InputField
                         placeholder="Matrikelnumber displayed here"
                         onChange={e => {
-                            this.handleInputChange('username', e.target.value);
+                            this.handleInputChange('matrikelnumber', e.target.value);
                         }}
                     /><br />
-                </TopLeftContainer>
+                    <h1>Colors</h1>
+                    <Label2>Lectures</Label2>
+                    <ColorSquare style={{
+                        backgroundColor: 'blue',
+                        }}></ColorSquare><br />
+                    <Label2>Exercises</Label2>
+                    <ColorSquare style={{
+                        backgroundColor: COLOR10,
+                    }}></ColorSquare><br />
+                    <Label2>Deadlines</Label2>
+                    <ColorSquare style={{
+                        backgroundColor: 'blue',
+                    }}></ColorSquare><br />
+                    <Label2>Meetings</Label2>
+                    <ColorSquare style={{
+                        backgroundColor: 'yellow',
+                    }}></ColorSquare><br />
+                    <Label2>Events</Label2>
+                    <ColorSquare style={{
+                        backgroundColor: COLOR3,
+                    }}></ColorSquare>
+                    <ButtonContainer>
+                        <RectButton
+                            width="60%"
+                            onClick={() => {
+                                this.props.history.push(`/edit`);
+                            }}
+                        >
+                            Edit your Brofile here!
+                        </RectButton>
+                    </ButtonContainer>
+                </BigContainer>
             </BaseContainer>
         )
     }
