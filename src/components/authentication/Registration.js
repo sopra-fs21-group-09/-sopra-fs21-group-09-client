@@ -7,9 +7,10 @@ import BrolatLogo from "../../views/design/BrolatLogo.png";
 import { LogoContainer, LoginMainContainer} from "../../views/Container";
 import { RectButton } from '../../views/Button';
 import User from "../profile/User";
+import {COLORS} from "../../views/design/colors";
 
 //Change the whole background for just this file
-document.body.style.backgroundColor = "#646464";
+document.body.style.backgroundColor = COLORS.COLOR13;
 
 //Constants we need for this page
 const Label = styled.label`

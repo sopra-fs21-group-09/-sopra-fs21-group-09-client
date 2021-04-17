@@ -10,7 +10,7 @@ import User from "../profile/User";
 import {COLORS} from "../../views/design/colors";
 
 //Change the whole background for just this file
-document.body.style.backgroundColor = COLORS.COLOR10;
+document.body.style.backgroundColor = COLORS.COLOR13;
 
 //Constants we need for this page
 const Label = styled.label`
