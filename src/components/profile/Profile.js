@@ -8,7 +8,7 @@ import {PageTitle} from '../../views/Container';
 import { COLORS } from "../../views/design/colors";
 
 //Change the whole background for just this file
-document.body.style = 'background: #F5F5F5;';
+document.body.style.backgroundColor = COLORS.COLOR11;
 
 //Constants we need for this page
 const BigContainer = styled.div`
