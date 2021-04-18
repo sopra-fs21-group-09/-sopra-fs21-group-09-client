@@ -3,29 +3,25 @@ import styled from 'styled-components';
 import { api, handleError } from '../../helpers/api';
 import { RectButton } from '../../views/Button';
 import { withRouter } from 'react-router-dom';
+import {COLORS} from "../../views/design/colors";
+import User from "../profile/User";
 
-const FormContainer = styled.div`
-  margin-top: 2em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 300px;
-  justify-content: center;
-`;
-
-const Form = styled.div`
+//Constants we need for this page
+const EditMainContainer = styled.div`
+  height: ${props => props.height}px;
+  background: ${props => props.background};
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
-  height: 450px;
-  font-size: 16px;
-  font-weight: 300;
-  padding-left: 37px;
-  padding-right: 37px;
-  border-radius: 5px;
-  background: linear-gradient(rgb(27, 124, 186), rgb(2, 46, 101));
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  align-items: left;
+  margin-top: 10%;
+  margin-bottom: 4%;
+  background: ${COLORS.COLOR13};
+  margin-left: 30%;
+  padding-left: 15px;
+  margin-right: 30%;
+  padding-right: 15px;
+  border-radius: 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -34,11 +30,13 @@ const ButtonContainer = styled.div`
   margin-top: 20px;
 `;
 
-const Titel = styled.label`
+const Title = styled.label`
   color: white;
   margin-bottom: 30px;
   text-transform: uppercase;
   text-align: center;
+  margin: 3%;
+  font-size: 30px;
 `;
 
 const Label = styled.label`
@@ -58,6 +56,7 @@ const InputField = styled.input`
   margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.2);
   color: white;
+  border-radius: 20px;
 `;
 
 class Edit extends React.Component {
@@ -76,9 +75,25 @@ class Edit extends React.Component {
      */
     async edit() {
         try {
+            const requestBody = JSON.stringify({
+                id: this.state.id,
+                username: this.state.username,
+                birthday: this.state.birthday,
+                matrikel_nr: this.state.matrikel_nr
+            });
 
+            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+
+            // Get the returned user and update a new object.
+            const user = new User(response.data);
+
+            // Store the token into the local storage.
+            localStorage.setItem('token', user.token);
+
+            // Login successfully worked --> navigate to the route /game in the GameRouter
+            this.props.history.push(`/game/Profile`);
         } catch (error) {
-            alert(`Something went wrong during the registration: \n${handleError(error)}`);
+            alert(`Something went wrong during the edit: \n${handleError(error)}`);
         }
     }
 
@@ -101,45 +116,51 @@ class Edit extends React.Component {
 
     render() {
             return (
-                <FormContainer>
-                    <Form>
-                        <Titel>Hey there! Here you can edit your profile:</Titel>
-                        <Label>Username</Label>
-                        <InputField
-                            placeholder="Enter here..."
-                            onChange={e => {
-                                this.handleInputChange('username', e.target.value);
+                <EditMainContainer>
+                    <Title>Here you can edit your profile:</Title>
+                    <Label>Change Username:</Label>
+                    <InputField
+                        placeholder="Enter your new username here..."
+                        onChange={e => {
+                            this.handleInputChange('username', e.target.value);
+                        }}
+                    />
+                    <Label>Change Birthday:</Label>
+                    <InputField
+                        placeholder="Enter your birthday here..."
+                        onChange={e => {
+                            this.handleInputChange('birthday', e.target.value);
+                        }}
+                    />
+                    <Label>Change Matrikelnumber:</Label>
+                    <InputField
+                        placeholder="Enter your Matrikelnumber here..."
+                        onChange={e => {
+                            this.handleInputChange('matrikelnumber', e.target.value);
+                        }}
+                    />
+                    <ButtonContainer>
+                        <RectButton
+                            disabled={!this.state.username || !this.state.birthday || !this.state.matrikel_nr}
+                            width="60%"
+                            onClick={() => {
+                                this.edit();
                             }}
-                        />
-                        <Label>Birthday</Label>
-                        <InputField
-                            placeholder="Enter here..."
-                            onChange={e => {
-                                this.handleInputChange('birthDate', e.target.value);
+                        >
+                            Change your Brofile Information!
+                        </RectButton>
+                    </ButtonContainer>
+                    <ButtonContainer>
+                        <RectButton
+                            width="100%"
+                            onClick={() => {
+                                this.props.history.push('/profile');
                             }}
-                        />
-                        <ButtonContainer>
-                            <RectButton
-                                width="100%"
-                                onClick={() => {
-                                    this.edit();
-                                }}
-                            >
-                                Edit
-                            </RectButton>
-                        </ButtonContainer>
-                        <ButtonContainer>
-                            <RectButton
-                                width="100%"
-                                onClick={() => {
-                                    this.props.history.push('/profile');
-                                }}
-                            >
-                                Back to Profile
-                            </RectButton>
-                        </ButtonContainer>
-                    </Form>
-                </FormContainer>
+                        >
+                            Back to Profile
+                        </RectButton>
+                    </ButtonContainer>
+                </EditMainContainer>
             );
         }
 

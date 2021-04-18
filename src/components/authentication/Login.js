@@ -120,7 +120,7 @@ class Login extends React.Component {
                             disabled={!this.state.name || !this.state.username || !this.state.password}
                             width="60%"
                             onClick={() => {
-                                this.registration();
+                                this.login();
                             }}
                         >
                             Log into Account!
