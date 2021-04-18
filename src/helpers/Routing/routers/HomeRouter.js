@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Redirect, Route } from "react-router-dom";
-import Home from "/src/components/home/Home";
+import Home from "../../../components/home/Home";
+import Profile from "../../../components/profile/Profile";
+import Edit from "../../../components/profile/Edit";
 
 
 const Container = styled.div`
@@ -11,9 +13,6 @@ const Container = styled.div`
 
 class HomeRouter extends React.Component {
   render() {
-    /**
-     * "this.props.base" is "/app" because as been passed as a prop in the parent of GameRouter, i.e., App.js
-     */
     return (
       <Container>
         <Route
@@ -25,7 +24,20 @@ class HomeRouter extends React.Component {
         <Route
           exact
           path={`${this.props.base}`}
-          render={() => <Redirect to={`${this.props.base}/dashboard`}/>}/>
+          render={() => <Redirect to={`${this.props.base}/dashboard`}/>}
+        />
+
+        <Route
+          exact
+          path={`${this.props.base}/profile`}
+          render={() => <Profile/>}
+        />
+
+        <Route
+          exact
+          path={`${this.props.base}/edit`}
+          render={() => <Edit/>}
+        />
 
       </Container>
     );
