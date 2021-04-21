@@ -7,9 +7,6 @@ import {CircleButton, RectButton} from '../../views/Button';
 import {PageTitle} from '../../views/Container';
 import { COLORS } from "../../views/design/colors";
 
-//Change the whole background for just this file
-document.body.style.backgroundColor = COLORS.COLOR11;
-
 //Constants we need for this page
 const BigContainer = styled.div`
   height: 50%;
@@ -52,6 +49,7 @@ const InputField = styled.input`
   background: ${COLORS[12]};
   border-radius: 20px;
   float: right;
+  border: 1px solid black;
 `;
 
 const ButtonContainer = styled.div`
@@ -94,7 +92,10 @@ class Profile extends React.Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = COLORS.COLOR11;
+    }
 
     handleInputChange(key, value) {
         // Example: if the key is username, this statement is the equivalent to the following one:

@@ -6,9 +6,6 @@ import { withRouter } from 'react-router-dom';
 import {COLORS} from "../../views/design/colors";
 import User from "../profile/User";
 
-//Change the whole background for just this file
-document.body.style.backgroundColor = COLORS.COLOR11;
-
 //Constants we need for this page
 const EditMainContainer = styled.div`
   height: ${props => props.height}px;
@@ -110,6 +107,9 @@ class Edit extends React.Component {
     }
 
     async componentDidMount() {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = COLORS.COLOR11;
+
         try {
 
         } catch (error) {

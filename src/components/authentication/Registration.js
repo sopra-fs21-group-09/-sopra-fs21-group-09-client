@@ -78,7 +78,10 @@ class Registration extends React.Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = COLORS.COLOR13;
+    }
 
     /**
      *  Every time the user enters something in the input field, the state gets updated.

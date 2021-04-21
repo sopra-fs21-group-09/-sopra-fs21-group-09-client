@@ -9,6 +9,7 @@ import { RectButton } from '../../views/Button';
 import User from "../profile/User";
 import {COLORS} from "../../views/design/colors";
 
+
 //Constants we need for this page
 const Label = styled.label`
   color: black;
@@ -78,7 +79,10 @@ class Login extends React.Component {
         }
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = COLORS.COLOR13;
+    }
 
     /**
      *  Every time the user enters something in the input field, the state gets updated.
