@@ -69,8 +69,8 @@ class Edit extends React.Component {
     }
 
     /**
-     * HTTP POST request is sent to the backend.
-     * If the request is successful, a new user is returned to the front-end
+     * HTTP PUT request is sent to the backend.
+     * If the request is successful, the user info is updated and returned to the front-end
      * and its token is stored in the localStorage.
      */
     async edit() {

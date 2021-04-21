@@ -20,8 +20,8 @@ export const CircleButton = styled.button`
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 5%;
+  left: 2%;
   background: white;
   width: 55px;
   height: 55px;
@@ -48,6 +48,28 @@ export const RectButton = styled.button`
   border: 1px solid #11244E;
 `;
 
+export const RectButtonBig = styled.button`
+  &:hover {
+    transform: translateY(-2px);
+  }
+  padding: 6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 18px;
+  width: 30%;
+  height: 45px;
+  text-align: center;
+  align-items: center;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
+  transition: all 0.3s ease;
+  background: ${COLORS.BUTTON};
+  border-radius: 20px;
+  color: white;
+  margin-bottom: 4%;
+  border: 1px solid #11244E;
+`;
+
 export class RoundButton extends Component {
     render(){
         return<div className="roundButton" />;
@@ -57,6 +79,12 @@ export class RoundButton extends Component {
 export class RectangleButton extends Component {
     render(){
         return<div className="rectangleButton" />;
+    }
+}
+
+export class RectangleButtonBig extends Component {
+    render(){
+        return<div className="rectangleButtonBig" />;
     }
 }
 

@@ -82,7 +82,7 @@ class Profile extends React.Component {
 
     /**
      * HTTP GET request is sent to the backend.
-     * If the request is successful, the user gets logged in
+     * If the request is successful, the user info is shown
      */
     async profile() {
         try {

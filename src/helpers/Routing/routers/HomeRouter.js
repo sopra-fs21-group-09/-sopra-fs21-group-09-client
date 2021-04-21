@@ -4,6 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 import Home from "../../../components/home/Home";
 import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
+import Module from "../../../components/module/Module";
 
 
 const Container = styled.div`
@@ -37,6 +38,12 @@ class HomeRouter extends React.Component {
           exact
           path={`${this.props.base}/edit`}
           render={() => <Edit/>}
+        />
+
+        <Route
+          exact
+          path={`${this.props.base}/module`}
+          render={ () => <Module/>}
         />
 
       </Container>

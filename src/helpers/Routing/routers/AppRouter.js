@@ -8,6 +8,7 @@ import Registration from "../../../components/authentication/Registration";
 import Login from "../../../components/authentication/Login";
 import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
+import Module from "../../../components/module/Module";
 
 class AppRouter extends React.Component {
   render() {
@@ -51,6 +52,12 @@ class AppRouter extends React.Component {
                   <Edit />
               )}
             />
+              <Route
+                  path="/module"
+                  render={() => (
+                      <Module />
+                  )}
+              />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>
