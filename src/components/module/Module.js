@@ -6,7 +6,6 @@ import {withRouter} from "react-router-dom";
 import {CircleButton, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Container';
 import { COLORS } from "../../views/design/colors";
-import Scrollbars from "../../views/design/Scrollbars";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 
 //Constants we need for this page
@@ -22,8 +21,8 @@ const BigContainer = styled.div`
 const Label = styled.label`
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 21%;
-  margin-right: 10%;
+  margin-left: 16%;
+  margin-right: 8%;
   text-transform: uppercase;
   line-height:320%;
   color: orange;
@@ -99,7 +98,7 @@ class Module extends React.Component {
                 <CircleButton></CircleButton>
                 <PageTitle>My Modules</PageTitle>
                 <BigContainer>
-                    <Label>Name</Label>
+                    <Label>Module Name</Label>
                     <Label>Certificate of Achievement</Label>
                     <Scrollbar>
                         <ModuleBox>
@@ -151,7 +150,7 @@ class Module extends React.Component {
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
-                                this.props.history.push('/moduleDetail');
+                                this.props.history.push('/joinModule');
                             }}
                         >
                             Join a Module!

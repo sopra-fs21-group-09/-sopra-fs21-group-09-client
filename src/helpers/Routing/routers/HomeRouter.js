@@ -5,6 +5,7 @@ import Home from "../../../components/home/Home";
 import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
 import Module from "../../../components/module/Module";
+import JoinModule from "../../../components/module/JoinModule";
 
 
 const Container = styled.div`
@@ -44,6 +45,12 @@ class HomeRouter extends React.Component {
           exact
           path={`${this.props.base}/module`}
           render={ () => <Module/>}
+        />
+
+        <Route
+          exact
+          path={`${this.props.base}/joinModule`}
+          render={ () => <JoinModule/>}
         />
 
       </Container>

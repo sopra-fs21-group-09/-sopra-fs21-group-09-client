@@ -9,6 +9,7 @@ import Login from "../../../components/authentication/Login";
 import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
 import Module from "../../../components/module/Module";
+import JoinModule from "../../../components/module/JoinModule";
 
 class AppRouter extends React.Component {
   render() {
@@ -52,12 +53,18 @@ class AppRouter extends React.Component {
                   <Edit />
               )}
             />
-              <Route
-                  path="/module"
-                  render={() => (
-                      <Module />
-                  )}
-              />
+            <Route
+              path="/module"
+              render={() => (
+                  <Module />
+              )}
+            />
+            <Route
+              path="/joinModule"
+              render={() => (
+                  <JoinModule />
+              )}
+            />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>
