@@ -147,7 +147,7 @@ export const Deadline = styled.div`
 `;
 
 export const UpcomingContainer = styled.div`
-  height: 50%;
+  height: 40%;
   margin: 0px 10px 0px 10px;
 `;
 
@@ -167,19 +167,19 @@ export const Upcoming = styled.div`
 `;
 
 //TASK
-export const TaskContainer = styled.div`
+export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
-  heigth: 50%;
+  height: 50%;
 `;
 
-export const Task = styled.div`
+export const TaskContainer = styled.div`
   &:hover {
     transform: translateY(-2px);
     background: ${COLORS.TASK};
     color: white;
   }
   width: 100%;
-  padding: 5px 0px 5px 30px;
+  padding: 5px 0px 5px 10px;
   margin: 5px 0px 0px 0px;
   border: 3px solid #018692;
   border-radius: 45px;
@@ -187,6 +187,31 @@ export const Task = styled.div`
   align-items: center;
   background: #E5E5E5;
 `;
+
+export const TaskButton = styled.button` 
+  &:hover {
+    transform: translateY(-0.5px);
+    color: white;
+    cursor: pointer;
+  }
+  background-color: white;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 10px; 
+`;
+
+export const Task = props => {
+    const [open, setClosed] = React.useState(true)
+    return (<TaskContainer>
+        <TaskButton onClick={()=>setClosed(false)}>{/*open ? <i class="fas fa-check"></i> : <i class="fas fa-check"></i>*/}</TaskButton>
+        {props.name}
+        </TaskContainer>)
+}
 
 //LOGO
 // Contains the Logo in the registration and login page
