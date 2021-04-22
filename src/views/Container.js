@@ -249,8 +249,8 @@ export const LoginMainContainer = styled.div`
 export const PageTitle = styled.h1`
   color: #4F4F4F;
   font-size: 50px;
-  margin-top: -4%;
+  margin-top: -10%;
   margin-bottom: 2%;
-  margin-left: 4%;
+  margin-left: 1.3%;
   text-transform: uppercase;
 `;

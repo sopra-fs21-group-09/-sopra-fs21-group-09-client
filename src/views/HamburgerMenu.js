@@ -72,5 +72,5 @@ HamburgerMenu.propTypes = {
   color: PropTypes.string,
   borderRadius: PropTypes.number,
   animationDuration: PropTypes.number,
-	className: PropTypes.string,
+  className: PropTypes.string,
 };

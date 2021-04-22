@@ -13,7 +13,6 @@ const BigContainer = styled.div`
   height: 50%;
   width: 55%;
   padding-left: 15px;
-  margin-left: 3%;
   margin-right: 7%;
   border: none;
   margin-bottom: 20px;
@@ -35,7 +34,7 @@ const Label2 = styled.label`
   line-height:200%;
 `;
 
-const InputField = styled.input`
+const InfoField = styled.input`
   &::placeholder {
     color: #4F4F4F;
     font-size: 1vw;
@@ -112,21 +111,21 @@ class Profile extends React.Component {
                 <BigContainer>
                     <h1>Name</h1>
                     <Label>Username</Label>
-                    <InputField
+                    <InfoField
                         placeholder="Username displayed here"
                         onChange={e => {
                             this.handleInputChange('username', e.target.value);
                         }}
                     /><br />
                     <Label>Birthday</Label>
-                    <InputField
+                    <InfoField
                         placeholder="Birthday displayed here"
                         onChange={e => {
                             this.handleInputChange('birthday', e.target.value);
                         }}
                     /><br />
                     <Label>Matrikelnumber</Label>
-                    <InputField
+                    <InfoField
                         placeholder="Matrikelnumber displayed here"
                         onChange={e => {
                             this.handleInputChange('matrikelnumber', e.target.value);
