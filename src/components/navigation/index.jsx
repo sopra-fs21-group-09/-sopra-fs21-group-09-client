@@ -2,7 +2,8 @@ import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
 //import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import React from "react";
-import { useState } from "react";
+import { useState} from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { MenuToggle } from "./menuToggle";
 import { NavMenu } from "./navMenu";
@@ -128,6 +129,8 @@ export function HamburgerMenu(props) {
     setOpen(!isOpen);
   };
 
+  const history = useHistory();
+
   return (
     <HamburgerMenuContainer>
       <MenuToggle toggle={toggleMenu} isOpen={isOpen} />
@@ -142,6 +145,7 @@ export function HamburgerMenu(props) {
         </ContentContainer>
         <BottomContainer>
           <BottomButton
+              onClick={() => history.push('/profile')}
               initial={false}
               animate={isOpen ? "show" : "hide"}
               variants={commonVariants}
@@ -150,6 +154,7 @@ export function HamburgerMenu(props) {
             PROFILE
           </BottomButton>
           <BottomButton
+              onClick={() => history.push('/login')}
               initial={false}
               animate={isOpen ? "show" : "hide"}
               variants={commonVariants}

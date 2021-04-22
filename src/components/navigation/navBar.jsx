@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { HamburgerMenu } from "../hamburgerMenu";
+import { HamburgerMenu } from "./index";
 
 const NavbarContainer = styled.div`
   width: 100%;
@@ -11,7 +11,7 @@ const NavbarContainer = styled.div`
   padding: 0 2em;
 `;
 
-export function Navbar(props) {
+export function NavBar(props) {
   return (
     <NavbarContainer>
       <HamburgerMenu />

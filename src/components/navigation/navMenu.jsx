@@ -65,7 +65,7 @@ export function NavMenu({ isOpen }) {
             },
           }}
         >
-          <a href="#">Home</a>
+          <a href="/home">Home</a>
         </NavLink>
         <NavLink
           initial={false}
@@ -81,7 +81,7 @@ export function NavMenu({ isOpen }) {
             },
           }}
         >
-          <a href="#">Modules</a>
+          <a href="/module">Modules</a>
         </NavLink>
         <NavLink
           initial={false}

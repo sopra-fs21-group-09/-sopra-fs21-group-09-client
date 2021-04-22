@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import {CircleButton, RectButton} from '../../views/Button';
 import {PageTitle} from '../../views/Container';
 import { COLORS } from "../../views/design/colors";
-import {Navbar} from "../navigation/navbar/index.jsx"
+import {NavBar} from "../navigation/navBar.jsx"
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -107,7 +107,7 @@ class Profile extends React.Component {
     render() {
         return (
             <BaseContainer>
-                <Navbar/>
+                <NavBar/>
                 <PageTitle>Brofile</PageTitle>
                 <BigContainer>
                     <h1>Name</h1>

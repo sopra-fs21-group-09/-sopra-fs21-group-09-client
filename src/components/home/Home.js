@@ -8,7 +8,7 @@ import HamburgerMenu from "../../views/HamburgerMenu"
 import {Label, DateLabel} from "../../views/layout"
 import { COLORS } from "../../views/design/colors";
 import ShadowScrollbars from "../../views/design/Scrollbars"
-import {Navbar} from "../navigation/navbar/index.jsx"
+import {NavBar} from "../navigation/navBar.jsx"
 
 class Home extends React.Component {
     constructor() {
@@ -46,7 +46,7 @@ class Home extends React.Component {
                         animationDuration={0.4}
                     />
                 </CircleButton>*/}
-                <Navbar/>
+                <NavBar/>
                 <CalendarContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>MON</WeekDayLabel>
