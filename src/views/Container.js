@@ -183,7 +183,6 @@ export const TaskContainer = styled.div`
   margin: 5px 0px 0px 0px;
   border: 3px solid #018692;
   border-radius: 45px;
-  display: flex;
   align-items: center;
   background: #E5E5E5;
 `;
@@ -197,18 +196,22 @@ export const TaskButton = styled.button`
   background-color: white;
   border: none;
   color: white;
-  padding: 10px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
   border-radius: 50%;
   margin-right: 10px; 
+  display: inline-block;
+  padding: 0;
+  padding-left: 3.5px; 
+  line-height: 23px;
+  width: 23px;
+  height: 23px;
 `;
 
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
     return (<TaskContainer>
-        <TaskButton onClick={()=>setClosed(false)}>{/*open ? <i class="fas fa-check"></i> : <i class="fas fa-check"></i>*/}</TaskButton>
+        <TaskButton onClick={()=>setClosed(!open)}>{open ? '' : <i className="fas fa-check fa-xs"></i>}
+        }</TaskButton>
         {props.name}
         </TaskContainer>)
 }

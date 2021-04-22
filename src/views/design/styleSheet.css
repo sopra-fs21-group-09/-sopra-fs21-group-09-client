@@ -49,4 +49,10 @@ li{
     height: 100%;
 }
 
+.fa-check{
+    color:black;
+    positon: relative;
+    margin: 0;
+}
+
 
