@@ -167,19 +167,19 @@ export const Upcoming = styled.div`
 `;
 
 //TASK
-export const TaskContainer = styled.div`
+export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
   heigth: 50%;
 `;
 
-export const Task = styled.div`
+export const TaskContainer = styled.div`
   &:hover {
     transform: translateY(-2px);
     background: ${COLORS.TASK};
     color: white;
   }
   width: 100%;
-  padding: 5px 0px 5px 30px;
+  padding: 5px 0px 5px 10px;
   margin: 5px 0px 0px 0px;
   border: 3px solid #018692;
   border-radius: 45px;
