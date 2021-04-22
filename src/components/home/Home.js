@@ -26,6 +26,8 @@ class Home extends React.Component {
 	}
 
     componentDidMount() {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = COLORS.COLOR11;
     }
 
     render() {
@@ -104,7 +106,7 @@ class Home extends React.Component {
                 <SideBar>
                     <UpcomingContainer>
                         <Label>Upcoming</Label>
-                        <ShadowScrollbars  style={{ height: 370 }}>
+                        <ShadowScrollbars  style={{ height: 340 }}>
                             <DateLabel>Today</DateLabel>
                             <Upcoming>Software Engineering</Upcoming>
                             <Upcoming>SOPRA</Upcoming>
@@ -126,7 +128,7 @@ class Home extends React.Component {
                     <hr width="95%"/>
                     <TaskContainer>
                         <Label>TO-DO</Label>
-                        <ShadowScrollbars style={{ height: 380 }}>
+                        <ShadowScrollbars style={{ height: 320 }}>
                             <DateLabel>Today</DateLabel>
                             <Task>Assignment</Task>
                             <Task>Paper</Task>

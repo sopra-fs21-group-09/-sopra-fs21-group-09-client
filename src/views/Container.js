@@ -148,7 +148,7 @@ export const Deadline = styled.div`
 
 export const UpcomingContainer = styled.div`
   height: 50%;
-  margin: 0px 10px 0px 10px;
+  margin: 0px 10px 10px 10px;
 `;
 
 export const Upcoming = styled.div`
@@ -169,7 +169,7 @@ export const Upcoming = styled.div`
 //TASK
 export const TaskContainer = styled.div`
   margin: 0px 10px 0px 10px;
-  heigth: 50%;
+  height: 50%;
 `;
 
 export const Task = styled.div`
