@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SideBar, HomeContainer } from '../../views/layout';
 import {withRouter} from "react-router-dom";
 import {CircleButton} from "../../views/Button";
-import {TaskContainer, CalendarContainer, WeekDayLabel, Task, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline, UpcomingContainer, Upcoming} from "../../views/Container";
+import {Task, TasksContainer, CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline, UpcomingContainer, Upcoming} from "../../views/Container";
 import HamburgerMenu from "../../views/HamburgerMenu"
 import {Label, DateLabel} from "../../views/layout"
 import { COLORS } from "../../views/design/colors";
@@ -33,7 +33,7 @@ class Home extends React.Component {
     render() {
         return (
             <HomeContainer>
-                <CircleButton>
+                {/*<CircleButton>
                     <HamburgerMenu
                         isOpen={this.state.open[0]}
                         menuClicked={this.handleClick.bind(this, 0)}
@@ -45,7 +45,7 @@ class Home extends React.Component {
                         borderRadius={10}
                         animationDuration={0.4}
                     />
-                </CircleButton>
+                </CircleButton>*/}
                 <Navbar/>
                 <CalendarContainer>
                     <WeekdayContainer>
@@ -126,29 +126,28 @@ class Home extends React.Component {
                         </ShadowScrollbars>
                     </UpcomingContainer>
                     <hr width="95%"/>
-                    <TaskContainer>
+                    <TasksContainer>
                         <Label>TO-DO</Label>
                         <ShadowScrollbars style={{ height: 320 }}>
                             <DateLabel>Today</DateLabel>
-                            <Task>Assignment</Task>
-                            <Task>Paper</Task>
+                            <Task name='Assignment'/>
+                            <Task name='Paper'/>
                             <DateLabel>Tomorrow</DateLabel>
-                            <Task>Study</Task>
+                            <Task name='Assignment'/>
                             <DateLabel>22.08.2021</DateLabel>
-                            <Task>Assignment</Task>
-                            <Task>Paper</Task>
+                            <Task name='Read Book'/>
+                            <Task name='Paper'/>
                             <DateLabel>23.08.2021</DateLabel>
-                            <Task>Study</Task>
-                            <Task>Assignment</Task>
-                            <Task>Paper</Task>
+                            <Task name='Assignment'/>
+                            <Task name='M2'/>
                             <DateLabel>24.08.2021</DateLabel>
-                            <Task>Study</Task>
-                            <Task>Assignment</Task>
-                            <Task>Paper</Task>
+                            <Task name='Reading'/>
+                            <Task name='Assignment'/>
                             <DateLabel>25.08.2021</DateLabel>
-                            <Task>Study</Task>
+                            <Task name='Paper'/>
+                            <Task name='Assignment'/>
                         </ShadowScrollbars>
-                    </TaskContainer>
+                    </TasksContainer>
                 </SideBar>
 
             </HomeContainer>

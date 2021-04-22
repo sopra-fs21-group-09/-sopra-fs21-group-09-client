@@ -169,7 +169,7 @@ export const Upcoming = styled.div`
 //TASK
 export const TaskContainer = styled.div`
   margin: 0px 10px 0px 10px;
-  height: 50%;
+  heigth: 50%;
 `;
 
 export const Task = styled.div`
@@ -187,6 +187,31 @@ export const Task = styled.div`
   align-items: center;
   background: #E5E5E5;
 `;
+
+export const TaskButton = styled.button` 
+  &:hover {
+    transform: translateY(-0.5px);
+    color: white;
+    cursor: pointer;
+  }
+  background-color: white;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 10px; 
+`;
+
+export const Task = props => {
+    const [open, setClosed] = React.useState(true)
+    return (<TaskContainer>
+        <TaskButton onClick={()=>setClosed(false)}>{/*open ? <i class="fas fa-check"></i> : <i class="fas fa-check"></i>*/}</TaskButton>
+        {props.name}
+        </TaskContainer>)
+}
 
 //LOGO
 // Contains the Logo in the registration and login page

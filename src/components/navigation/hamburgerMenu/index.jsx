@@ -9,6 +9,10 @@ import { NavMenu } from "./navMenu";
 
 const HamburgerMenuContainer = styled.div`
   display: flex;
+  position: fixed;
+  top: 3%;
+  left: 3%; 
+  z-index: 99;
 `;
 
 const HamburgerIcon = styled.div`
@@ -80,7 +84,7 @@ const BottomButton = styled(motion.button)`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 1em;
+  margin-top: 3em;
 `;
 
 /*change percentage for size*/

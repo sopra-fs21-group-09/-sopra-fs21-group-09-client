@@ -9,7 +9,6 @@ export const SMALL_WIDTH = 768;
 export const HomeContainer = styled.div`
   max-width: ${DESKTOP_WIDTH}px;
   display: flex; 
-  margin: 0;
 `;
 
 export const SideBar = styled.div`
