@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "./design/colors";
+import { Colors } from "./design/Colors";
 
 export const DESKTOP_WIDTH = 1160;
 export const SMALL_LAPTOPS_WIDTH = 970;
@@ -20,7 +20,7 @@ export const SideBar = styled.div`
   right: 0;
   padding: 20px;
   justify-content: center;
-  background-color: ${COLORS.DARK_GREY}; 
+  background-color: ${Colors.DARK_GREY}; 
   overflow: hidden; /* Disablex horizontal scroll */
 `;
 
@@ -31,17 +31,20 @@ export const BaseContainer = styled.div`
   max-width: ${DESKTOP_WIDTH}px;
 `;
 
-export const Label = styled.label`
-  font-size: 20px;
+// Main light grey container for the login and registration page
+export const LoginMainContainer = styled.div`
+  height: ${props => props.height}px;
+  background: ${props => props.background};
   display: flex;
-  color: white;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  padding: 0px;     
-`;
-
-export const DateLabel = styled.label`
-  margin-top: 10px;
-  font-size: 12px;
-  color: white;  
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  margin-top: 2%;
+  margin-bottom: 4%;
+  background: #E5E5E5;
+  margin-left: 30%;
+  padding-left: 15px;
+  margin-right: 30%;
+  padding-right: 15px;
+  border-radius: 20px;
 `;

@@ -1,12 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
-import { SideBar, HomeContainer } from '../../views/layout';
+import { SideBar, HomeContainer } from '../../views/Layout';
 import {withRouter} from "react-router-dom";
-import {CircleButton} from "../../views/Button";
-import {Task, TasksContainer, CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline, UpcomingContainer, Upcoming} from "../../views/Container";
-import HamburgerMenu from "../../views/HamburgerMenu"
-import {Label, DateLabel} from "../../views/layout"
-import { COLORS } from "../../views/design/colors";
+import {CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline} from "./Calendar";
+import {Upcoming, UpcomingContainer} from "./HomeContainers";
+import {Task, TasksContainer} from "../task/Task"
+import HamburgerMenu from "../../views/design/HamburgerMenu"
+import {Label, DateLabel} from "../../views/Labels"
+import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars"
 import {NavBar} from "../navigation/navBar.jsx"
 
@@ -27,7 +27,7 @@ class Home extends React.Component {
 
     componentDidMount() {
         //Change the whole background for just this file
-        document.body.style.backgroundColor = COLORS.COLOR11;
+        document.body.style.backgroundColor = Colors.COLOR11;
     }
 
     render() {
@@ -102,6 +102,57 @@ class Home extends React.Component {
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
+                    {/*when working with props later:
+                    <Weekday day='MON'>
+                        But don't know yet how to pass content without using a container again:
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='TUE'>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='WED'>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='THU'>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='FRI'>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='SAT'>
+                        <DeadlineContainer></DeadlineContainer>
+                        <CalendarEntry title='SOFTCON' description='' start='0800' end='1000'></CalendarEntry>
+                    </Weekday>
+                    <Weekday day='SUN'>
+
+                        <DeadlineContainer>
+                            <ShadowScrollbars style={{ height: 70 }}>
+                                <Deadline>Assignment</Deadline>
+                                <Deadline>Paper</Deadline>
+                                <Deadline>Assignment</Deadline>
+                                <Deadline>Paper</Deadline>
+                            </ShadowScrollbars>
+                        </DeadlineContainer>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                        <CalendarEntry></CalendarEntry>
+                    </Weekday>
+                    */}
                 </CalendarContainer>
                 <SideBar>
                     <UpcomingContainer>

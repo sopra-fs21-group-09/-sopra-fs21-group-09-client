@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BaseContainer } from '../../views/layout';
+import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import BrolatLogo from "../../views/design/BrolatLogo.png";
-import { LogoContainer, LoginMainContainer} from "../../views/Container";
+import BrolatLogo from "../../views/design/logo/BrolatLogo.png";
+import { LogoContainer} from "../../views/design/logo/Logo";
+import {LoginMainContainer} from "../../views/Layout";
 import { RectButton } from '../../views/Button';
 import User from "../profile/User";
-import {COLORS} from "../../views/design/colors";
+import {Colors} from "../../views/design/Colors";
 
 
 //Constants we need for this page
@@ -22,7 +23,7 @@ const Label = styled.label`
 
 const InputField = styled.input`
   &::placeholder {
-    color: ${COLORS.COLOR13};
+    color: ${Colors.COLOR13};
   }
   height: 35px;
   padding-left: 15px;
@@ -82,7 +83,7 @@ class Login extends React.Component {
 
     componentDidMount() {
         //Change the whole background for just this file
-        document.body.style.backgroundColor = COLORS.COLOR13;
+        document.body.style.backgroundColor = Colors.COLOR13;
     }
 
     /**

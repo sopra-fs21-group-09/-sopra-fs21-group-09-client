@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { api, handleError } from '../../helpers/api';
 import { RectButton } from '../../views/Button';
 import { withRouter } from 'react-router-dom';
-import {COLORS} from "../../views/design/colors";
+import {Colors} from "../../views/design/Colors";
 import User from "../profile/User";
 
 //Constants we need for this page
@@ -16,7 +16,7 @@ const EditMainContainer = styled.div`
   align-items: left;
   margin-top: 10%;
   margin-bottom: 4%;
-  background: ${COLORS.COLOR13};
+  background: ${Colors.COLOR13};
   margin-left: 30%;
   padding-left: 15px;
   margin-right: 30%;
@@ -108,7 +108,7 @@ class Edit extends React.Component {
 
     async componentDidMount() {
         //Change the whole background for just this file
-        document.body.style.backgroundColor = COLORS.COLOR11;
+        document.body.style.backgroundColor = Colors.COLOR11;
 
         try {
 

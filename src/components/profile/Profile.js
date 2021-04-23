@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BaseContainer } from '../../views/layout';
+import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import {CircleButton, RectButton} from '../../views/Button';
-import {PageTitle} from '../../views/Container';
-import { COLORS } from "../../views/design/colors";
+import {PageTitle} from '../../views/Labels';
+import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar.jsx"
 
 //Constants we need for this page
@@ -46,7 +46,7 @@ const InfoField = styled.input`
   margin-right: 7%;
   margin-top: 2.5%;
   border: none;
-  background: ${COLORS[12]};
+  background: ${Colors[12]};
   border-radius: 20px;
   float: right;
   border: 1px solid black;
@@ -94,7 +94,7 @@ class Profile extends React.Component {
 
     componentDidMount() {
         //Change the whole background for just this file
-        document.body.style.backgroundColor = COLORS.COLOR11;
+        document.body.style.backgroundColor = Colors.COLOR11;
     }
 
     handleInputChange(key, value) {
@@ -138,7 +138,7 @@ class Profile extends React.Component {
                         }}></ColorSquare><br />
                     <Label2>Exercises</Label2>
                     <ColorSquare style={{
-                        backgroundColor: COLORS.COLOR10,
+                        backgroundColor: Colors.COLOR10,
                     }}></ColorSquare><br />
                     <Label2>Deadlines</Label2>
                     <ColorSquare style={{
@@ -150,7 +150,7 @@ class Profile extends React.Component {
                     }}></ColorSquare><br />
                     <Label2>Events</Label2>
                     <ColorSquare style={{
-                        backgroundColor: COLORS.EXERCISES,
+                        backgroundColor: Colors.EXERCISES,
                     }}></ColorSquare>
                     <ButtonContainer>
                         <RectButton

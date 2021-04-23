@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { COLORS } from "../views/design/colors"
+import { Colors } from "./design/Colors"
 import React, {Component} from "react";
-import "./design/styleSheet.css"
+import "./design/StyleSheet.css"
 
 //use styled.HTMLelement
 //use $ to add javascript code
@@ -9,7 +9,7 @@ import "./design/styleSheet.css"
 export const CircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
-    background: ${COLORS.BUTTONS};
+    background: ${Colors.BUTTONS};
     color: white;
   }
   font-weight: 700;
@@ -41,7 +41,7 @@ export const RectButton = styled.button`
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
-  background: ${COLORS.BUTTON};
+  background: ${Colors.BUTTON};
   border-radius: 20px;
   color: white;
   margin-bottom: 4%;
@@ -63,7 +63,7 @@ export const RectButtonBig = styled.button`
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
-  background: ${COLORS.BUTTON};
+  background: ${Colors.BUTTON};
   border-radius: 20px;
   color: white;
   margin-bottom: 4%;
@@ -85,7 +85,7 @@ export const RectButtonSmall = styled.button`
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
-  background: ${COLORS.BUTTON};
+  background: ${Colors.BUTTON};
   border-radius: 10px;
   color: white;
   border: 1px solid #11244E;

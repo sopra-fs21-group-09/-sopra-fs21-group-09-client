@@ -1,4 +1,4 @@
-export const COLORS = {
+export const Colors = {
     DEADLINES : '#E63d26', //deadlines
     LECTURES : '#E86539', //lectures
     EXERCISES : '#F1A16A', //exercises

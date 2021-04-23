@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BaseContainer } from '../../views/layout';
+import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
 import {CircleButton, RectButtonBig} from '../../views/Button';
-import {PageTitle} from '../../views/Container';
-import { COLORS } from "../../views/design/colors";
+import {PageTitle} from '../../views/Labels';
+import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 
 //Constants we need for this page
@@ -83,7 +83,7 @@ class Module extends React.Component {
 
     componentDidMount() {
         //Change the whole background for just this file
-        document.body.style.backgroundColor = COLORS.COLOR11;
+        document.body.style.backgroundColor = Colors.COLOR11;
     }
 
     handleInputChange(key, value) {
