@@ -3,12 +3,13 @@ import { SideBar, HomeContainer } from '../../views/Layout';
 import {withRouter} from "react-router-dom";
 import {CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline} from "./Calendar";
 import {Upcoming, UpcomingContainer} from "./HomeContainers";
-import {Task, TasksContainer} from "../task/Task"
-import HamburgerMenu from "../../views/design/HamburgerMenu"
-import {Label, DateLabel} from "../../views/Labels"
-import { Colors } from "../../views/design/Colors";
+import {Task, TasksContainer} from "../task/Task";
+import {Label, DateLabel} from "../../views/Labels";
+import { Colors } from "../../views/design/Colors"
 import ShadowScrollbars from "../../views/design/Scrollbars"
 import {NavBar} from "../navigation/navBar.jsx"
+import BasicCalendar from './BasicCalendar'
+
 
 class Home extends React.Component {
     constructor() {
@@ -33,19 +34,6 @@ class Home extends React.Component {
     render() {
         return (
             <HomeContainer>
-                {/*<CircleButton>
-                    <HamburgerMenu
-                        isOpen={this.state.open[0]}
-                        menuClicked={this.handleClick.bind(this, 0)}
-                        width={40}
-                        height={30}
-                        strokeWidth={3}
-                        rotate={0}
-                        color='black'
-                        borderRadius={10}
-                        animationDuration={0.4}
-                    />
-                </CircleButton>*/}
                 <NavBar/>
                 <CalendarContainer>
                     <WeekdayContainer>
@@ -200,7 +188,6 @@ class Home extends React.Component {
                         </ShadowScrollbars>
                     </TasksContainer>
                 </SideBar>
-
             </HomeContainer>
         )
     }
