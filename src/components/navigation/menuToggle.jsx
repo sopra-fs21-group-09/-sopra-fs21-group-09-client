@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {CircleButton} from "../../views/Button";
 
@@ -20,8 +20,11 @@ const Path = (props) => (
 const transition = { duration: 0.3 };
 
 export function MenuToggle({ toggle, isOpen }) {
+
+    const [shadow, setShadow]  = useState(true)
+
   return (
-    <CircleButton onClick={toggle}>
+    <CircleButton onClick={toggle} style={{filter: isOpen ? '' : 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))'}}>
       <svg width="23" height="23" viewBox="0 0 23 23">
         <Path
           animate={isOpen ? "open" : "closed"}
