@@ -28,6 +28,7 @@ export const CircleButton = styled.button`
   border-radius: 50%;
   padding-top: 7.5px;
   z-index: 1000; 
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export const RectButton = styled.button`
