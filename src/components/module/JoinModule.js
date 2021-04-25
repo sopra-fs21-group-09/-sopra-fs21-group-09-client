@@ -7,6 +7,7 @@ import {CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
+import {NavBar} from "../navigation/navBar";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -21,7 +22,7 @@ const BigContainer = styled.div`
 const Label = styled.label`
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 16%;
+  margin-left: 8%;
   text-transform: uppercase;
   line-height:320%;
   color: orange;
@@ -31,7 +32,7 @@ const Label = styled.label`
 const ModuleBox = styled.div`
   height: 60px;
   width: 100%;
-  columns: 2;
+  columns: 3;
   margin-left: 0%;
   margin-right: 7%;
   margin-top: 1%;
@@ -52,6 +53,8 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 3%;
+  margin-top: 2%;
+  width: 100%;
 `;
 
 const Scrollbar = styled.div`
@@ -94,21 +97,30 @@ class JoinModule extends React.Component {
     render() {
         return (
             <BaseContainer>
-                <CircleButton></CircleButton>
+                <NavBar/>
                 <PageTitle>All Modules</PageTitle>
                 <BigContainer>
                     <Label>Module Name</Label>
-                    <Scrollbar>
+                    <ShadowScrollbars style={{height: 430}}>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <ButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -118,10 +130,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -131,10 +152,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -144,10 +174,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -157,10 +196,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -170,10 +218,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -183,10 +240,19 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
+                                </RectButtonSmall>
+                            </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
@@ -196,14 +262,23 @@ class JoinModule extends React.Component {
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/profile');
                                     }}
                                 >
                                     Join
                                 </RectButtonSmall>
                             </ButtonContainer>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
-                    </Scrollbar>
+                    </ShadowScrollbars>
                     <ButtonContainer>
                         <RectButtonBig
                             width="100%"

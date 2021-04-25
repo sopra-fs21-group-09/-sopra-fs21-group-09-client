@@ -151,7 +151,7 @@ export function HamburgerMenu(props) {
               variants={commonVariants}
               transition={commonTransition}
           >
-            PROFILE
+            BROFILE
           </BottomButton>
           <BottomButton
               onClick={() => history.push('/login')}

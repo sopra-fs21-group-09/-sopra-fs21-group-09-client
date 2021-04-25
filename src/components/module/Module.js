@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig} from '../../views/Button';
+import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
+import {NavBar} from "../navigation/navBar";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -21,8 +22,8 @@ const BigContainer = styled.div`
 const Label = styled.label`
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 16%;
-  margin-right: 8%;
+  margin-left: 8%;
+  margin-right: 1%;
   text-transform: uppercase;
   line-height:320%;
   color: orange;
@@ -32,7 +33,7 @@ const Label = styled.label`
 const ModuleBox = styled.div`
   height: 60px;
   width: 100%;
-  columns: 2;
+  columns: 3;
   padding-top: 10px;
   margin-left: 0%;
   margin-right: 7%;
@@ -52,7 +53,9 @@ const InboxLabel = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  padding-top: 9px;
+  margin-top: 2%;
+  width: 100%;
 `;
 
 const Scrollbar = styled.div`
@@ -95,7 +98,7 @@ class Module extends React.Component {
     render() {
         return (
             <BaseContainer>
-                <CircleButton></CircleButton>
+                <NavBar/>
                 <PageTitle>My Modules</PageTitle>
                 <BigContainer>
                     <Label>Module Name</Label>
@@ -104,46 +107,156 @@ class Module extends React.Component {
                         <ModuleBox>
                                 <InboxLabel>Beispiel</InboxLabel>
                                 <InboxLabel>Pass/Fail</InboxLabel>
+                                <ButtonContainer>
+                                    <RectButtonSmall
+                                        width="100%"
+                                        onClick={() => {
+                                            this.props.history.push('/moduleDetail');
+                                        }}
+                                    >
+                                        Info
+                                    </RectButtonSmall>
+                                </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
+                            <ButtonContainer>
+                                <RectButtonSmall
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/moduleDetail');
+                                    }}
+                                >
+                                    Info
+                                </RectButtonSmall>
+                            </ButtonContainer>
                         </ModuleBox>
                     </Scrollbar>
                     <ButtonContainer>

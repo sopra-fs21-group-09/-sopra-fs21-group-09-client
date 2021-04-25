@@ -10,6 +10,7 @@ import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
 import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
+import ModuleDetail from "../../../components/module/ModuleDetail";
 
 class AppRouter extends React.Component {
   render() {
@@ -63,6 +64,12 @@ class AppRouter extends React.Component {
               path="/joinModule"
               render={() => (
                   <JoinModule />
+              )}
+            />
+            <Route
+              path="/moduleDetail"
+              render={() => (
+                  <ModuleDetail />
               )}
             />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
