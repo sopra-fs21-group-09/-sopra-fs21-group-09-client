@@ -20,12 +20,14 @@ export const CircleButton = styled.button`
   opacity: ${props => (props.disabled ? 0.4 : 1)};
   transition: all 0.3s ease;
   position: fixed;
-  top: 5%;
+  top: 2%;
   left: 2%;
   background: white;
   width: 55px;
   height: 55px;
   border-radius: 50%;
+  padding-top: 7.5px;
+  z-index: 1000; 
 `;
 
 export const RectButton = styled.button`

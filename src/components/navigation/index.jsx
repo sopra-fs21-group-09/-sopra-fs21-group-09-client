@@ -1,5 +1,3 @@
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import React from "react";
 import { useState} from "react";
@@ -133,7 +131,7 @@ export function HamburgerMenu(props) {
 
   return (
     <HamburgerMenuContainer>
-      <MenuToggle toggle={toggleMenu} isOpen={isOpen} />
+      <MenuToggle toggle={toggleMenu} isOpen={isOpen}/>
       <MenuContainer
         initial={false}
         animate={isOpen ? "open" : "closed"}

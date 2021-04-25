@@ -90,7 +90,7 @@ class Home extends React.Component {
                         <CalendarEntry></CalendarEntry>
                         <CalendarEntry></CalendarEntry>
                     </WeekdayContainer>
-                    {/*when working with props later:
+                    {/*when working with passing props later:
                     <Weekday day='MON'>
                         But don't know yet how to pass content without using a container again:
                         <DeadlineContainer></DeadlineContainer>
