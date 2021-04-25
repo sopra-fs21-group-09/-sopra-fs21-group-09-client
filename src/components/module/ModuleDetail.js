@@ -21,31 +21,11 @@ const BigContainer = styled.div`
 const Label = styled.label`
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 16%;
+  margin-left: -2.5%;
   text-transform: uppercase;
   line-height:320%;
-  color: orange;
-  font-size: 25px;
-`;
-
-const ModuleBox = styled.div`
-  height: 60px;
-  width: 100%;
-  columns: 2;
-  margin-left: 0%;
-  margin-right: 7%;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: 1px solid black;
-  background: white;
-  border-radius: 10px;
-`;
-
-const InboxLabel = styled.div`
-  color: black;
-  font-size: 25px;
-  text-align: center;
-  padding-top: 10px;
+  color: ${Colors.COLOR14};
+  font-size: 28px;
 `;
 
 const ButtonContainer = styled.div`
@@ -54,11 +34,38 @@ const ButtonContainer = styled.div`
   padding-top: 3%;
 `;
 
-const Scrollbar = styled.div`
-    overflow: auto;
-    height: 450px;
-    width: 100%;
+const Line = styled.div`
+  width: 50%;
+  background: orange;
+  margin-bottom: 2%;
 `;
+
+const IconHolder = styled.div`
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  background: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  margin-left: -2.5%;
+`
+
+const TextField1 = styled.label`
+  color: black;
+  margin-left: 30%;
+  text-transform: uppercase;
+  float: right;
+`
+
+const TextField2 = styled.label`
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: -2.5%;
+  text-transform: uppercase;
+  line-height:200%;
+`
 
 class ModuleDetail extends React.Component {
     constructor() {
@@ -97,11 +104,29 @@ class ModuleDetail extends React.Component {
                 <NavBar/>
                 <PageTitle>ModuleDetail</PageTitle>
                 <BigContainer>
+                    <Label>Info</Label>
+                    <Line>
+                        <IconHolder>T</IconHolder>
+                        <TextField1>Prof. Thomas Fritz</TextField1>
+                    </Line>
+                    <Line>
+                    <IconHolder>T</IconHolder>
+                    <TextField1>Monday, 14.00-16.00</TextField1><br />
+                    </Line>
+                    <Line>
+                    <IconHolder>T</IconHolder>
+                    <TextField1>https://zoom.us/...</TextField1><br />
+                    </Line>
+                    <Label>Deadlines</Label><br />
+                    <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                    <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                    <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                    <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
                     <ButtonContainer>
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
-                                this.props.history.push('/module');
+                                this.props.history.goBack();
                             }}
                         >
                             Back

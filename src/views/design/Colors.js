@@ -12,6 +12,7 @@ export const Colors = {
     COLOR11 : '#F5F5F5', //background from most pages
     COLOR12 : '#C4C4C4', //used in Profile.js
     COLOR13 : '#646464', //background of login and registration
+    COLOR14 : '#028B9B', // Turquoise Titles
     BACKGROUND : '#F5F5F5',
     DARK_GREY : '#4F4F4F',
     LIGHT_GREY : '#E5E5E5', 
