@@ -3,25 +3,62 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import {CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
+import {SmallCircleButton, CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
+import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
+import ShadowScrollbars from "../../views/design/Scrollbars";
 
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
-  padding-left: 15px;
-  margin-left: 3%;
-  margin-right: 7%;
+  height: 550px;
   border: none;
   margin-bottom: 20px;
+  columns: 2;
+`;
+
+const LeftContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-left: 15px;
+  border: none;
+`;
+
+const RightContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding-left: 5%;
+`;
+
+const SmallRightContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 100px);
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
+  width: 100%;
+  border: none;
+  margin-left: -5%;
+`;
+
+const GroupContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  place-self: center;
+  font-size: 30px;
+  background: red;
+  width: 100px;
+  height: 100px;
+  border-radius: 20%;
 `;
 
 const Label = styled.label`
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: -2.5%;
   text-transform: uppercase;
   line-height:320%;
   color: ${Colors.COLOR14};
@@ -36,8 +73,9 @@ const ButtonContainer = styled.div`
 
 const Line = styled.div`
   width: 50%;
-  background: orange;
   margin-bottom: 2%;
+  columns: 2;
+  height: 55px;
 `;
 
 const IconHolder = styled.div`
@@ -48,24 +86,25 @@ const IconHolder = styled.div`
   width: 55px;
   height: 55px;
   border-radius: 50%;
-  margin-left: -2.5%;
-`
+`;
 
 const TextField1 = styled.label`
   color: black;
-  margin-left: 30%;
   text-transform: uppercase;
-  float: right;
-`
+  float: left;
+  height: 55px;
+  margin-left: -50%;
+  display: flex;
+  align-items: center;
+`;
 
 const TextField2 = styled.label`
   color: black;
   margin-top: 1%;
   margin-bottom: 1%;
-  margin-left: -2.5%;
   text-transform: uppercase;
   line-height:200%;
-`
+`;
 
 class ModuleDetail extends React.Component {
     constructor() {
@@ -73,6 +112,19 @@ class ModuleDetail extends React.Component {
         this.state = {
 
         };
+        let colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
+    }
+
+    getNewRandomColor() {
+        let boxes = document.getElementsByClassName("Box");
+        console.log(boxes.length);
+        let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
+            '#99CC00', '#d3c331', '#67d363', '#3b96d3'];
+        let i;
+        for (i = 0; i < boxes.length; i++) {
+            // Pick a random color from the array 'colors'.
+            boxes[i].style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
     }
 
     /**
@@ -90,6 +142,7 @@ class ModuleDetail extends React.Component {
     componentDidMount() {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+        this.getNewRandomColor();
     }
 
     handleInputChange(key, value) {
@@ -104,35 +157,65 @@ class ModuleDetail extends React.Component {
                 <NavBar/>
                 <PageTitle>ModuleDetail</PageTitle>
                 <BigContainer>
-                    <Label>Info</Label>
-                    <Line>
-                        <IconHolder>T</IconHolder>
-                        <TextField1>Prof. Thomas Fritz</TextField1>
-                    </Line>
-                    <Line>
-                    <IconHolder>T</IconHolder>
-                    <TextField1>Monday, 14.00-16.00</TextField1><br />
-                    </Line>
-                    <Line>
-                    <IconHolder>T</IconHolder>
-                    <TextField1>https://zoom.us/...</TextField1><br />
-                    </Line>
-                    <Label>Deadlines</Label><br />
-                    <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                    <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                    <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                    <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.goBack();
-                            }}
-                        >
-                            Back
-                        </RectButtonBig>
-                    </ButtonContainer>
+                    <LeftContainer>
+                        <Label>Info</Label>
+                        <Line>
+                            <IconHolder>
+                                <span style={{fontSize: 35}}>
+                                    <i className="far fa-user"></i>
+                                </span>
+                            </IconHolder>
+                            <TextField1>Prof. Thomas Fritz</TextField1>
+                        </Line>
+                        <Line>
+                            <IconHolder>
+                                <span style={{fontSize: 35}}>
+                                    <i className="far fa-calendar"></i>
+                                </span>
+                            </IconHolder>
+                        <TextField1>Monday, 14.00-16.00</TextField1><br />
+                        </Line>
+                        <Line>
+                            <IconHolder>
+                                <span style={{fontSize: 35}}>
+                                    <i className="fas fa-video"></i>
+                                </span>
+                            </IconHolder>
+                        <TextField1>https://zoom.us/...</TextField1><br />
+                        </Line>
+                        <Label>Deadlines</Label><br />
+                        <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                        <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                        <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                        <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                    </LeftContainer>
+                    <RightContainer>
+                        <Label>Joined Groups</Label>
+                        <ShadowScrollbars style={{height: 420}}>
+                            <SmallRightContainer>
+                                <GroupContainer className={"Box"}>09</GroupContainer>
+                                <GroupContainer className={"Box"}>10</GroupContainer>
+                                <GroupContainer className={"Box"}>11</GroupContainer>
+                                <GroupContainer className={"Box"}>12</GroupContainer>
+                                <SmallCircleButton>
+                                    <span style={{fontSize: 25}}>
+                                        <i className="fas fa-plus"></i>
+                                    </span>
+                                </SmallCircleButton>
+                            </SmallRightContainer>
+                        </ShadowScrollbars>
+                    </RightContainer>
                 </BigContainer>
+                <ButtonContainer>
+                    <RectButtonBig
+                        width="100%"
+                        onClick={() => {
+                            this.props.history.goBack();
+                        }}
+                    >
+                        Back
+                    </RectButtonBig>
+                </ButtonContainer>
             </BaseContainer>
         )
     }

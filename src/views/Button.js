@@ -9,8 +9,6 @@ import "./design/StyleSheet.css"
 export const CircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
-    background: ${Colors.BUTTONS};
-    color: white;
   }
   font-weight: 700;
   text-transform: uppercase;
@@ -28,6 +26,26 @@ export const CircleButton = styled.button`
   border-radius: 50%;
   padding-top: 7.5px;
   z-index: 1000; 
+`;
+
+export const SmallCircleButton = styled.button` 
+  &:hover {
+    transform: translateY(-2px);
+    background: ${Colors.BUTTON};
+  }
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  place-self: center;
+  margin-top: 10%;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  transition: all 0.3s ease;
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid black;
 `;
 
 export const RectButton = styled.button`
