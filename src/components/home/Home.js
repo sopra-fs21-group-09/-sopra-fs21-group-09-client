@@ -9,7 +9,17 @@ import { Colors } from "../../views/design/Colors"
 import ShadowScrollbars from "../../views/design/Scrollbars"
 import {NavBar} from "../navigation/navBar.jsx"
 import BasicCalendar from './BasicCalendar'
+import styled from "styled-components";
 
+//Constants we need for this page
+const PageTitle = styled.h1`
+  color: #4F4F4F;
+  font-size: 50px;
+  margin-top: 2%;
+  margin-left: 8%;
+  text-transform: uppercase;
+  position: fixed;
+`;
 
 class Home extends React.Component {
     constructor() {
@@ -35,6 +45,7 @@ class Home extends React.Component {
         return (
             <HomeContainer>
                 <NavBar/>
+                <PageTitle>Welcome Home, "Name"</PageTitle>
                 <CalendarContainer>
                     <WeekdayContainer>
                         <WeekDayLabel>MON</WeekDayLabel>
