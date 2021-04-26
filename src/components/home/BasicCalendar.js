@@ -1,7 +1,7 @@
 import React from 'react'
 import { Calendar, Views } from 'react-big-calendar'
-import events from './events'
-import * as dates from './dates'
+import events from './Events'
+import * as dates from './Dates'
 
 let allViews = Object.keys(Views).map(k => Views[k])
 

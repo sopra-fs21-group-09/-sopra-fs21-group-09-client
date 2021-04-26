@@ -286,7 +286,7 @@ class JoinModule extends React.Component {
                                 this.props.history.push('/module');
                             }}
                         >
-                            Back
+                            See your modules
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>
