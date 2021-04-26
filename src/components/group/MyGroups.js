@@ -11,25 +11,18 @@ import {PageTitle} from "../../views/Labels";
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
-  height: 550px;
+  height: 800px;
   border: none;
-  margin: 40px 10px;  
+  margin: 60px 10px;  
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto-fill, 100px);
-  grid-row-gap: 1em;
-  grid-column-gap: 1em;
+  grid-row-gap: 4em;
+  grid-column-gap: 4em;
   width: 100%;
   border: none;
   margin-left: -5%;
 `;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 3%;
-`;
-
 
 
 export function MyGroups(){

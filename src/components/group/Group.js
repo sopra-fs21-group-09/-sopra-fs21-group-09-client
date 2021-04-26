@@ -1,15 +1,23 @@
 import styled from "styled-components";
 import React, {useState} from "react";
 
+
+const random = () => Math.floor(Math.random() * 255);
+
 export const GroupContainer = styled.div`
+  &:hover {
+        transform: translateY(-2px);
+        cursor: pointer; 
+      }  
   display: flex;
   justify-content: center;
   place-self: center;
   font-size: 30px;
-  background: red;
-  width: 100px;
-  height: 100px;
+  background: rgb(${random()}, ${random()}, ${random()});
+  width: 125px;
+  height: 125px;
   border-radius: 20%;
+  padding: 20px; 
 `;
 
 export const GroupName = styled.label`
@@ -19,6 +27,7 @@ export const GroupName = styled.label`
   margin: auto;
   width: 50%;
 `;
+
 
 
 
@@ -40,7 +49,7 @@ export const Group = props => {
     //getNewRandomColor()
      */
 
-    return (<GroupContainer className={"Box"}>
+    return (<GroupContainer>
             <GroupName>{props.name}</GroupName>
         </GroupContainer>
     )

@@ -39,6 +39,8 @@ class Home extends React.Component {
     componentDidMount() {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+        const random = () => Math.floor(Math.random() * 255);
+        console.log(random())
     }
 
     render() {

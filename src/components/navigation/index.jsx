@@ -83,7 +83,7 @@ const BottomButton = styled(motion.button)`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 3em;
+  margin-top: 5em;
 `;
 
 /*change percentage for size*/
@@ -153,6 +153,7 @@ export function HamburgerMenu(props) {
           </BottomButton>
           <BottomButton
               onClick={() => history.push('/login')}
+              //localStorage.removeItem('token');
               initial={false}
               animate={isOpen ? "show" : "hide"}
               variants={commonVariants}
