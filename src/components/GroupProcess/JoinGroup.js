@@ -43,8 +43,6 @@ const ModuleBox = styled.div`
   grid-template-columns: 25% 30% 15% 10% 15%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
-  margin-left: 0%;
-  margin-right: 7%;
   margin-top: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
