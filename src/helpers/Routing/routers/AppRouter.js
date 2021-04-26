@@ -12,6 +12,7 @@ import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
 import {MyGroups} from  "../../../components/group/MyGroups"
+import JoinGroup from "../../../components/GroupProcess/JoinGroup";
 
 class AppRouter extends React.Component {
   render() {
@@ -73,12 +74,18 @@ class AppRouter extends React.Component {
                   <ModuleDetail />
               )}
             />
-              <Route
-                  path="/MyGroups"
-                  render={() => (
-                      <MyGroups />
-                  )}
-              />
+            <Route
+              path="/MyGroups"
+              render={() => (
+                  <MyGroups />
+              )}
+            />
+            <Route
+              path="/joinGroup"
+              render={() => (
+                  <JoinGroup />
+              )}
+            />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>

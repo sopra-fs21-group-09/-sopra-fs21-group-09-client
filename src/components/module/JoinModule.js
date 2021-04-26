@@ -29,6 +29,7 @@ const Label = styled.label`
   font-size: 25px;
 `;
 
+//This is the div that will be generated with each new group (of course with other divs inside)
 const ModuleBox = styled.div`
   height: 60px;
   width: 100%;

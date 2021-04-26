@@ -44,6 +44,7 @@ const SmallRightContainer = styled.div`
   margin-left: -5%;
 `;
 
+//This is the div that will be generated with each new group
 const GroupContainer = styled.div`
   display: flex;
   align-items: center;

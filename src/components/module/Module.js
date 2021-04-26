@@ -53,7 +53,7 @@ const InboxLabel = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 9px;
+  padding-top: 3%;
   margin-top: 2%;
   width: 100%;
 `;
@@ -103,7 +103,7 @@ class Module extends React.Component {
                 <BigContainer>
                     <Label>Module Name</Label>
                     <Label>Certificate of Achievement</Label>
-                    <Scrollbar>
+                    <ShadowScrollbars style={{height: 430}}>
                         <ModuleBox>
                                 <InboxLabel>Beispiel</InboxLabel>
                                 <InboxLabel>Pass/Fail</InboxLabel>
@@ -258,7 +258,7 @@ class Module extends React.Component {
                                 </RectButtonSmall>
                             </ButtonContainer>
                         </ModuleBox>
-                    </Scrollbar>
+                    </ShadowScrollbars>
                     <ButtonContainer>
                         <RectButtonBig
                             width="100%"
