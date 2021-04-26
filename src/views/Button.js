@@ -98,7 +98,7 @@ export const RectButtonSmall = styled.button`
   font-weight: 800;
   text-transform: uppercase;
   font-size: 18px;
-  width: 40%;
+  width: 100%;
   height: 40px;
   text-align: center;
   align-items: center;

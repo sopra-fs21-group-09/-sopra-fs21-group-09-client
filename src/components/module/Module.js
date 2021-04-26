@@ -19,24 +19,29 @@ const BigContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const Line = styled.div`
+  display grid;
+  grid-template-columns: 40% 40% 15%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+  width: 99%;
+  height: 70px;
+`;
+
 const Label = styled.label`
-  margin-top: 2%;
-  margin-bottom: 2%;
-  margin-left: 8%;
-  margin-right: 1%;
+  place-self: center;
   text-transform: uppercase;
-  line-height:320%;
   color: orange;
   font-size: 25px;
 `;
 
 const ModuleBox = styled.div`
   height: 60px;
-  width: 100%;
-  columns: 3;
-  padding-top: 10px;
-  margin-left: 0%;
-  margin-right: 7%;
+  width: 99%;
+  display grid;
+  grid-template-columns: 40% 40% 15%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
   margin-top: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
@@ -47,13 +52,17 @@ const ModuleBox = styled.div`
 const InboxLabel = styled.div`
   color: black;
   font-size: 25px;
-  text-align: center;
+  place-self: center;
+`;
+
+const InboxButtonContainer = styled.div`
+  place-self: center;
+  width: 80%;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 9px;
   margin-top: 2%;
   width: 100%;
 `;
@@ -101,13 +110,15 @@ class Module extends React.Component {
                 <NavBar/>
                 <PageTitle>My Modules</PageTitle>
                 <BigContainer>
-                    <Label>Module Name</Label>
-                    <Label>Certificate of Achievement</Label>
-                    <Scrollbar>
+                    <Line>
+                        <Label>Module Name</Label>
+                        <Label>Certificate of Achievement</Label>
+                    </Line>
+                    <ShadowScrollbars style={{height: 430}}>
                         <ModuleBox>
                                 <InboxLabel>Beispiel</InboxLabel>
                                 <InboxLabel>Pass/Fail</InboxLabel>
-                                <ButtonContainer>
+                                <InboxButtonContainer>
                                     <RectButtonSmall
                                         width="100%"
                                         onClick={() => {
@@ -116,12 +127,12 @@ class Module extends React.Component {
                                     >
                                         Info
                                     </RectButtonSmall>
-                                </ButtonContainer>
+                                </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -130,12 +141,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -144,12 +155,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -158,12 +169,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -172,12 +183,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -186,12 +197,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -200,12 +211,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -214,12 +225,12 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
                             <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -228,37 +239,9 @@ class Module extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <InboxLabel>Pass/Fail</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                    </Scrollbar>
+                    </ShadowScrollbars>
                     <ButtonContainer>
                         <RectButtonBig
                             width="100%"

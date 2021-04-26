@@ -1,15 +1,15 @@
 import React from 'react';
-import { SideBar, HomeContainer } from '../../views/Layout';
-import {withRouter} from "react-router-dom";
-import {CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline} from "./Calendar";
-import {Upcoming, UpcomingContainer} from "./HomeContainers";
-import {Task, TasksContainer} from "../task/Task";
-import {Label, DateLabel} from "../../views/Labels";
+import { SideBar, HomeContainer } from '../../views/Layout'
+import {withRouter} from "react-router-dom"
+import {CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline} from "./Calendar"
+import {Upcoming, UpcomingContainer} from "./HomeContainers"
+import {Task, TasksContainer} from "../task/Task"
+import {Label, DateLabel} from "../../views/Labels"
 import { Colors } from "../../views/design/Colors"
 import ShadowScrollbars from "../../views/design/Scrollbars"
 import {NavBar} from "../navigation/navBar.jsx"
-import BasicCalendar from './BasicCalendar'
-import styled from "styled-components";
+import styled from "styled-components"
+import NpmCal from './NpmCal'
 
 //Constants we need for this page
 const PageTitle = styled.h1`
@@ -48,113 +48,7 @@ class Home extends React.Component {
             <HomeContainer>
                 <NavBar/>
                 <PageTitle>Welcome Home, "Name"</PageTitle>
-                <CalendarContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>MON</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>TUE</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>WED</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>THU</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>FRI</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>SAT</WeekDayLabel>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry title='SOFTCON' description='' start='0800' end='1000'></CalendarEntry>
-                    </WeekdayContainer>
-                    <WeekdayContainer>
-                        <WeekDayLabel>SUN</WeekDayLabel>
-                        <DeadlineContainer>
-                            <ShadowScrollbars style={{ height: 70 }}>
-                                <Deadline>Assignment</Deadline>
-                                <Deadline>Paper</Deadline>
-                                <Deadline>Assignment</Deadline>
-                                <Deadline>Paper</Deadline>
-                            </ShadowScrollbars>
-                        </DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </WeekdayContainer>
-                    {/*when working with passing props later:
-                    <Weekday day='MON'>
-                        But don't know yet how to pass content without using a container again:
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='TUE'>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='WED'>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='THU'>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='FRI'>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='SAT'>
-                        <DeadlineContainer></DeadlineContainer>
-                        <CalendarEntry title='SOFTCON' description='' start='0800' end='1000'></CalendarEntry>
-                    </Weekday>
-                    <Weekday day='SUN'>
-
-                        <DeadlineContainer>
-                            <ShadowScrollbars style={{ height: 70 }}>
-                                <Deadline>Assignment</Deadline>
-                                <Deadline>Paper</Deadline>
-                                <Deadline>Assignment</Deadline>
-                                <Deadline>Paper</Deadline>
-                            </ShadowScrollbars>
-                        </DeadlineContainer>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                        <CalendarEntry></CalendarEntry>
-                    </Weekday>
-                    */}
-                </CalendarContainer>
+                <CalendarContainer><NpmCal></NpmCal></CalendarContainer>
                 <SideBar>
                     <UpcomingContainer>
                         <Label>Upcoming</Label>

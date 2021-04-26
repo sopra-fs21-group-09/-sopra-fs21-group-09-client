@@ -44,6 +44,7 @@ const SmallRightContainer = styled.div`
   margin-left: -5%;
 `;
 
+//This is the div that will be generated with each new group
 const GroupContainer = styled.div`
   display: flex;
   align-items: center;
@@ -197,7 +198,12 @@ class ModuleDetail extends React.Component {
                                 <GroupContainer className={"Box"}>10</GroupContainer>
                                 <GroupContainer className={"Box"}>11</GroupContainer>
                                 <GroupContainer className={"Box"}>12</GroupContainer>
-                                <SmallCircleButton>
+                                <SmallCircleButton
+                                    width="100%"
+                                    onClick={() => {
+                                        this.props.history.push('/joinGroup');
+                                    }}
+                                >
                                     <span style={{fontSize: 25}}>
                                         <i className="fas fa-plus"></i>
                                     </span>
