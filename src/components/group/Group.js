@@ -25,11 +25,9 @@ export const GroupName = styled.label`
   width: 50%;
 `;
 
-export class Group extends Component {
-    render() {
+export const Group = props => {
         return (<GroupContainer>
                 <GroupName>GROUP NAME</GroupName>
             </GroupContainer>
         )
-    }
 }

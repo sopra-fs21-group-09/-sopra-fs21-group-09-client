@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import {withRouter, useHistory} from "react-router-dom";
 import BrolatLogo from "../../views/design/logo/BrolatLogo.png";
 import { LogoContainer} from "../../views/design/logo/Logo";
 import {LoginMainContainer} from "../../views/Layout";
@@ -42,23 +42,20 @@ const ButtonContainer = styled.div`
 `;
 
 
-class Login extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: null,
-            password: null,
-            token: null,
-            date: null
-        };
-    }
+export const Login = () => {
+    const [username, setUsername] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [token, setToken] = useState(null)
+    const [date, setDate] = useState(null)
+
+    const history = useHistory()
 
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, the user gets logged in
      * and its token is stored in the localStorage.
      */
-    async login() {
+    async function login() {
         try {
             const requestBody = JSON.stringify({
                 username: this.state.username,
@@ -73,31 +70,24 @@ class Login extends React.Component {
 
             console.log(response.data);
 
-            // Login successfully worked --> navigate to the route /game in the GameRouter
-            this.props.history.push(`/home`);
+            // Login successfully worked --> navigate to the route /home
+            history.push('/home');
 
         } catch (error) {
             alert(`Something went wrong during the login: \n${handleError(error)}`);
         }
     }
 
-    componentDidMount() {
-        //Change the whole background for just this file
+    // this will run, when the component is first initialized
+    React.useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
-    }
+    }, []);
 
-    /**
-     *  Every time the user enters something in the input field, the state gets updated.
-     * @param key (the key of the state for identifying the field that needs to be updated)
-     * @param value (the value that gets assigned to the identified state key)
-     */
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
 
-    render() {
+    // this will run when the component mounts and anytime the stateful data changes
+    React.useEffect(() => {
+    });
+
         return (
             <BaseContainer>
                 <LogoContainer>
@@ -108,22 +98,22 @@ class Login extends React.Component {
                     <InputField
                         placeholder="Enter your username here..."
                         onChange={e => {
-                            this.handleInputChange('username', e.target.value);
+                            setUsername(e.target.value);
                         }}
                     />
                     <Label>Password:</Label>
                     <InputField
                         placeholder="Enter your password here..."
                         onChange={e => {
-                            this.handleInputChange('password', e.target.value);
+                            setPassword(e.target.value)
                         }}
                     />
                     <ButtonContainer>
                         <RectButton
-                            disabled={!this.state.name || !this.state.username || !this.state.password}
+                            disabled={!username || !password}
                             width="60%"
                             onClick={() => {
-                                this.login();
+                                login();
                             }}
                         >
                             Log into Account!
@@ -133,16 +123,15 @@ class Login extends React.Component {
                         <RectButton
                             width="60%"
                             onClick={() => {
-                                this.props.history.push(`/registration`);
+                                history.push('/registration')
                             }}
                         >
-                            Don't have an account? Registrate here!
+                            Don't have an account? Register here!
                         </RectButton>
                     </ButtonContainer>
                 </LoginMainContainer>
             </BaseContainer>
         )
-    }
 }
 
 export default withRouter(Login);

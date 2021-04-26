@@ -11,6 +11,7 @@ import Edit from "../../../components/profile/Edit";
 import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
+import {MyGroups} from  "../../../components/group/MyGroups"
 
 class AppRouter extends React.Component {
   render() {
@@ -72,6 +73,12 @@ class AppRouter extends React.Component {
                   <ModuleDetail />
               )}
             />
+              <Route
+                  path="/MyGroups"
+                  render={() => (
+                      <MyGroups />
+                  )}
+              />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>
