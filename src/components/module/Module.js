@@ -24,7 +24,7 @@ const Line = styled.div`
   grid-template-columns: 40% 40% 15%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
-  width: 100%;
+  width: 99%;
   height: 70px;
 `;
 
@@ -37,7 +37,7 @@ const Label = styled.label`
 
 const ModuleBox = styled.div`
   height: 60px;
-  width: 100%;
+  width: 99%;
   display grid;
   grid-template-columns: 40% 40% 15%;
   grid-template-rows: 1;

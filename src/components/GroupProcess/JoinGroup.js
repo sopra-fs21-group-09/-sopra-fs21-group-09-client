@@ -24,7 +24,7 @@ const Line = styled.div`
   grid-template-columns: 25% 30% 15% 10% 15%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
-  width: 100%;
+  width: 99%;
   height: 70px;
 `;
 
@@ -38,7 +38,7 @@ const Label = styled.label`
 //This is the div that will be generated with each new group (of course with other divs inside)
 const ModuleBox = styled.div`
   height: 60px;
-  width: 100%;
+  width: 99%;
   display grid;
   grid-template-columns: 25% 30% 15% 10% 15%;
   grid-template-rows: 1;
@@ -70,6 +70,7 @@ const InboxButtonContainer = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: -5%;
   margin-top: 2%;
   width: 100%;
 `;
@@ -231,7 +232,17 @@ class JoinGroup extends React.Component {
 
                             }}
                         >
-                            Create your own group!
+                            Create your own group
+                        </RectButtonBig>
+                    </ButtonContainer>
+                    <ButtonContainer>
+                        <RectButtonBig
+                            width="100%"
+                            onClick={() => {
+                                this.props.history.goBack();
+                            }}
+                        >
+                            Back to module details
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>
