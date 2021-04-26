@@ -19,22 +19,30 @@ const BigContainer = styled.div`
   margin-bottom: 20px;
 `;
 
+const Line = styled.div`
+  display grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+  width: 100%;
+  height: 70px;
+`;
+
 const Label = styled.label`
-  margin-top: 2%;
-  margin-bottom: 2%;
-  margin-left: 8%;
+  place-self: center;
   text-transform: uppercase;
-  line-height:320%;
   color: orange;
   font-size: 25px;
 `;
 
+//This is the div that will be generated with each new group (of course with other divs inside)
 const ModuleBox = styled.div`
   height: 60px;
   width: 100%;
-  columns: 3;
-  margin-left: 0%;
-  margin-right: 7%;
+  display grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
   margin-top: 1%;
   margin-bottom: 1%;
   border: 1px solid black;
@@ -45,22 +53,19 @@ const ModuleBox = styled.div`
 const InboxLabel = styled.div`
   color: black;
   font-size: 25px;
-  text-align: center;
-  padding-top: 10px;
+  place-self: center;
+`;
+
+const InboxButtonContainer = styled.div`
+  place-self: center;
+  width: 60%;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 3%;
   margin-top: 2%;
   width: 100%;
-`;
-
-const Scrollbar = styled.div`
-    overflow: auto;
-    height: 450px;
-    width: 100%;
 `;
 
 class JoinModule extends React.Component {
@@ -100,11 +105,13 @@ class JoinModule extends React.Component {
                 <NavBar/>
                 <PageTitle>All Modules</PageTitle>
                 <BigContainer>
-                    <Label>Module Name</Label>
+                    <Line>
+                        <Label>Module Name</Label>
+                    </Line>
                     <ShadowScrollbars style={{height: 430}}>
                         <ModuleBox>
                             <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -112,8 +119,8 @@ class JoinModule extends React.Component {
                                 >
                                     Join
                                 </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
+                            </InboxButtonContainer>
+                            <InboxButtonContainer>
                                 <RectButtonSmall
                                     width="100%"
                                     onClick={() => {
@@ -122,161 +129,7 @@ class JoinModule extends React.Component {
                                 >
                                     Info
                                 </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Beispiel</InboxLabel>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </ButtonContainer>
-                            <ButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                        this.props.history.push('/moduleDetail');
-                                    }}
-                                >
-                                    Info
-                                </RectButtonSmall>
-                            </ButtonContainer>
+                            </InboxButtonContainer>
                         </ModuleBox>
                     </ShadowScrollbars>
                     <ButtonContainer>
