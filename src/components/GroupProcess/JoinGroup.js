@@ -87,7 +87,7 @@ class JoinGroup extends React.Component {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async module() {
+    async joinGroup() {
         try {
 
         } catch (error) {
@@ -229,7 +229,7 @@ class JoinGroup extends React.Component {
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
-
+                                this.props.history.push('/createGroup');
                             }}
                         >
                             Create your own group
