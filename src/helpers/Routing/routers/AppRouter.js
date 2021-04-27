@@ -13,6 +13,7 @@ import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
 import {MyGroups} from  "../../../components/group/MyGroups"
 import JoinGroup from "../../../components/GroupProcess/JoinGroup";
+import Home from "../../../components/home/HomeHook";
 
 class AppRouter extends React.Component {
   render() {
@@ -40,50 +41,64 @@ class AppRouter extends React.Component {
               path="/home"
               render={() => (
                   <HomeGuard>
-                    <HomeRouter  base={"/home"}/>
+                    <Home/>
                   </HomeGuard>
               )}
             />
             <Route
               path="/profile"
               render={() => (
+                  <HomeGuard>
                   <Profile />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/edit"
               render={() => (
-                  <Edit />
+                  <HomeGuard>
+                    <Edit />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/module"
               render={() => (
-                  <Module />
+                  <HomeGuard>
+                    <Module />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/joinModule"
               render={() => (
-                  <JoinModule />
+                  <HomeGuard>
+                    <JoinModule />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/moduleDetail"
               render={() => (
-                  <ModuleDetail />
+                  <HomeGuard>
+                    <ModuleDetail />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/MyGroups"
               render={() => (
-                  <MyGroups />
+                  <HomeGuard>
+                    <MyGroups />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/joinGroup"
               render={() => (
-                  <JoinGroup />
+                  <HomeGuard>
+                    <JoinGroup />
+                  </HomeGuard>
               )}
             />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
