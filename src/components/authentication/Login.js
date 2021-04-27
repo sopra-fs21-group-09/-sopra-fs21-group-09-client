@@ -58,8 +58,8 @@ export const Login = () => {
     async function login() {
         try {
             const requestBody = JSON.stringify({
-                username: this.state.username,
-                password: this.state.password
+                username: username,
+                password: password
             });
 
             const response = await api.post('/login', requestBody);
@@ -104,6 +104,7 @@ export const Login = () => {
                     <Label>Password:</Label>
                     <InputField
                         placeholder="Enter your password here..."
+                        type="password"
                         onChange={e => {
                             setPassword(e.target.value)
                         }}

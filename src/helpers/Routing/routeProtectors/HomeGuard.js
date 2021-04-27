@@ -13,5 +13,8 @@ import { Redirect } from "react-router-dom";
 
 
 export const HomeGuard = props => {
-  return props.children;
+  if (localStorage.getItem("token")) {
+    return props.children;
+  }
+  return <Redirect to={"/login"} />;
 };

@@ -43,6 +43,7 @@ export const TaskButton = styled.button`
   height: 23px;
 `;
 
+//TODO: if task marked as solved api.put()
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
     return (<TaskContainer>

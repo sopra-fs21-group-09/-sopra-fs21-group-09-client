@@ -47,43 +47,57 @@ class AppRouter extends React.Component {
             <Route
               path="/profile"
               render={() => (
+                  <HomeGuard>
                   <Profile />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/edit"
               render={() => (
-                  <Edit />
+                  <HomeGuard>
+                    <Edit />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/module"
               render={() => (
-                  <Module />
+                  <HomeGuard>
+                    <Module />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/joinModule"
               render={() => (
-                  <JoinModule />
+                  <HomeGuard>
+                    <JoinModule />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/moduleDetail"
               render={() => (
-                  <ModuleDetail />
+                  <HomeGuard>
+                    <ModuleDetail />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/MyGroups"
               render={() => (
-                  <MyGroups />
+                  <HomeGuard>
+                    <MyGroups />
+                  </HomeGuard>
               )}
             />
             <Route
               path="/joinGroup"
               render={() => (
-                  <JoinGroup />
+                  <HomeGuard>
+                    <JoinGroup />
+                  </HomeGuard>
               )}
             />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />

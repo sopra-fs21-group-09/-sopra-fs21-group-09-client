@@ -8,6 +8,7 @@ import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
 import JoinGroup from "../../../components/GroupProcess/JoinGroup";
+import {HomeGuard} from "../routeProtectors/HomeGuard";
 
 const Container = styled.div`
   display: flex;
@@ -20,50 +21,76 @@ class HomeRouter extends React.Component {
       <Container>
         <Route
           exact
-          path={`${this.props.base}/dashboard`}
-          render={() => <Home base={"/home"}/>}
+          path={`${this.props.base}`}
+          render={() =>
+              <HomeGuard>
+              <Home base={"/home"}/>
+              </HomeGuard>}
         />
 
-        <Route
+          {/*<Route
           exact
           path={`${this.props.base}`}
           render={() => <Redirect to={`${this.props.base}/dashboard`}/>}
-        />
+        />*/}
 
         <Route
           exact
           path={`${this.props.base}/profile`}
-          render={() => <Profile/>}
+          render={() =>
+              <HomeGuard>
+                  <Profile/>
+              </HomeGuard>}
         />
 
         <Route
           exact
           path={`${this.props.base}/edit`}
-          render={() => <Edit/>}
+          render={() =>
+              <HomeGuard>
+                  <Edit/>
+              </HomeGuard>}
+
         />
 
         <Route
           exact
           path={`${this.props.base}/module`}
-          render={ () => <Module/>}
+          render={() =>
+              <HomeGuard>
+                  <Module/>
+              </HomeGuard>}
+
         />
 
         <Route
           exact
           path={`${this.props.base}/joinModule`}
-          render={ () => <JoinModule/>}
+          render={() =>
+              <HomeGuard>
+                  <JoinModule/>
+              </HomeGuard>}
+
         />
 
         <Route
           exact
           path={`${this.props.base}/moduleDetail`}
-          render={ () => <ModuleDetail/>}
+          render={() =>
+              <HomeGuard>
+                  <ModuleDetail/>
+              </HomeGuard>}
+
         />
 
         <Route
           exact
           path={`${this.props.base}/joinGroup`}
-          render={ () => <JoinGroup/>}
+          render={() =>
+              <HomeGuard>
+                  <JoinGroup/>
+              </HomeGuard>}
+
         />
 
       </Container>
