@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
@@ -79,13 +79,13 @@ export const Login = () => {
     }
 
     // this will run, when the component is first initialized
-    React.useEffect(() => {
+    useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
     }, []);
 
 
     // this will run when the component mounts and anytime the stateful data changes
-    React.useEffect(() => {
+    useEffect(() => {
     });
 
         return (

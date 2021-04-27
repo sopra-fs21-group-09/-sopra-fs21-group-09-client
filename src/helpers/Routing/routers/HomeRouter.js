@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import styled from "styled-components";
 import { Redirect, Route } from "react-router-dom";
 import Home from "../../../components/home/Home";
@@ -32,7 +32,7 @@ class HomeRouter extends React.Component {
           exact
           path={`${this.props.base}`}
           render={() => <Redirect to={`${this.props.base}/dashboard`}/>}
-        />*/}
+        />}
 
         <Route
           exact
@@ -99,5 +99,5 @@ class HomeRouter extends React.Component {
 }
 /*
 * Don't forget to export your component!
- */
-export default HomeRouter;
+
+export default HomeRouter;*/
