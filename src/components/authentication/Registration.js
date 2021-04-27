@@ -47,8 +47,7 @@ class Registration extends React.Component {
         this.state = {
             username: null,
             password: null,
-            token: null,
-            date: null
+            token: null
         };
     }
 

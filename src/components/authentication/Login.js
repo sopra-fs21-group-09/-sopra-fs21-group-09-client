@@ -62,7 +62,7 @@ export const Login = () => {
                 password: this.state.password
             });
 
-            const response = await api.post('/loginForUsers', requestBody);
+            const response = await api.post('/login', requestBody);
 
             const user = new User(response.data);
 
