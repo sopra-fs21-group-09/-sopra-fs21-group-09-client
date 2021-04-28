@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Colors } from "./design/Colors";
 
 // Title of all the pages like Home, Brofile, MyGroups etc.
 export const PageTitle = styled.h1`
@@ -23,4 +24,17 @@ export const DateLabel = styled.label`
   margin-top: 10px;
   font-size: 12px;
   color: white;  
+`;
+
+export const InputField = styled.input`
+  &::placeholder {
+    color: ${Colors.COLOR13};
+  }
+  padding: 3%;
+  margin-bottom: 2%;
+  height: 35px;
+  width: 80%;
+  border: none;
+  background: ${Colors.LIGHT_GREY};
+  border-radius: 20px;
 `;
