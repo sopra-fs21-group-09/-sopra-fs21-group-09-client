@@ -174,7 +174,14 @@ export default [
   {
     id: 23,
     title: 'Go to the gym',
+    allDay: true,
     start: new Date(2015, 3, 14, 18, 30, 0),
     end: new Date(2015, 3, 14, 20, 0, 0),
+  },
+  {
+    id: 24,
+    title: 'All Day Event very long title',
+    allDay: true,
+    start: new Date(2021, 4, 27),
   },
 ]

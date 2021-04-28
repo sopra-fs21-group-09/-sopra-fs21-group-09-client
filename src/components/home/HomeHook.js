@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { SideBar, HomeContainer } from '../../views/Layout'
 import {withRouter} from "react-router-dom"
-import {CalendarContainer, WeekDayLabel, WeekdayContainer, CalendarEntry, DeadlineContainer, Deadline} from "./Calendar"
+import {CalendarContainer} from "./Calendar"
 import {Upcoming, UpcomingContainer} from "./HomeContainers"
 import {Task, TasksContainer} from "../task/Task"
 import {Label, DateLabel} from "../../views/Labels"
@@ -11,6 +11,10 @@ import {NavBar} from "../navigation/navBar.jsx"
 import styled from "styled-components"
 import NpmCal from './NpmCal'
 import { api, handleError } from '../../helpers/api';
+import { CircleButton, RectButtonBig, RectButton } from '../../views/Button';
+import { InputField } from '../../views/Labels'
+import Rodal from 'rodal';
+import 'rodal/lib/rodal.css';
 
 //Constants we need for this page
 const PageTitle = styled.h1`
@@ -24,6 +28,16 @@ const PageTitle = styled.h1`
 
 const Home = props => {
     const [user, setUser] = useState({username: ''});
+    const [visible, setVisible] = useState(false);
+
+    const [eventTypes] = React.useState([ //TODO: Set default event type
+        {label: "Event", value: "Event"},
+        {label: "Deadline", value: "Deadline"},
+        {label: "Lectures", value: "Lectures"},
+        {label: "Exercises", value: "Exercises"},
+        {label: "Meeting", value: "Meeting"},
+        {label: "Private", value: "Private"},    
+      ]);
 
     async function getUser(){
         try {
@@ -62,7 +76,26 @@ const Home = props => {
         <HomeContainer>
             <NavBar/>
             <PageTitle>Welcome Home, {user.username}</PageTitle>
-            <CalendarContainer><NpmCal></NpmCal></CalendarContainer>
+            <CalendarContainer>
+                <CircleButton 
+                    style={{position: 'absolute', bottom: 0, right: 0}}
+                    onClick={() => setVisible(true)}>ADD</CircleButton>
+                <Rodal height='300' visible={visible} border-radius='20px' onClose={() => setVisible(false)}>
+                    <div><b>Add Event</b></div><br/>
+                    <div>Title:  <InputField placeholder='Enter title here'></InputField></div>
+                    <div>Date: <InputField type="date" width='80%'/></div>
+                    <div>Type: 
+                        <select style={{height: '35px', paddingLeft:'3%', margin: '2%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5'}}>
+                            {eventTypes.map(({ label, value }) => (
+                                <option key={value} value={value}>{label}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div>Deadline <input type='checkbox'></input></div><br/>
+                    <div><RectButton style={{alignItems: 'center'}}>Submit</RectButton></div>
+                </Rodal>
+                <NpmCal></NpmCal>
+            </CalendarContainer>
             <SideBar>
                 <UpcomingContainer>
                     <Label>Upcoming</Label>
