@@ -75,7 +75,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-class JoinGroup extends React.Component {
+class JoinAppGroup extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -87,7 +87,7 @@ class JoinGroup extends React.Component {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async joinGroup() {
+    async joinAppGroup() {
         try {
 
         } catch (error) {
@@ -110,7 +110,7 @@ class JoinGroup extends React.Component {
         return (
             <BaseContainer>
                 <NavBar/>
-                <PageTitle>"Module Name" Groups</PageTitle>
+                <PageTitle>Groups</PageTitle>
                 <BigContainer>
                     <Line>
                         <Label>Group Name</Label>
@@ -121,7 +121,7 @@ class JoinGroup extends React.Component {
                     <ShadowScrollbars style={{height: 430}}>
                         <ModuleBox>
                             <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
+                            <InboxLabelName>Christoph Blocher</InboxLabelName>
                             <InboxLabel>Private</InboxLabel>
                             <InboxLabel>4/6</InboxLabel>
                             <InboxButtonContainer>
@@ -165,7 +165,7 @@ class JoinGroup extends React.Component {
                             </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
+                            <InboxLabel>Group 69</InboxLabel>
                             <InboxLabelName>Samuele Walzer</InboxLabelName>
                             <InboxLabel>Private</InboxLabel>
                             <InboxLabel>4/6</InboxLabel>
@@ -195,7 +195,7 @@ class JoinGroup extends React.Component {
                             </InboxButtonContainer>
                         </ModuleBox>
                         <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
+                            <InboxLabel>Group 4</InboxLabel>
                             <InboxLabelName>Samuele Walzer</InboxLabelName>
                             <InboxLabel>Private</InboxLabel>
                             <InboxLabel>4/6</InboxLabel>
@@ -242,7 +242,7 @@ class JoinGroup extends React.Component {
                                 this.props.history.goBack();
                             }}
                         >
-                            Back to module details
+                            Back
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>
@@ -251,4 +251,4 @@ class JoinGroup extends React.Component {
     }
 }
 
-export default withRouter(JoinGroup);
+export default withRouter(JoinAppGroup);

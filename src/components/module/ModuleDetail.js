@@ -201,7 +201,7 @@ class ModuleDetail extends React.Component {
                                 <SmallCircleButton
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/joinGroup');
+                                        this.props.history.push('/joinModuleGroup');
                                     }}
                                 >
                                     <span style={{fontSize: 25}}>
@@ -216,10 +216,10 @@ class ModuleDetail extends React.Component {
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            this.props.history.goBack();
+                            this.props.history.push('/module');
                         }}
                     >
-                        Back
+                        Back to your Modules
                     </RectButtonBig>
                 </ButtonContainer>
             </BaseContainer>

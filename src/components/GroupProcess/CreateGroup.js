@@ -8,6 +8,8 @@ import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
+import User from "../profile/User";
+import {Group} from "../group/Group";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -16,79 +18,66 @@ const BigContainer = styled.div`
   padding-left: 15px;
   border: none;
   margin-bottom: 20px;
-  background: orange;
 `;
 
 const FirstLine = styled.div`
   margin-bottom: 2%;
   height: 20%;
-  background: green;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
 `;
 
 const NextLine = styled.div`
   margin-bottom: 2%;
   height: 30%;
-  background: green;
+`;
+
+const InLine = styled.div`
+  height: 15%;
+  display: flex;
+  margin-bottom: 1px;
+  align-items: center;
 `;
 
 const Label = styled.label`
-  margin-top: 2%;
-  margin-bottom: 2%;
   text-transform: uppercase;
-  line-height:320%;
   color: ${Colors.COLOR14};
   font-size: 28px;
-  background: blue;
+  margin-bottom: 2%;
+  display: flex;
+  align-items: center;
 `;
 
-const InfoField = styled.input`
+const InputField = styled.input`
   &::placeholder {
     color: #4F4F4F;
-    font-size: 1vw;
   }
   height: 35px;
-  width: 250px;
+  width: 30%;
+  padding-left: 15px;
+  margin-top: -2%;
+  margin-left: 7%;
+  margin-right: 7%;
+  border: none;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+const InputFieldRadio = styled.input`
+  &::placeholder {
+    color: #4F4F4F;
+  }
+  height: 35px;
+  width: 30%;
   padding-left: 15px;
   margin-left: 7%;
   margin-right: 7%;
-  margin-top: 2%;
   border: none;
-  background: ${Colors[12]};
-  border-radius: 20px;
-  border: 1px solid black;
-`;
-
-//This is the div that will be generated with each new group (of course with other divs inside)
-const ModuleBox = styled.div`
-  height: 60px;
-  width: 99%;
-  display grid;
-  grid-template-columns: 25% 30% 15% 10% 15%;
-  grid-template-rows: 1;
-  grid-column-gap: 1em;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: 1px solid black;
   background: white;
-  border-radius: 10px;
-`;
-
-const InboxLabel = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 30px;
-`;
-
-const InboxLabelName = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 20px;
-`;
-
-const InboxButtonContainer = styled.div`
-  place-self: center;
-  width: 80%;
+  border-radius: 20px;
+  
 `;
 
 const ButtonContainer = styled.div`
@@ -113,9 +102,20 @@ class CreateGroup extends React.Component {
      */
     async createGroup() {
         try {
+            const requestBody = JSON.stringify({
+                name: this.state.name,
+                password: this.state.password,
+                priv: this.state.priv,
+                memberLimit: this.state.memberLimit
+            });
+            const response = await api.post('/groups', requestBody);
+            // Get the returned user and update a new object.
+            const group = new Group(response.data);
 
+            // Login successfully worked --> navigate to the route /game in the GameRouter
+            this.props.history.push(`/moduleDetail`);
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong during group creation: \n${handleError(error)}`);
         }
     }
 
@@ -130,6 +130,10 @@ class CreateGroup extends React.Component {
         this.setState({ [key]: value });
     }
 
+    setPrivacy(event) {
+        console.log(event.target.value);
+    }
+
     render() {
         return (
             <BaseContainer>
@@ -138,23 +142,72 @@ class CreateGroup extends React.Component {
                 <BigContainer>
                     <FirstLine>
                         <Label>Name:</Label>
-                        <InfoField
-                            placeholder="Username displayed here"
+                        <InputField
+                            placeholder="Enter group name..."
                             onChange={e => {
-                                this.handleInputChange('username', e.target.value);
+                                this.handleInputChange('name', e.target.value);
                             }}
                         />
                     </FirstLine>
-                    <NextLine>Test</NextLine>
-                    <NextLine>Test</NextLine>
+                    <NextLine>
+                        <Label>Settings</Label>
+                        <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
+                            <InLine>
+                                <input type="radio" value="True" name="privacy" id="private" style={{height: 25, width: 25}} /> Private:
+                                <InputFieldRadio
+                                    type="password"
+                                    style={{fontSize: 17}}
+                                    placeholder="Enter password..."
+                                    disabled
+                                    id="privacy"
+                                    onChange={e => {
+                                        this.handleInputChange('password', e.target.value);
+                                    }}
+                                />
+                            </InLine>
+                            <InLine>
+                                <input type="radio" value="False" name="privacy" style={{height: 25, width: 25}}/> Public
+                            </InLine>
+                        </div>
+                    </NextLine>
+                    <NextLine>
+                        <Label>Limitations</Label>
+                        <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
+                            <InLine>
+                                <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
+                                <InputFieldRadio
+                                    type="password"
+                                    style={{fontSize: 17, width: 120}}
+                                    placeholder="Enter Size..."
+                                    disabled
+                                    onChange={e => {
+                                        this.handleInputChange('memberLimit', e.target.value);
+                                    }}
+                                />
+                            </InLine>
+                            <InLine>
+                                <input type="radio" value="False" name="limitation" style={{height: 25, width: 25}}/> Unlimited
+                            </InLine>
+                        </div>
+                    </NextLine>
                     <ButtonContainer>
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
-                                this.props.history.goBack();
+                                this.createGroup();
                             }}
                         >
-                            Back to module details
+                            Create
+                        </RectButtonBig>
+                    </ButtonContainer>
+                    <ButtonContainer>
+                        <RectButtonBig
+                            width="100%"
+                            onClick={() => {
+                                this.props.history.push('/joinModuleGroup');
+                            }}
+                        >
+                            Back
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>

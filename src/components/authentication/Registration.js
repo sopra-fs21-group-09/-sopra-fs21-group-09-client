@@ -110,7 +110,6 @@ class Registration extends React.Component {
                     />
                     <Label>Username:</Label>
                     <InputField
-                        type="password"
                         placeholder="Enter your username here..."
                         onChange={e => {
                             this.handleInputChange('username', e.target.value);
@@ -118,6 +117,7 @@ class Registration extends React.Component {
                     />
                     <Label>Password:</Label>
                     <InputField
+                        type="password"
                         placeholder="Enter your password here..."
                         onChange={e => {
                             this.handleInputChange('password', e.target.value);

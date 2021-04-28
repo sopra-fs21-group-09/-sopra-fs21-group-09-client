@@ -12,9 +12,10 @@ import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
 import {MyGroups} from  "../../../components/group/MyGroups"
-import JoinGroup from "../../../components/GroupProcess/JoinGroup";
+import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
+import JoinModuleGroup from "../../../components/GroupProcess/JoinModuleGroup";
 
 class AppRouter extends React.Component {
   render() {
@@ -95,10 +96,18 @@ class AppRouter extends React.Component {
               )}
             />
             <Route
-              path="/joinGroup"
+              path="/joinModuleGroup"
               render={() => (
                   <HomeGuard>
-                    <JoinGroup />
+                      <JoinModuleGroup />
+                  </HomeGuard>
+              )}
+            />
+            <Route
+              path="/joinAppGroup"
+              render={() => (
+                  <HomeGuard>
+                    <JoinAppGroup />
                   </HomeGuard>
               )}
             />
