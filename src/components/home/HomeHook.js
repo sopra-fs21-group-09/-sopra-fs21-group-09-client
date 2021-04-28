@@ -26,6 +26,12 @@ const PageTitle = styled.h1`
   position: fixed;
 `;
 
+const AddButton = styled(CircleButton)`
+    position: 'absolute';
+    bottom: 0;
+    right: 0;
+`;
+
 const Home = props => {
     const [user, setUser] = useState({username: ''});
     const [visible, setVisible] = useState(false);
@@ -77,10 +83,10 @@ const Home = props => {
             <NavBar/>
             <PageTitle>Welcome Home, {user.username}</PageTitle>
             <CalendarContainer>
-                <CircleButton 
+            <CircleButton 
                     style={{position: 'absolute', bottom: 0, right: 0}}
                     onClick={() => setVisible(true)}>ADD</CircleButton>
-                <Rodal height='300' visible={visible} border-radius='20px' onClose={() => setVisible(false)}>
+                <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
                     <div><b>Add Event</b></div><br/>
                     <div>Title:  <InputField placeholder='Enter title here'></InputField></div>
                     <div>Date: <InputField type="date" width='80%'/></div>
