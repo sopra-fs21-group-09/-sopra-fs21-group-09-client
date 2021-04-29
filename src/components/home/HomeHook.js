@@ -11,7 +11,7 @@ import {NavBar} from "../navigation/navBar.jsx"
 import styled from "styled-components"
 import NpmCal from './NpmCal'
 import { api, handleError } from '../../helpers/api';
-import { CircleButton, RectButtonBig, RectButton } from '../../views/Button';
+import { CircleButton, RectButtonSmall, RectButton } from '../../views/Button';
 import { InputField } from '../../views/Labels'
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
@@ -35,16 +35,7 @@ const AddButton = styled(CircleButton)`
 
 const Home = props => {
     const [user, setUser] = useState({username: ''});
-    const [visible, setVisible] = useState(false);
-
-    const [eventTypes] = React.useState([ //TODO: Set default event type
-        {label: "Event", value: "Event"},
-        {label: "Deadline", value: "Deadline"},
-        {label: "Lectures", value: "Lectures"},
-        {label: "Exercises", value: "Exercises"},
-        {label: "Meeting", value: "Meeting"},
-        {label: "Private", value: "Private"},    
-      ]);
+    
 
     async function getUser(){
         try {
@@ -84,23 +75,6 @@ const Home = props => {
             <NavBar/>
             <PageTitle>Welcome Home, {user.name}</PageTitle>
             <CalendarContainer>
-            <CircleButton 
-                    style={{position: 'absolute', bottom: 0, right: 0}}
-                    onClick={() => setVisible(true)}>ADD</CircleButton>
-                <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
-                    <div><b>Add Event</b></div><br/>
-                    <div>Title:  <InputField placeholder='Enter title here'></InputField></div>
-                    <div>Date: <InputField type="date" width='80%'/></div>
-                    <div>Type: 
-                        <select style={{height: '35px', paddingLeft:'3%', margin: '2%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5'}}>
-                            {eventTypes.map(({ label, value }) => (
-                                <option key={value} value={value}>{label}</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div>Deadline <input type='checkbox'></input></div><br/>
-                    <div><RectButton style={{alignItems: 'center'}}>Submit</RectButton></div>
-                </Rodal>
                 <NpmCal></NpmCal>
             </CalendarContainer>
             <SideBar>

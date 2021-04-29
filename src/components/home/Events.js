@@ -179,8 +179,16 @@ export default [
   },
   {
     id: 24,
-    title: 'All Day Event very long title',
+    title: 'Test Event',
     allDay: true,
-    start: new Date(2021, 4, 27),
+    start: new Date(2021, 3, 29),
+    end: new Date(2021, 3, 29),
+  },
+  {
+    id: 25,
+    title: 'Pornöser Event',
+    allDay: true,
+    start: new Date('2021-04-29T03:24:00'),
+    end: new Date('2021-04-29T03:24:00'),
   },
 ]
