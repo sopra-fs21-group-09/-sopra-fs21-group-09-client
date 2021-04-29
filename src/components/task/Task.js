@@ -2,6 +2,8 @@ import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
 import React from "react";
 import {CalendarContainer} from "../home/Calendar";
+import {api, handleError} from "../../helpers/api";
+import User from "../profile/User";
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
@@ -46,8 +48,25 @@ export const TaskButton = styled.button`
 //TODO: if task marked as solved api.put()
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
+
+    async function markAsDone(){
+        try {
+            //TODO: connect with backend POST/tasks
+            //const response = await api.post('/tasks');
+
+            //console.log('Marked as Done: ' + response.data);
+
+        } catch (error) {
+            alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
+        }
+
+    }
+
     return (<TaskContainer>
-        <TaskButton onClick={()=>setClosed(!open)}>{open ? '' : <i className="fas fa-check fa-xs"></i>}
+        <TaskButton
+            onClick={()=>{setClosed(!open); markAsDone();}}
+        >
+            {open ? '' : <i className="fas fa-check fa-xs"></i>}
             }</TaskButton>
         {props.name}
     </TaskContainer>)

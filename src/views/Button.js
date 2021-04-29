@@ -28,6 +28,7 @@ export const CircleButton = styled.button`
   z-index: 1000; 
 `;
 
+
 export const SmallCircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);

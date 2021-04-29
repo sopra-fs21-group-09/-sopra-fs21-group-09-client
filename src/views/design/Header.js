@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import {PageTitle} from "../Labels";
+import {NavBar} from "../../components/navigation/navBar";
 
 /**
  * Using styled-components you can visual HTML primitives and use props with it!
@@ -7,19 +9,11 @@ import styled from "styled-components";
  * Using styled-components, you can have styling conditions using the following syntax: ${props => ...}
  * https://www.styled-components.com/
  */
-const Container = styled.div`
-  height: ${props => props.height}px;
-  background: ${props => props.background};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Container = styled.div` 
+  margin-top: 100px; 
+  margin-left: 99px; 
 `;
 
-const Title = styled.h1`
-  font-weight: bold;
-  color: white;
-  text-align: center;
-`;
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
  * Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called “props”) and return React elements describing what should appear on the screen.
@@ -30,8 +24,9 @@ const Title = styled.h1`
  */
 const Header = props => {
   return (
-    <Container height={props.height}>
-      <Title>{props.title}</Title>
+    <Container>
+        <NavBar/>
+      <PageTitle>{props.title}</PageTitle>
     </Container>
   );
 };

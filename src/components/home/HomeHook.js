@@ -30,6 +30,7 @@ const AddButton = styled(CircleButton)`
     position: 'absolute';
     bottom: 0;
     right: 0;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const Home = props => {
@@ -81,7 +82,7 @@ const Home = props => {
     return (
         <HomeContainer>
             <NavBar/>
-            <PageTitle>Welcome Home, {user.username}</PageTitle>
+            <PageTitle>Welcome Home, {user.name}</PageTitle>
             <CalendarContainer>
             <CircleButton 
                     style={{position: 'absolute', bottom: 0, right: 0}}

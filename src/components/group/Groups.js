@@ -26,7 +26,7 @@ const BigContainer = styled.div`
 `;
 
 
-export function MyGroups(){
+export function Groups(){
     const [userID, setUserID] = useState('userID')
     const history = useHistory()
 
