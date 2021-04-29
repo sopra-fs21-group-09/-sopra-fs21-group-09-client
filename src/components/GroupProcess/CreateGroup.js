@@ -105,7 +105,7 @@ class CreateGroup extends React.Component {
             const requestBody = JSON.stringify({
                 name: this.state.name,
                 password: this.state.password,
-                priv: this.state.priv,
+                open: this.state.open,
                 memberLimit: this.state.memberLimit
             });
             const response = await api.post('/groups', requestBody);

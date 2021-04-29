@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import {withRouter, useHistory} from "react-router-dom";
 import {Group} from "./Group";
 import {RectButtonBig, SmallCircleButton} from "../../views/Button";
 import ShadowScrollbars from "../../views/design/Scrollbars";
@@ -27,7 +28,7 @@ const BigContainer = styled.div`
 
 export function MyGroups(){
     const [userID, setUserID] = useState('userID')
-
+    const history = useHistory()
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
@@ -44,7 +45,10 @@ export function MyGroups(){
                             <Group name={'11'}/>
                             <Group name={'12'}/>
                             <Group name={'13'}/>
-                            <SmallCircleButton>
+                            <SmallCircleButton
+                                onClick={() => {
+                                    history.push('/joinAppGroup')
+                                }}>
                                     <span style={{fontSize: 25}}>
                                         <i className="fas fa-plus"></i>
                                     </span>

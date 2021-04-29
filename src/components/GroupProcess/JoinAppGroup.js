@@ -239,10 +239,10 @@ class JoinAppGroup extends React.Component {
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
-                                this.props.history.goBack();
+                                this.props.history.push('/myGroups');
                             }}
                         >
-                            Back
+                            Back to your groups
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>
