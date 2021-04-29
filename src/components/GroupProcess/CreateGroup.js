@@ -91,6 +91,8 @@ const ButtonContainer = styled.div`
 class CreateGroup extends React.Component {
     constructor() {
         super();
+        this.InputOne = React.createRef();
+        this.InputTwo = React.createRef();
         this.state = {
 
         };
@@ -108,6 +110,8 @@ class CreateGroup extends React.Component {
                 open: this.state.open,
                 memberLimit: this.state.memberLimit
             });
+
+            console.log(requestBody);
             const response = await api.post('/groups', requestBody);
             // Get the returned user and update a new object.
             const group = new Group(response.data);
@@ -131,7 +135,18 @@ class CreateGroup extends React.Component {
     }
 
     setPrivacy(event) {
-        console.log(event.target.value);
+        if (event.target.value == "True"){
+            this.InputOne.current.removeAttribute("disabled");
+            this.state.open = false;
+        } else if (event.target.value == "False"){
+            this.InputOne.current.setAttribute("disabled", "");
+            this.state.open = true;
+        } else if (event.target.value == "One"){
+            this.InputTwo.current.removeAttribute("disabled");
+        } else if (event.target.value == "Zero"){
+            this.InputTwo.current.setAttribute("disabled", "");
+            this.state.memberLimit = null;
+        }
     }
 
     render() {
@@ -153,9 +168,10 @@ class CreateGroup extends React.Component {
                         <Label>Settings</Label>
                         <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
                             <InLine>
-                                <input type="radio" value="True" name="privacy" id="private" style={{height: 25, width: 25}} /> Private:
+                                <input type="radio" value="True" name="privacy" style={{height: 25, width: 25}} /> Private:
                                 <InputFieldRadio
                                     type="password"
+                                    ref={this.InputOne}
                                     style={{fontSize: 17}}
                                     placeholder="Enter password..."
                                     disabled
@@ -174,9 +190,9 @@ class CreateGroup extends React.Component {
                         <Label>Limitations</Label>
                         <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
                             <InLine>
-                                <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
+                                <input type="radio" value="One" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
                                 <InputFieldRadio
-                                    type="password"
+                                    ref={this.InputTwo}
                                     style={{fontSize: 17, width: 120}}
                                     placeholder="Enter Size..."
                                     disabled
@@ -186,7 +202,7 @@ class CreateGroup extends React.Component {
                                 />
                             </InLine>
                             <InLine>
-                                <input type="radio" value="False" name="limitation" style={{height: 25, width: 25}}/> Unlimited
+                                <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}}/> Unlimited
                             </InLine>
                         </div>
                     </NextLine>
@@ -198,16 +214,6 @@ class CreateGroup extends React.Component {
                             }}
                         >
                             Create
-                        </RectButtonBig>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/joinModuleGroup');
-                            }}
-                        >
-                            Back
                         </RectButtonBig>
                     </ButtonContainer>
                 </BigContainer>
