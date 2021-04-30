@@ -63,12 +63,15 @@ class Registration extends React.Component {
                 username: this.state.username,
                 password: this.state.password
             });
+            console.log("requestbody");
             const response = await api.post('/users', requestBody);
+            console.log("post");
             // Get the returned user and update a new object.
             const user = new User(response.data);
 
             // Store the token into the local storage.
             localStorage.setItem('token', user.token);
+            localStorage.setItem('id', user.id);
             console.log(localStorage);
 
             // Login successfully worked --> navigate to the route /game in the GameRouter

@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
-import React from "react";
+import React, {useState} from "react";
 import {CalendarContainer} from "../home/Calendar";
 import {api, handleError} from "../../helpers/api";
 import User from "../profile/User";
+import {DateLabel} from "./Tasks";
+import {today} from "../home/Dates";
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
@@ -52,23 +54,86 @@ export const Task = props => {
     async function markAsDone(){
         try {
             //TODO: connect with backend POST/tasks
-            //const response = await api.post('/tasks');
+            console.log('markAsDone')
+            const response = await api.delete('/task/'+props.id);
 
             //console.log('Marked as Done: ' + response.data);
 
         } catch (error) {
-            alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
+            //alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
         }
 
     }
 
     return (<TaskContainer>
-        <TaskButton
-            onClick={()=>{setClosed(!open); markAsDone();}}
-        >
+        <TaskButton onClick={()=>{setClosed(!open); markAsDone();}}>
             {open ? '' : <i className="fas fa-check fa-xs"></i>}
-            }</TaskButton>
+        </TaskButton>
         {props.name}
+        {' '}
+        {props.description}
+        {' '}
+        {/*props.time*/}
     </TaskContainer>)
+}
+
+
+export function TaskListNEW(props) {
+    const tasks = props.tasks;
+    const [tasksToday, setTasksToday] = useState()
+    if (!tasks) {
+        return null;
+    }
+
+    const taskItem = tasks.map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+
+    /*const taskItemToday = tasks.filter(task => task.name.includes('s')).map((taskToday) =>
+        <Task name={taskToday.name} description={taskToday.description}
+              time={taskToday.deadline ? taskToday.deadline.time : ""} id={taskToday.id}/>
+    );
+
+    let filteredNumbers = tasks.filter(function (task) {
+        const array = []
+        if (task.deadline) {
+            if (task.deadline.time) {
+                array.push(task)
+            }
+        }
+        setTasksToday(array)
+    });*/
+
+    console.log('TASK1 Deadline:')
+    //console.log(tasks[0].deadline)
+
+
+    return (
+        <div class='row'>
+            <div class='column'>
+                <DateLabel>Today</DateLabel>
+                {taskItem}
+            </div>
+            <div class='column'>
+                <DateLabel>Tomorrow</DateLabel>
+                <Task name='Assignment'/>
+                <DateLabel>22.05.2021</DateLabel>
+                <Task name='Read Book'/>
+                <Task name='Paper'/>
+                <DateLabel>23.05.2021</DateLabel>
+                <Task name='Assignment'/>
+                <Task name='M2'/>
+                <DateLabel>24.05.2021</DateLabel>
+                <Task name='Reading'/>
+                <Task name='Assignment'/>
+                <DateLabel>25.05.2021</DateLabel>
+                <Task name='Paper'/>
+                <Task name='Assignment'/>
+            </div>
+        </div>
+    )
+
 }
 
