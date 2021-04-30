@@ -89,7 +89,7 @@ class AppRouter extends React.Component {
               )}
             />
             <Route
-              path="/Groups"
+              path="/myGroups"
               render={() => (
                   <HomeGuard>
                     <Groups/>

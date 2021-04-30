@@ -112,12 +112,14 @@ class CreateGroup extends React.Component {
             });
 
             console.log(requestBody);
-            const response = await api.post('/groups', requestBody);
+            const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
             // Get the returned user and update a new object.
-            const group = new Group(response.data);
+            //const group = new Group(response.data);
 
+            console.log(response.data);
+            //console.log(group.data());
             // Login successfully worked --> navigate to the route /game in the GameRouter
-            this.props.history.push(`/moduleDetail`);
+            this.props.history.push(`/myGroups`);
         } catch (error) {
             alert(`Something went wrong during group creation: \n${handleError(error)}`);
         }
