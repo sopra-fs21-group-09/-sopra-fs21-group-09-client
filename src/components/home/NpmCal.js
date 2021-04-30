@@ -15,7 +15,7 @@ let allViews = Object.keys(Views).map(k => Views[k])
 
 const EventInfo = styled.div`
   display grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 25% 75%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
 `;
@@ -35,13 +35,19 @@ const ColoredDateCellWrapper = ({ children }) =>
 const localizer = momentLocalizer(moment)
 
 const NpmCal = props => {
+  
+  const [eventTitle, setEventTitle] = useState();
+  const [eventStart, setEventStart] = useState();
+  const [eventEnd, setEventEnd] = useState();
+  const [eventDesc, setEventDesc] = useState();
+  const [eventLabel, setEventLabel] = useState();
 
   const [addVisible, setAddVisible] = useState(false);
   const [eventVisible, setEventVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [dateValue, onChange] = useState(new Date());
 
-  const [eventTypes] = React.useState([ //TODO: Set default event type
+  const [eventLabels] = React.useState([ //TODO: Set default event type
       {label: "Event", value: "Event"},
       {label: "Deadline", value: "Deadline"},
       {label: "Lectures", value: "Lectures"},
@@ -62,9 +68,9 @@ const NpmCal = props => {
         timeSlotWrapper: ColoredDateCellWrapper,
       }}
       localizer={localizer}
-      onSelectEvent={() => setEventVisible(true)}
+      onSelectEvent={event => {setEventVisible(true); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}
     />
-    <CircleButton 
+    <CircleButton
       style={{position: 'absolute', bottom: 0, right: 0}}
       onClick={() => setAddVisible(true)}>ADD</CircleButton>
       {/*Overlay for ADDING Event */}
@@ -81,45 +87,46 @@ const NpmCal = props => {
             <DateInfo>
               <InputField type='date'/>
               <InputField type='time'/>
-            </DateInfo>
-          <div>Type:</div><div>
+            </DateInfo> 
+          <div>Label:</div><div>
           <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5'}}>
-            {eventTypes.map(({ label, value }) => (
+            {eventLabels.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>
         </EventInfo>
-        <br/>
+        <br/> 
         <div><RectButtonSmall>Submit</RectButtonSmall></div>
       </Rodal>
     {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => setEventVisible(false)}>
-        <div><b>Event Title</b></div><br/>
+    <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
+        <div><b>{eventTitle}</b></div><br/>
         <EventInfo>
-          <div>Start</div><div>26.02.2021 18:00</div>
-          <div>End:</div><div>26.02.2021 20:00</div>
-          <div>Type:</div><div>Meeting</div><div></div>
+          <div>Start:</div><div>{eventStart}</div>
+          <div>End:</div><div>{eventEnd}</div>
+          <div>Label:</div><div>{eventLabel}</div>
+          <div>Description:</div><div>{eventDesc}</div>
         </EventInfo><br/><br/><br/><br/><br/>
-        <RectButtonSmall onClick={() => {setEditVisible(true); setEventVisible(false); }}>Edit</RectButtonSmall>
+        <RectButtonSmall onClick={() => {setEditVisible(true); setEventVisible(false)}}>Edit</RectButtonSmall>
     </Rodal>
     {/*Overlay for EDITING event*/}
     <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={editVisible} closeOnEsc='true' onClose={() => setEditVisible(false)}>
-        <div><b>Edit Event</b></div><br/>
+        <div><b>Edit {eventTitle}</b></div><br/>
         <EventInfo>
-          <div>Title:</div><InputField placeholder='Enter title here'></InputField>
+          <div>Title:</div><InputField placeholder={eventTitle}></InputField>
           <div>Start:</div>
             <DateInfo>
               <InputField type='date'/>
               <InputField type='time'/>
             </DateInfo>
-          <div>End:</div>
+          <div>End:</div> 
             <DateInfo>
               <InputField type='date'/>
               <InputField type='time'/>
             </DateInfo>
           <div>Type:</div><div>
           <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5'}}>
-            {eventTypes.map(({ label, value }) => (
+            {eventLabels.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>

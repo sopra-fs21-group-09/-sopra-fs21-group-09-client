@@ -8,6 +8,9 @@ import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
+import {ModuleBox, InboxLabelName, InboxLabel, InboxButtonContainer} from "../group/Group";
+import Group from "../group/Group";
+import {Spinner} from "../../views/design/Spinner";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -35,38 +38,6 @@ const Label = styled.label`
   font-size: 25px;
 `;
 
-//This is the div that will be generated with each new group (of course with other divs inside)
-const ModuleBox = styled.div`
-  height: 60px;
-  width: 99%;
-  display grid;
-  grid-template-columns: 25% 30% 15% 10% 15%;
-  grid-template-rows: 1;
-  grid-column-gap: 1em;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: 1px solid black;
-  background: white;
-  border-radius: 10px;
-`;
-
-const InboxLabel = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 30px;
-`;
-
-const InboxLabelName = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 20px;
-`;
-
-const InboxButtonContainer = styled.div`
-  place-self: center;
-  width: 80%;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -79,13 +50,13 @@ class JoinAppGroup extends React.Component {
     constructor() {
         super();
         this.state = {
-
+            groups: null,
         };
     }
 
     /**
      * HTTP GET request is sent to the backend.
-     * If the request is successful, the modules are shown
+     * If the request is successful, the groups are shown
      */
     async joinAppGroup() {
         try {
@@ -95,9 +66,30 @@ class JoinAppGroup extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+
+        // Get all the Groups
+        try {
+            const response = await api.get(`/groups`);//TODO: get User by Token
+
+            this.setState({
+                groups: response.data,
+                loading: false
+            });
+            // This is just some data for you to see what is available.
+            // Feel free to remove it.
+            console.log('request to:', response.request.responseURL);
+            console.log('status code:', response.status);
+            console.log('status text:', response.statusText);
+            console.log('requested data:', response.data);
+
+            // See here to get more data.
+            console.log(response);
+        } catch (error) {
+            alert(`Something went wrong during the login: \n${handleError(error)}`);
+        }
     }
 
     handleInputChange(key, value) {
@@ -111,141 +103,45 @@ class JoinAppGroup extends React.Component {
             <BaseContainer>
                 <NavBar/>
                 <PageTitle>Groups</PageTitle>
-                <BigContainer>
-                    <Line>
-                        <Label>Group Name</Label>
-                        <Label>Creator</Label>
-                        <Label>Settings</Label>
-                        <Label>Enroll</Label>
-                    </Line>
-                    <ShadowScrollbars style={{height: 430}}>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Christoph Blocher</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 69</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 4</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                    </ShadowScrollbars>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/createGroup');
-                            }}
-                        >
-                            Create your own group
-                        </RectButtonBig>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/myGroups');
-                            }}
-                        >
-                            Back to your groups
-                        </RectButtonBig>
-                    </ButtonContainer>
-                </BigContainer>
+                {!this.state.groups ? (
+                    <Spinner />
+                ) : (
+                    <BigContainer>
+                        <Line>
+                            <Label>Group Name</Label>
+                            <Label>Creator</Label>
+                            <Label>Settings</Label>
+                            <Label>Enroll</Label>
+                        </Line>
+                        <ShadowScrollbars style={{height: 430}}>
+                            {this.state.groups.map(group => {
+                                return (
+                                    <Group group={group}/>
+                                );
+                            })}
+                        </ShadowScrollbars>
+                        <ButtonContainer>
+                            <RectButtonBig
+                                width="100%"
+                                onClick={() => {
+                                    this.props.history.push('/createGroup');
+                                }}
+                            >
+                                Create your own group
+                            </RectButtonBig>
+                        </ButtonContainer>
+                        <ButtonContainer>
+                            <RectButtonBig
+                                width="100%"
+                                onClick={() => {
+                                    this.props.history.push('/myGroups');
+                                }}
+                            >
+                                Back to your groups
+                            </RectButtonBig>
+                        </ButtonContainer>
+                    </BigContainer>
+                )}
             </BaseContainer>
         )
     }

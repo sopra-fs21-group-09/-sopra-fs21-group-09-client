@@ -39,7 +39,7 @@ const Home = props => {
 
     async function getUser(){
         try {
-            const response = await api.get('/users/1');//TODO: get User by Token
+            const response = await api.get(`/users/${localStorage.getItem('id')}`);//TODO: get User by Token
             setUser(response.data);
 
             // This is just some data for you to see what is available.

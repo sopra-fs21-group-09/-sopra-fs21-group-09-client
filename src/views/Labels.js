@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Colors } from "./design/Colors";
 
-// Title of all the pages like Home, Brofile, Groups etc.
+// Title of all the pages like Home, Brofile, MyGroups etc.
 export const PageTitle = styled.h1`
   color: #4F4F4F;
   font-size: 50px;

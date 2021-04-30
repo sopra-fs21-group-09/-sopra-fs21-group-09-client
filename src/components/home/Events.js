@@ -188,7 +188,9 @@ export default [
     id: 25,
     title: 'Pornöser Event',
     allDay: true,
-    start: new Date('2021-04-29T03:24:00'),
-    end: new Date('2021-04-29T03:24:00'),
+    start: new Date('2021-04-05T14:00:00.000+00:00'),
+    end: new Date('2021-04-05T16:00:00.000+00:00'),
+    desc: 'Test',
+    label: 'Meeting',
   },
 ]

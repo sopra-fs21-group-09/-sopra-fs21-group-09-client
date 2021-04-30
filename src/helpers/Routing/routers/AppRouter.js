@@ -11,7 +11,7 @@ import Edit from "../../../components/profile/Edit";
 import Module from "../../../components/module/Module";
 import JoinModule from "../../../components/module/JoinModule";
 import ModuleDetail from "../../../components/module/ModuleDetail";
-import {Groups} from "../../../components/group/Groups"
+import {MyGroups} from "../../../components/group/myGroups"
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
@@ -92,7 +92,7 @@ class AppRouter extends React.Component {
               path="/myGroups"
               render={() => (
                   <HomeGuard>
-                    <Groups/>
+                    <MyGroups/>
                   </HomeGuard>
               )}
             />

@@ -97,7 +97,7 @@ export function NavMenu({ isOpen }) {
             },
           }}
         >
-          <a href="/Groups">Groups</a>
+          <a href="/myGroups">MyGroups</a>
         </NavLink>
         <NavLink
           initial={false}
