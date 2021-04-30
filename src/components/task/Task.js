@@ -57,8 +57,6 @@ export const Task = props => {
             console.log('markAsDone')
             const response = await api.delete('/task/'+props.id);
 
-            //console.log('Marked as Done: ' + response.data);
-
         } catch (error) {
             //alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
         }
@@ -71,26 +69,90 @@ export const Task = props => {
         </TaskButton>
         {props.name}
         {' '}
-        {props.description}
+        {/*props.description*/}
         {' '}
         {/*props.time*/}
     </TaskContainer>)
 }
 
+function todaysDate(){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
 
-export function TaskListNEW(props) {
+    today = yyyy + '-' + mm + '-' + dd;
+    return today;
+}
+
+
+function todaysTasks(props) {
+    const tasks = props.tasks;
+    const taskArray = []
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].deadline) {
+            if (tasks[i].deadline.time.includes(todaysDate())) {
+                taskArray.push(tasks[i])
+            }}
+    }
+
+    return taskArray
+
+}
+
+function nxtMonthsTasks(props) {
+    const tasks = props.tasks;
+    const taskArray = []
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].deadline) {
+            if (!tasks[i].deadline.time.includes(todaysDate())) {
+                taskArray.push(tasks[i])
+            }}
+    }
+
+    return taskArray
+
+}
+
+
+function otherTasks(props) {
+    const tasks = props.tasks;
+    const taskArray = []
+    for (var i = 0; i < tasks.length; i++) {
+        if (!tasks[i].deadline) {
+            taskArray.push(tasks[i])
+        }
+    }
+
+    return taskArray
+
+}
+
+export function TaskList(props) {
     const tasks = props.tasks;
     const [tasksToday, setTasksToday] = useState()
     if (!tasks) {
         return null;
     }
 
-    const taskItem = tasks.map((task) =>
+    const todaysTaskItem = todaysTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+    const otherTaskItem = otherTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+    const nxtMonthsTaskItem = nxtMonthsTasks(props).map((task) =>
         <Task name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
 
+
+    //const tasksToday2 = tasks.filter( (task) => task.deadline.time.includes("30"))
     /*const taskItemToday = tasks.filter(task => task.name.includes('s')).map((taskToday) =>
         <Task name={taskToday.name} description={taskToday.description}
               time={taskToday.deadline ? taskToday.deadline.time : ""} id={taskToday.id}/>
@@ -105,32 +167,20 @@ export function TaskListNEW(props) {
         }
         setTasksToday(array)
     });*/
-
-    console.log('TASK1 Deadline:')
-    //console.log(tasks[0].deadline)
+    //setTasksToday(test(props))
 
 
     return (
         <div class='row'>
             <div class='column'>
                 <DateLabel>Today</DateLabel>
-                {taskItem}
+                {todaysTaskItem}
             </div>
             <div class='column'>
-                <DateLabel>Tomorrow</DateLabel>
-                <Task name='Assignment'/>
-                <DateLabel>22.05.2021</DateLabel>
-                <Task name='Read Book'/>
-                <Task name='Paper'/>
-                <DateLabel>23.05.2021</DateLabel>
-                <Task name='Assignment'/>
-                <Task name='M2'/>
-                <DateLabel>24.05.2021</DateLabel>
-                <Task name='Reading'/>
-                <Task name='Assignment'/>
-                <DateLabel>25.05.2021</DateLabel>
-                <Task name='Paper'/>
-                <Task name='Assignment'/>
+                <DateLabel>Next Month</DateLabel>
+                {nxtMonthsTaskItem}
+                <DateLabel>No Date</DateLabel>
+                {otherTaskItem}
             </div>
         </div>
     )

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {Colors} from "../../views/design/Colors";
-import {Task, TaskListNEW} from "../task/Task"
+import {TaskList} from "../task/Task"
 import styled from "styled-components";
 import "./Task.css"
 import {InputField} from "../../views/Labels";
@@ -10,7 +10,6 @@ import {CircleButton, RectButton} from "../../views/Button";
 import Rodal from "rodal";
 import {Label} from "../../views/Labels";
 import { api, handleError } from '../../helpers/api';
-import {today} from "../home/Dates";
 
 
 export const DateLabel = styled.label`
@@ -48,13 +47,9 @@ export function Tasks(){
             var i;
             for (i = 0; i < response.data.length; i++) {
                 array.push(response.data[i]);
-                console.log(response.data[i])
             }
 
-            console.log(array)
-            console.log(array[0])
             setTasks(array)
-            console.log('Task was set')
 
         } catch (error) {
             alert(`Something went wrong during get Tasks: \n${handleError(error)}`);
@@ -65,7 +60,7 @@ export function Tasks(){
         try {
             const requestBody = JSON.stringify({
                 name: taskName,
-                description: 'soemthing',
+                description: 'empty',
                 deadline: {
                     time: "2021-04-30T13:57:52",
                     visible: "true"
@@ -82,18 +77,6 @@ export function Tasks(){
         }
     }
 
-    function TaskList(props) {
-        const tasks = props.tasks;
-        if (!tasks) {
-            return null;
-        }
-        const taskItem = tasks.map((task) =>
-            <Task name={task.name} description={task.description} time={task.deadline?task.deadline.time:""} id={task.id}/>
-        );
-        return (
-            <ul>{taskItem}</ul>
-        );
-    }
 
 
     // this will run, when the component is first initialized
@@ -130,15 +113,10 @@ export function Tasks(){
                         <InputField
                             onChange={e => {
                                 setTaskName(e.target.value);
-                                console.log(taskName)
                             }}
                             placeholder='Enter title here'></InputField></div>
                     <div>Date:
                         <InputField
-                            onChange={e => {
-                                setTaskDate(e.target.value);
-                                console.log('Taksdatae: '+taskDate)
-                            }}
                         type="date"
                         width='80%'
                         onChange={e => {
@@ -162,7 +140,7 @@ export function Tasks(){
 
             <Header title='MY TASKS'>
             </Header>
-            <TaskListNEW tasks={tasks}/>
+            <TaskList tasks={tasks}/>
         </div>
     )
 }
