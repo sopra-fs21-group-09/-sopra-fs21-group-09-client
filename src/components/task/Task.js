@@ -52,7 +52,8 @@ export const Task = props => {
     async function markAsDone(){
         try {
             //TODO: connect with backend POST/tasks
-            //const response = await api.post('/tasks');
+            console.log('markAsDone')
+            const response = await api.delete('/task/'+props.id);
 
             //console.log('Marked as Done: ' + response.data);
 
@@ -63,12 +64,13 @@ export const Task = props => {
     }
 
     return (<TaskContainer>
-        <TaskButton
-            onClick={()=>{setClosed(!open); markAsDone();}}
-        >
+        <TaskButton onClick={()=>{setClosed(!open); markAsDone();}}>
             {open ? '' : <i className="fas fa-check fa-xs"></i>}
-            }</TaskButton>
+        </TaskButton>
         {props.name}
+        {' '}
+        {props.description}
+        {props.time}
     </TaskContainer>)
 }
 

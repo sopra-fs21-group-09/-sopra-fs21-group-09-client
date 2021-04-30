@@ -97,7 +97,7 @@ export function NavMenu({ isOpen }) {
             },
           }}
         >
-          <a href="/myGroups">Groups</a>
+          <a href="/Groups">Groups</a>
         </NavLink>
         <NavLink
           initial={false}
@@ -113,7 +113,7 @@ export function NavMenu({ isOpen }) {
             },
           }}
         >
-          <a href="#">Tasks</a>
+          <a href="/Tasks">Tasks</a>
         </NavLink>
       </NavList>
     </NavMenuContainer>

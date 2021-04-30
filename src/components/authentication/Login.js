@@ -67,6 +67,7 @@ export const Login = () => {
             const user = new User(response.data);
 
             localStorage.setItem('token', user.token);
+            localStorage.setItem('ID', user.id)
 
             console.log(response.data);
 
