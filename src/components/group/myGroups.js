@@ -56,12 +56,4 @@ export function MyGroups(){
             </BigContainer>
         </BaseContainer>
     )
-
-    /*return <div>
-        {response.groups.map(group => {
-            return (
-                //groups
-            );
-        })}
-    </div>*/
 }

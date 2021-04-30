@@ -87,11 +87,11 @@ class JoinModuleGroup extends React.Component {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async joinMoudleGroup() {
+    async joinModuleGroup() {
         try {
 
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong while joining the group: \n${handleError(error)}`);
         }
     }
 

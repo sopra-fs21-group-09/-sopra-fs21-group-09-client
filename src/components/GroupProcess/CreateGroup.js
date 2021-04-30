@@ -113,10 +113,11 @@ class CreateGroup extends React.Component {
 
             console.log(requestBody);
             const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
+
             // Get the returned user and update a new object.
             //const group = new Group(response.data);
 
-            console.log(response.data);
+            console.log(response);
             //console.log(group.data());
             // Login successfully worked --> navigate to the route /game in the GameRouter
             this.props.history.push(`/myGroups`);

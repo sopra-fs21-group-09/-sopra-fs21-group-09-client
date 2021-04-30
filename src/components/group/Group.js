@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import React, {useState} from "react";
 import {RectButtonSmall} from "../../views/Button";
+import {api, handleError} from "../../helpers/api";
+import { useHistory } from "react-router";
 
 
 const random = () => Math.floor(Math.random() * 255);
@@ -62,7 +64,7 @@ export const InboxButtonContainer = styled.div`
 `;
 
 function groupPrivacy(privacy) {
-    if (privacy == true){
+    if (privacy === true){
         return "Public";
     } else {
         return "Privat";
@@ -70,19 +72,34 @@ function groupPrivacy(privacy) {
 }
 
 /**
+ * HTTP GET request is sent to the backend.
+ * If the request is successful, the groups are shown
+ */
+function joinAppGroup(id) {
+    try {
+        api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
+    } catch (error) {
+        alert(`Something went wrong while joining the group: \n${handleError(error)}`);
+    }
+}
+
+/**
  * @FunctionalComponent
  */
 const Group = ({ group }) => {
+    const history = useHistory();
     return (
         <ModuleBox>
             <InboxLabel>{group.name}</InboxLabel>
-            <InboxLabelName>{group.name}</InboxLabelName>
+            <InboxLabelName>{group.creator.username}</InboxLabelName>
             <InboxLabel>{groupPrivacy(group.open)}</InboxLabel>
-            <InboxLabel>1/{group.memberLimit}</InboxLabel>
+            <InboxLabel>{group.memberCount}/{group.memberLimit}</InboxLabel>
             <InboxButtonContainer>
                 <RectButtonSmall
                     width="100%"
                     onClick={() => {
+                        joinAppGroup(group.id);
+                        history.push('/myGroups');
                     }}
                 >
                     Join

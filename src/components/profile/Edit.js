@@ -93,7 +93,7 @@ class Edit extends React.Component {
             // Login successfully worked --> navigate to the route /game in the GameRouter
             this.props.history.push(`/game/Profile`);
         } catch (error) {
-            alert(`Something went wrong during the edit: \n${handleError(error)}`);
+            alert(`Something went wrong while editing the user: \n${handleError(error)}`);
         }
     }
 

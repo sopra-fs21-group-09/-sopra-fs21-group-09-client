@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
+import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
-import {ModuleBox, InboxLabelName, InboxLabel, InboxButtonContainer} from "../group/Group";
 import Group from "../group/Group";
 import {Spinner} from "../../views/design/Spinner";
 
@@ -54,25 +53,13 @@ class JoinAppGroup extends React.Component {
         };
     }
 
-    /**
-     * HTTP GET request is sent to the backend.
-     * If the request is successful, the groups are shown
-     */
-    async joinAppGroup() {
-        try {
-
-        } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
-        }
-    }
-
     async componentDidMount() {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
         // Get all the Groups
         try {
-            const response = await api.get(`/groups`);//TODO: get User by Token
+            const response = await api.get(`/groups`);
 
             this.setState({
                 groups: response.data,
@@ -88,7 +75,7 @@ class JoinAppGroup extends React.Component {
             // See here to get more data.
             console.log(response);
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong while getting the groups: \n${handleError(error)}`);
         }
     }
 
