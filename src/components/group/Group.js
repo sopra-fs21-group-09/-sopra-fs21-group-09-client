@@ -77,13 +77,6 @@ function groupPrivacy(privacy) {
  * HTTP GET request is sent to the backend.
  * If the request is successful, the groups are shown
  */
-function joinAppGroup(id) {
-    try {
-        api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
-    } catch (error) {
-        alert(`Something went wrong while joining the group: \n${handleError(error)}`);
-    }
-}
 
 /**
  * @FunctionalComponent
@@ -91,9 +84,22 @@ function joinAppGroup(id) {
 const Group = ({ group }) => {
     const history = useHistory();
 
+    function joinAppGroup(id, privacy) {
+        try {
+            if (privacy === true) {
+                api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
+                history.push('/myGroups');
+            } else if (privacy === false){
+                history.push('/groupLogin');
+            }
+        } catch (error) {
+            alert(`Something went wrong while joining the group: \n${handleError(error)}`);
+        }
+    }
+
     // Define display of settings of Groups
     let settings;
-    if (group.memberLimit == 0){
+    if (group.memberLimit === 0){
          settings = "unlimited";
     } else {
         settings = group.memberCount + "/" + group.memberLimit;
@@ -109,8 +115,7 @@ const Group = ({ group }) => {
                 <RectButtonSmall
                     width="100%"
                     onClick={() => {
-                        joinAppGroup(group.id);
-                        history.push('/myGroups');
+                        joinAppGroup(group.id, group.open);
                     }}
                 >
                     Join

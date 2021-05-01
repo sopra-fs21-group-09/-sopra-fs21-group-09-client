@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
+import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
-import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
-import User from "../profile/User";
 import {Group} from "../group/Group";
 
 //Constants we need for this page
@@ -100,7 +98,7 @@ class CreateGroup extends React.Component {
 
     /**
      * HTTP GET request is sent to the backend.
-     * If the request is successful, the modules are shown
+     * If the request is successful, the group is created
      */
     async createGroup() {
         try {
@@ -138,15 +136,15 @@ class CreateGroup extends React.Component {
     }
 
     setPrivacy(event) {
-        if (event.target.value == "True"){
+        if (event.target.value === "True"){
             this.InputOne.current.removeAttribute("disabled");
             this.state.open = false;
-        } else if (event.target.value == "False"){
+        } else if (event.target.value === "False"){
             this.InputOne.current.setAttribute("disabled", "");
             this.state.open = true;
-        } else if (event.target.value == "One"){
+        } else if (event.target.value === "One"){
             this.InputTwo.current.removeAttribute("disabled");
-        } else if (event.target.value == "Zero"){
+        } else if (event.target.value === "Zero"){
             this.InputTwo.current.setAttribute("disabled", "");
             this.state.memberLimit = null;
         }
