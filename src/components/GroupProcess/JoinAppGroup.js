@@ -59,21 +59,30 @@ class JoinAppGroup extends React.Component {
 
         // Get all the Groups
         try {
-            const response = await api.get(`/groups`);
+            let allGroups = null;
+            let usersGroups = null;
+            let groupsWithoutUser = null;
+
+            //get groups 2 times; one for checking, one for deleting
+            allGroups = await api.get(`/groups`);
+            groupsWithoutUser = await api.get(`/groups`);
+
+            usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+
+            // Get all groups where the user is not in
+            for (let i = 0; i < allGroups.data.length; i++){
+                for (let z = 0; z < usersGroups.data.length; z++){
+                    if (allGroups.data[i].id === usersGroups.data[z].id){
+                        delete groupsWithoutUser.data[i];
+                    }
+                }
+            }
 
             this.setState({
-                groups: response.data,
+                groups: groupsWithoutUser.data,
                 loading: false
             });
-            // This is just some data for you to see what is available.
-            // Feel free to remove it.
-            console.log('request to:', response.request.responseURL);
-            console.log('status code:', response.status);
-            console.log('status text:', response.statusText);
-            console.log('requested data:', response.data);
 
-            // See here to get more data.
-            console.log(response);
         } catch (error) {
             alert(`Something went wrong while getting the groups: \n${handleError(error)}`);
         }

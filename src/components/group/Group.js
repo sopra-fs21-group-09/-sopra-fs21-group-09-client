@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import React, {useState} from "react";
-import {RectButtonSmall} from "../../views/Button";
+import {RectButton, RectButtonSmall} from "../../views/Button";
 import {api, handleError} from "../../helpers/api";
 import { useHistory } from "react-router";
+import {InputField, Label} from "../../views/Labels";
+import Rodal from "rodal";
 
 
 const random = () => Math.floor(Math.random() * 255);
@@ -88,12 +90,21 @@ function joinAppGroup(id) {
  */
 const Group = ({ group }) => {
     const history = useHistory();
+
+    // Define display of settings of Groups
+    let settings;
+    if (group.memberLimit == 0){
+         settings = "unlimited";
+    } else {
+        settings = group.memberCount + "/" + group.memberLimit;
+    }
+
     return (
         <ModuleBox>
             <InboxLabel>{group.name}</InboxLabel>
             <InboxLabelName>{group.creator.username}</InboxLabelName>
             <InboxLabel>{groupPrivacy(group.open)}</InboxLabel>
-            <InboxLabel>{group.memberCount}/{group.memberLimit}</InboxLabel>
+            <InboxLabel>{settings}</InboxLabel>
             <InboxButtonContainer>
                 <RectButtonSmall
                     width="100%"
