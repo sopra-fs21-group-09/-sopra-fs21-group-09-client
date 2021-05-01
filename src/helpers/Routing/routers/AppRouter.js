@@ -10,7 +10,7 @@ import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
 import {Modules} from "../../../components/module/Modules";
 import JoinModule from "../../../components/module/JoinModule";
-import ModuleDetail from "../../../components/module/ModuleDetail";
+import {ModuleDetail} from "../../../components/module/ModuleDetail";
 import {MyGroups} from "../../../components/group/myGroups"
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";

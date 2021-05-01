@@ -6,6 +6,7 @@ import {Task} from "../task/Task";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import Group from "../group/Group";
 import {useHistory} from "react-router-dom";
+import {ModuleDetail} from "./ModuleDetail";
 
 const ModuleBox = styled.div`
   height: 60px;
@@ -45,6 +46,7 @@ export const Module = props => {
                     width="100%"
                     onClick={() => {
                         history.push('/moduleDetail');
+                        {ModuleDetail(props.id)}
                     }}
                 >
                     Info
