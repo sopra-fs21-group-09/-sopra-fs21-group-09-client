@@ -75,11 +75,6 @@ function groupPrivacy(privacy) {
 }
 
 /**
- * HTTP GET request is sent to the backend.
- * If the request is successful, the groups are shown
- */
-
-/**
  * @FunctionalComponent
  */
 const Group = ({ group }) => {
@@ -97,6 +92,24 @@ const Group = ({ group }) => {
             history.push('/myGroups');
         } catch (error) {
             alert(`Something went wrong while joining the group: \n${handleError(error)}`);
+        }
+    }
+
+    /**
+     * HTTP POST request is sent to the backend.
+     * If the request is successful, user joins private group
+     */
+    function JoinPrivateGroup() {
+        try {
+            const requestBody = JSON.stringify({
+                password: password,
+            });
+
+            api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
+            history.push(`/myGroups`);
+
+        } catch (error) {
+            alert(`Something went wrong during group creation: \n${handleError(error)}`);
         }
     }
 
@@ -135,7 +148,11 @@ const Group = ({ group }) => {
                             setPassword(e.target.value);
                         }}
                     /></div>
-                    <div><RectButtonPopUp>Join Group</RectButtonPopUp></div>
+                    <div><RectButtonPopUp
+                        onClick={() => {
+                            JoinPrivateGroup();
+                        }}
+                    >Join Group</RectButtonPopUp></div>
                 </Rodal>
             </InboxButtonContainer>
         </ModuleBox>
