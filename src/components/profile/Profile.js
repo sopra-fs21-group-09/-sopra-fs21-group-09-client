@@ -88,7 +88,7 @@ class Profile extends React.Component {
         try {
 
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong while fetching the user info: \n${handleError(error)}`);
         }
     }
 

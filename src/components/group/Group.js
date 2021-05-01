@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import React, {useState} from "react";
-import {RectButtonSmall} from "../../views/Button";
+import {RectButtonPopUp, RectButtonSmall} from "../../views/Button";
+import {api, handleError} from "../../helpers/api";
+import {InputFieldPopUp} from "../../views/Labels";
+import { useHistory } from "react-router";
+import Rodal from "rodal";
+import {Colors} from "../../views/design/Colors";
 
 
 const random = () => Math.floor(Math.random() * 255);
@@ -62,7 +67,7 @@ export const InboxButtonContainer = styled.div`
 `;
 
 function groupPrivacy(privacy) {
-    if (privacy == true){
+    if (privacy === true){
         return "Public";
     } else {
         return "Privat";
@@ -73,20 +78,82 @@ function groupPrivacy(privacy) {
  * @FunctionalComponent
  */
 const Group = ({ group }) => {
+    const history = useHistory();
+    const [visible, setVisible] = useState(false);
+    const [password, setPassword] = useState(null);
+
+    /**
+     * HTTP GET request is sent to the backend.
+     * If the request is successful, the groups are shown
+     */
+    function JoinPublicGroup(id) {
+        try {
+            api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
+            history.push('/myGroups');
+        } catch (error) {
+            alert(`Something went wrong while joining the group: \n${handleError(error)}`);
+        }
+    }
+
+    /**
+     * HTTP POST request is sent to the backend.
+     * If the request is successful, user joins private group
+     */
+    function JoinPrivateGroup() {
+        try {
+            const requestBody = JSON.stringify({
+                password: password,
+            });
+
+            api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
+            history.push(`/myGroups`);
+
+        } catch (error) {
+            alert(`Something went wrong during group creation: \n${handleError(error)}`);
+        }
+    }
+
+    // Define display of settings of Groups
+    let settings;
+    if (group.memberLimit === 0){
+         settings = "unlimited";
+    } else {
+        settings = group.memberCount + "/" + group.memberLimit;
+    }
+
     return (
         <ModuleBox>
             <InboxLabel>{group.name}</InboxLabel>
-            <InboxLabelName>{group.name}</InboxLabelName>
+            <InboxLabelName>{group.creator.username}</InboxLabelName>
             <InboxLabel>{groupPrivacy(group.open)}</InboxLabel>
-            <InboxLabel>1/{group.memberLimit}</InboxLabel>
+            <InboxLabel>{settings}</InboxLabel>
             <InboxButtonContainer>
                 <RectButtonSmall
                     width="100%"
                     onClick={() => {
+                        if (group.open === true){
+                            JoinPublicGroup(group.id);
+                        } else if (group.open === false){
+                            setVisible(true);
+                        }
                     }}
                 >
                     Join
                 </RectButtonSmall>
+                {/*Overlay for password */}
+                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                    <div><InputFieldPopUp
+                        placeholder="Enter group password here..."
+                        onChange={e => {
+                            setPassword(e.target.value);
+                        }}
+                    /></div>
+                    <div><RectButtonPopUp
+                        onClick={() => {
+                            JoinPrivateGroup();
+                        }}
+                    >Join Group</RectButtonPopUp></div>
+                </Rodal>
             </InboxButtonContainer>
         </ModuleBox>
     );
