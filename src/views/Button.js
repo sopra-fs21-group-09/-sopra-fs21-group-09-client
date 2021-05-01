@@ -113,6 +113,27 @@ export const RectButtonSmall = styled.button`
   margin-right: -22%;
 `;
 
+export const RectButtonPopUp = styled.button`
+  &:hover {
+    transform: translateY(-2px);
+  }
+  padding: 6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 18px;
+  width: 80%;
+  margin-left: 40px;
+  margin-top: 40px;
+  height: 40px;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
+  transition: all 0.3s ease;
+  background: ${Colors.BUTTON};
+  border-radius: 10px;
+  color: white;
+  border: 1px solid #11244E;
+`;
+
 export class RoundButton extends Component {
     render(){
         return<div className="roundButton" />;

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import React, {useState} from "react";
-import {RectButton, RectButtonSmall} from "../../views/Button";
+import {RectButtonPopUp, RectButtonSmall} from "../../views/Button";
 import {api, handleError} from "../../helpers/api";
+import {InputFieldPopUp} from "../../views/Labels";
 import { useHistory } from "react-router";
-import {InputField, Label} from "../../views/Labels";
 import Rodal from "rodal";
+import {Colors} from "../../views/design/Colors";
 
 
 const random = () => Math.floor(Math.random() * 255);
@@ -83,15 +84,17 @@ function groupPrivacy(privacy) {
  */
 const Group = ({ group }) => {
     const history = useHistory();
+    const [visible, setVisible] = useState(false);
+    const [password, setPassword] = useState(null);
 
-    function joinAppGroup(id, privacy) {
+    /**
+     * HTTP GET request is sent to the backend.
+     * If the request is successful, the groups are shown
+     */
+    function JoinPublicGroup(id) {
         try {
-            if (privacy === true) {
-                api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
-                history.push('/myGroups');
-            } else if (privacy === false){
-                history.push('/groupLogin');
-            }
+            api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
+            history.push('/myGroups');
         } catch (error) {
             alert(`Something went wrong while joining the group: \n${handleError(error)}`);
         }
@@ -115,11 +118,25 @@ const Group = ({ group }) => {
                 <RectButtonSmall
                     width="100%"
                     onClick={() => {
-                        joinAppGroup(group.id, group.open);
+                        if (group.open === true){
+                            JoinPublicGroup(group.id);
+                        } else if (group.open === false){
+                            setVisible(true);
+                        }
                     }}
                 >
                     Join
                 </RectButtonSmall>
+                {/*Overlay for password */}
+                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                    <div><InputFieldPopUp
+                        placeholder="Enter group password here..."
+                        onChange={e => {
+                            setPassword(e.target.value);
+                        }}
+                    /></div>
+                    <div><RectButtonPopUp>Join Group</RectButtonPopUp></div>
+                </Rodal>
             </InboxButtonContainer>
         </ModuleBox>
     );

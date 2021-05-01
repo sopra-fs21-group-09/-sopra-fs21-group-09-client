@@ -38,3 +38,17 @@ export const InputField = styled.input`
   background: ${Colors.LIGHT_GREY};
   border-radius: 20px;
 `;
+
+export const InputFieldPopUp = styled.input`
+  &::placeholder {
+    color: ${Colors.COLOR13};
+  }
+  padding: 3%;
+  height: 35px;
+  margin-top: 30px;
+  margin-left: 40px;
+  width: 80%;
+  border: none;
+  background: ${Colors.LIGHT_GREY};
+  border-radius: 20px;
+`;
