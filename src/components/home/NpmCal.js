@@ -71,8 +71,8 @@ const NpmCal = props => {
       onSelectEvent={event => {setEventVisible(true); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}
     />
     <CircleButton
-      style={{position: 'absolute', bottom: 0, right: 0}}
-      onClick={() => setAddVisible(true)}>ADD</CircleButton>
+      style={{position: 'absolute', bottom: 0, right: 0, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
+      onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
       {/*Overlay for ADDING Event */}
       <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
         <div><b>Add Event</b></div><br/>

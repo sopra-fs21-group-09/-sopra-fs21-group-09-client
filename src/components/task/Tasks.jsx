@@ -31,17 +31,14 @@ export function Tasks(){
     const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
     const [taskDate, setTaskDate] = useState()
-    const [tasks, setTasks] = useState([{name: 'TEst'}])
+    const [tasks, setTasks] = useState([])
     const [rerender, setRerender] = useState()
     const history = useHistory()
 
     async function getTasks(){
         try {
-            const response = await api.get('/users/'+ localStorage.getItem('ID')+'/tasks')//TODO: API call to get ALL tasks
+            const response = await api.get('/users/'+ localStorage.getItem('id')+'/tasks')
 
-
-            console.log('Is this even run?');
-            console.log('length:'+ response.data.length)
 
             const array = []
             var i;
@@ -60,17 +57,17 @@ export function Tasks(){
         try {
             const requestBody = JSON.stringify({
                 name: taskName,
-                description: 'empty',
+                description: "bla",
                 deadline: {
-                    time: "2021-04-30T13:57:52",
+                    time: taskDate,
                     visible: "true"
                 }
             });
 
-            const response = api.post('/users/'+ localStorage.getItem('ID')+'/tasks', requestBody)
+            const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
 
             console.log('posted!!!!')
-            setRerender(true)
+            document.getElementById("input").value = null;
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);
@@ -83,6 +80,7 @@ export function Tasks(){
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         console.log('Runed only when initialized')
+        getTasks()
 
     }, []);
 
@@ -90,9 +88,10 @@ export function Tasks(){
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getTasks()
-        console.log('Runs only when task date changes')
+        console.log('Runs only when tasks are added')
+        console.log(document.getElementById("input").value)
 
-    }, [taskName, rerender]);
+    }, [visible]);
 
 
     useEffect(()=>{
@@ -110,13 +109,13 @@ export function Tasks(){
                 <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
                     <Label style={{color: 'black'}}>NEW TASK</Label>
                     <div>Title:
-                        <InputField
+                        <InputField id='input'
                             onChange={e => {
                                 setTaskName(e.target.value);
                             }}
                             placeholder='Enter title here'></InputField></div>
                     <div>Date:
-                        <InputField
+                        <InputField id='input'
                         type="date"
                         width='80%'
                         onChange={e => {
@@ -133,6 +132,7 @@ export function Tasks(){
                         onClick={() => {
                             postTask();
                             setVisible(false);
+                            getTasks();
                         }}>
                         Submit</RectButton>
                     </div>

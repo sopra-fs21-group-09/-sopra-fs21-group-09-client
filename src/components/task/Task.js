@@ -19,7 +19,7 @@ export const TaskContainer = styled.div`
     color: white;
   }
   width: 100%;
-  padding: 5px 0px 5px 10px;
+  padding: 4px 0px 5px 10px;
   margin: 5px 0px 0px 0px;
   border: 3px solid #018692;
   border-radius: 45px;
@@ -41,19 +41,18 @@ export const TaskButton = styled.button`
   margin-right: 10px; 
   display: inline-block;
   padding: 0;
-  padding-left: 3.5px; 
+  padding-left: 0px; 
   line-height: 23px;
   width: 23px;
   height: 23px;
 `;
 
-//TODO: if task marked as solved api.put()
+
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
 
     async function markAsDone(){
         try {
-            //TODO: connect with backend POST/tasks
             console.log('markAsDone')
             const response = await api.delete('/task/'+props.id);
 
@@ -64,7 +63,7 @@ export const Task = props => {
     }
 
     return (<TaskContainer>
-        <TaskButton onClick={()=>{setClosed(!open); markAsDone();}}>
+        <TaskButton onClick={()=>{setClosed(false); markAsDone();}}>
             {open ? '' : <i className="fas fa-check fa-xs"></i>}
         </TaskButton>
         {props.name}
@@ -85,6 +84,17 @@ function todaysDate(){
     return today;
 }
 
+function tomorrowsDate(){
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var dd = String(tomorrow.getDate()).padStart(2, '0');
+    var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = tomorrow.getFullYear();
+
+    tomorrow = yyyy + '-' + mm + '-' + dd;
+    return tomorrow;
+}
+
 
 function todaysTasks(props) {
     const tasks = props.tasks;
@@ -100,12 +110,26 @@ function todaysTasks(props) {
 
 }
 
+function tomorrowsTasks(props) {
+    const tasks = props.tasks;
+    const taskArray = []
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].deadline) {
+            if (tasks[i].deadline.time.includes(tomorrowsDate())) {
+                taskArray.push(tasks[i])
+            }}
+    }
+
+    return taskArray
+
+}
+
 function nxtMonthsTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].deadline) {
-            if (!tasks[i].deadline.time.includes(todaysDate())) {
+            if (!tasks[i].deadline.time.includes(todaysDate()) && !tasks[i].deadline.time.includes(tomorrowsDate())) {
                 taskArray.push(tasks[i])
             }}
     }
@@ -123,7 +147,6 @@ function otherTasks(props) {
             taskArray.push(tasks[i])
         }
     }
-
     return taskArray
 
 }
@@ -140,6 +163,11 @@ export function TaskList(props) {
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
+    const tomorrowsTaskItem = tomorrowsTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
     const otherTaskItem = otherTasks(props).map((task) =>
         <Task name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
@@ -150,25 +178,7 @@ export function TaskList(props) {
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-
-
-    //const tasksToday2 = tasks.filter( (task) => task.deadline.time.includes("30"))
-    /*const taskItemToday = tasks.filter(task => task.name.includes('s')).map((taskToday) =>
-        <Task name={taskToday.name} description={taskToday.description}
-              time={taskToday.deadline ? taskToday.deadline.time : ""} id={taskToday.id}/>
-    );
-
-    let filteredNumbers = tasks.filter(function (task) {
-        const array = []
-        if (task.deadline) {
-            if (task.deadline.time) {
-                array.push(task)
-            }
-        }
-        setTasksToday(array)
-    });*/
-    //setTasksToday(test(props))
-
+    console.log('otherTaskItem:'+ otherTaskItem)
 
     return (
         <div class='row'>
@@ -177,10 +187,12 @@ export function TaskList(props) {
                 {todaysTaskItem}
             </div>
             <div class='column'>
-                <DateLabel>Next Month</DateLabel>
+                <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
+                {tomorrowsTaskItem}
+                <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
                 {nxtMonthsTaskItem}
-                <DateLabel>No Date</DateLabel>
-                {otherTaskItem}
+                {/*<DateLabel>{otherTasks!=[]? 'No Date': 'x'}</DateLabel>
+                {otherTaskItem}*/}
             </div>
         </div>
     )
