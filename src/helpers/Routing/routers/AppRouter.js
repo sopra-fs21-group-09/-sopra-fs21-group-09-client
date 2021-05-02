@@ -11,7 +11,7 @@ import Edit from "../../../components/profile/Edit";
 import {Modules} from "../../../components/module/Modules";
 import {JoinModules} from "../../../components/module/JoinModules"
 import {ModuleDetail} from "../../../components/module/ModuleDetail";
-import MyGroups from "../../../components/group/myGroups"
+import MyGroups from "../../../components/group/MyGroups";
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
