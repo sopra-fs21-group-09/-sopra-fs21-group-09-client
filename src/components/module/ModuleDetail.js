@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
@@ -9,6 +9,8 @@ import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
 import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
 import ShadowScrollbars from "../../views/design/Scrollbars";
+import {useHistory} from "react-router-dom";
+import { Redirect } from 'react-router';
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -107,16 +109,12 @@ const TextField2 = styled.label`
   line-height:200%;
 `;
 
-class ModuleDetail extends React.Component {
-    constructor() {
-        super();
-        this.state = {
+export const ModuleDetail = props => {//props is ID
 
-        };
-        let colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
-    }
+    const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
+    //const history = useHistory()
 
-    getNewRandomColor() {
+    function getNewRandomColor() {
         let boxes = document.getElementsByClassName("Box");
         console.log(boxes.length);
         let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
@@ -132,27 +130,27 @@ class ModuleDetail extends React.Component {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async moduleDetail() {
+    async function moduleDetail() {
         try {
+            const response = await api.get('/users/'+ localStorage.getItem('id')+'/modules')
 
         } catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`Something went wrong during getting the moduleDetail: \n${handleError(error)}`);
         }
     }
 
-    componentDidMount() {
+
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        this.getNewRandomColor();
-    }
+        getNewRandomColor();
 
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
+    }, []);
 
-    render() {
+    //const joinModulesGroup = () => history.push('/joinModuleGroup');
+    //const backToModules = () => history.push('/modules');
+
+
         return (
             <BaseContainer>
                 <NavBar/>
@@ -201,7 +199,7 @@ class ModuleDetail extends React.Component {
                                 <SmallCircleButton
                                     width="100%"
                                     onClick={() => {
-                                        this.props.history.push('/joinModuleGroup');
+                                        //joinModulesGroup();
                                     }}
                                 >
                                     <span style={{fontSize: 25}}>
@@ -216,7 +214,7 @@ class ModuleDetail extends React.Component {
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            this.props.history.push('/module');
+                            //backToModules();
                         }}
                     >
                         Back to your Modules
@@ -224,7 +222,4 @@ class ModuleDetail extends React.Component {
                 </ButtonContainer>
             </BaseContainer>
         )
-    }
 }
-
-export default withRouter(ModuleDetail);

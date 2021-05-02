@@ -33,7 +33,20 @@ export const InputField = styled.input`
   padding: 3%;
   margin-bottom: 2%;
   height: 35px;
-  width: 80%;
+  width: 90%;
+  border: none;
+  background: ${Colors.LIGHT_GREY};
+  border-radius: 20px;
+`;
+
+export const InputArea = styled.textarea`
+  &::placeholder {
+    color: ${Colors.COLOR13};
+  }
+  resize:none;
+  padding: 10px;
+  height: 100px;
+  width: 90%;
   border: none;
   background: ${Colors.LIGHT_GREY};
   border-radius: 20px;

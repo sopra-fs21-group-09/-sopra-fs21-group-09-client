@@ -68,6 +68,7 @@ export function Tasks(){
 
             console.log('posted!!!!')
             document.getElementById("input").value = null;
+            console.log(taskDate)
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);

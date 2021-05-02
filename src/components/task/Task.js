@@ -47,6 +47,11 @@ export const TaskButton = styled.button`
   height: 23px;
 `;
 
+export const DateLabelHome = styled.label`
+  margin-top: 10px;
+  font-size: 12px;
+  color: white;  
+`;
 
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
@@ -194,6 +199,42 @@ export function TaskList(props) {
                 {/*<DateLabel>{otherTasks!=[]? 'No Date': 'x'}</DateLabel>
                 {otherTaskItem}*/}
             </div>
+        </div>
+    )
+
+}
+
+export function TasksForHome(props){
+    const tasks = props.tasks;
+    const [tasksToday, setTasksToday] = useState()
+    if (!tasks) {
+        return null;
+    }
+
+    const todaysTaskItem = todaysTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+    const tomorrowsTaskItem = tomorrowsTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+    const nxtMonthsTaskItem = nxtMonthsTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+
+    return (
+        <div>
+            {todaysTaskItem.length!=0 ? <DateLabelHome>Today</DateLabelHome> : ''}
+                {todaysTaskItem}
+            {tomorrowsTaskItem.length!=0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
+                {tomorrowsTaskItem}
+            {nxtMonthsTaskItem.length!=0 ? <DateLabelHome>Next Month</DateLabelHome> : ''}
+                {nxtMonthsTaskItem}
         </div>
     )
 

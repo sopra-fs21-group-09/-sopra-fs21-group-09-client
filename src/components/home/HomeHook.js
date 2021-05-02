@@ -15,6 +15,7 @@ import { CircleButton, RectButtonSmall, RectButton } from '../../views/Button';
 import { InputField } from '../../views/Labels'
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
+import {TasksForHome} from "../task/Task";
 
 //Constants we need for this page
 const PageTitle = styled.h1`
@@ -35,6 +36,7 @@ const AddButton = styled(CircleButton)`
 
 const Home = props => {
     const [user, setUser] = useState({username: ''});
+    const [tasks, setTasks] = useState([])
     
 
     async function getUser(){
@@ -56,10 +58,29 @@ const Home = props => {
         }
     }
 
+    async function getTasks(){
+        try {
+            const response = await api.get('/users/'+ localStorage.getItem('id')+'/tasks')
+
+
+            const array = []
+            var i;
+            for (i = 0; i < response.data.length; i++) {
+                array.push(response.data[i]);
+            }
+
+            setTasks(array)
+
+        } catch (error) {
+            alert(`Something went wrong during get Tasks: \n${handleError(error)}`);
+        }
+    }
+
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getUser();
+        getTasks();
     }, []);
 
     // this will run when the component mounts and anytime the stateful data changes
@@ -68,6 +89,8 @@ const Home = props => {
         document.body.style.backgroundColor = Colors.COLOR11;
         const random = () => Math.floor(Math.random() * 255);
         console.log(random())
+        console.log('taks')
+        console.log(tasks)
     });
 
     return (
@@ -103,23 +126,7 @@ const Home = props => {
                 <TasksContainer>
                     <Label>TO-DO</Label>
                     <ShadowScrollbars style={{ height: 320 }}>
-                        <DateLabel>Today</DateLabel>
-                        <Task name='Assignment'/>
-                        <Task name='Paper'/>
-                        <DateLabel>Tomorrow</DateLabel>
-                        <Task name='Assignment'/>
-                        <DateLabel>22.08.2021</DateLabel>
-                        <Task name='Read Book'/>
-                        <Task name='Paper'/>
-                        <DateLabel>23.08.2021</DateLabel>
-                        <Task name='Assignment'/>
-                        <Task name='M2'/>
-                        <DateLabel>24.08.2021</DateLabel>
-                        <Task name='Reading'/>
-                        <Task name='Assignment'/>
-                        <DateLabel>25.08.2021</DateLabel>
-                        <Task name='Paper'/>
-                        <Task name='Assignment'/>
+                            <TasksForHome tasks={tasks}/>
                     </ShadowScrollbars>
                 </TasksContainer>
             </SideBar>

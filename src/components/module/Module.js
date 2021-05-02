@@ -6,6 +6,7 @@ import {Task} from "../task/Task";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import Group from "../group/AllAppGroups";
 import {useHistory} from "react-router-dom";
+import {ModuleDetail} from "./ModuleDetail";
 
 const ModuleBox = styled.div`
   height: 60px;
@@ -45,6 +46,35 @@ export const Module = props => {
                     width="100%"
                     onClick={() => {
                         history.push('/moduleDetail');
+                        {ModuleDetail(props.id)}
+                    }}
+                >
+                    Info
+                </RectButtonSmall>
+            </InboxButtonContainer>
+        </ModuleBox>
+    )
+}
+
+export const JoinModule = props => {
+    const history = useHistory()
+
+    return (
+        <ModuleBox>
+            <InboxLabel>{props.name}</InboxLabel>
+            <InboxButtonContainer style={{width: '30%'}}>
+                <RectButtonSmall
+                    onClick={() => {
+                    }}
+                >
+                    Join
+                </RectButtonSmall>
+            </InboxButtonContainer>
+            <InboxButtonContainer>
+                <RectButtonSmall
+                    width="100%"
+                    onClick={() => {
+                        history.push('/moduleDetail');
                     }}
                 >
                     Info
@@ -64,6 +94,21 @@ export function ModuleList(props) {
             {modules.map(module => {
                 return (
                     <Module name={module.name} description={module.description}/>
+                );
+            })}
+        </ShadowScrollbars>
+    )
+
+}
+
+export function JoinModuleList(props) {
+    const modules = props.modules
+
+    return (
+        <ShadowScrollbars style={{height: 430}}>
+            {modules.map(module => {
+                return (
+                    <JoinModule name={module.name} description={module.description}/>
                 );
             })}
         </ShadowScrollbars>

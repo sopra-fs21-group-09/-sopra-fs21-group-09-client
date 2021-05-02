@@ -9,9 +9,9 @@ import Login from "../../../components/authentication/Login";
 import Profile from "../../../components/profile/Profile";
 import Edit from "../../../components/profile/Edit";
 import {Modules} from "../../../components/module/Modules";
-import JoinModule from "../../../components/module/JoinModule";
-import ModuleDetail from "../../../components/module/ModuleDetail";
-import MyGroups from "../../../components/group/MyGroups"
+import {JoinModules} from "../../../components/module/JoinModules"
+import {ModuleDetail} from "../../../components/module/ModuleDetail";
+import MyGroups from "../../../components/group/myGroups"
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
@@ -73,10 +73,10 @@ class AppRouter extends React.Component {
               )}
             />
             <Route
-              path="/joinModule"
+              path="/joinModules"
               render={() => (
                   <HomeGuard>
-                    <JoinModule />
+                    <JoinModules/>
                   </HomeGuard>
               )}
             />
