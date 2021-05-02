@@ -174,7 +174,7 @@ class CreateGroup extends React.Component {
                                     type="password"
                                     ref={this.InputOne}
                                     style={{fontSize: 17}}
-                                    placeholder="Enter password..."
+                                    placeholder="Set password..."
                                     disabled
                                     id="privacy"
                                     onChange={e => {

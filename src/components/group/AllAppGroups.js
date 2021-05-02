@@ -120,6 +120,7 @@ const AllAppGroups = ({ group }) => {
                 <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
                     <div><InputFieldPopUp
                         placeholder="Enter group password here..."
+                        type="password"
                         onChange={e => {
                             setPassword(e.target.value);
                         }}
