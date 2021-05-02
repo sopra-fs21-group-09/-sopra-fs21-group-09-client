@@ -25,6 +25,7 @@ const EventLabel = styled.div`
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
     style: {
+      background: '#026C8D'
     },
   })
 
@@ -39,6 +40,7 @@ export default function NpmCal() {
   useEffect(() => {getEvents(); console.log('mounted or updated');}, [calendar]);
 
   //set initial values for event details
+  const [eventId, setEventId] = useState();
   const [eventTitle, setEventTitle] = useState();
   const [eventStart, setEventStart] = useState(toDatetimeLocal(new Date()));
   const [eventEnd, setEventEnd] = useState(toDatetimeLocal(new Date()));
@@ -47,11 +49,11 @@ export default function NpmCal() {
 
   //reset event so when one event submitted, initial values appear in add-overlay
   function resetEvent(){
-    setEventTitle();
+    setEventTitle('');
     setEventStart(toDatetimeLocal(new Date()));
     setEventEnd(toDatetimeLocal(new Date()));
-    setEventDesc();
-    setEventLabel();
+    setEventDesc('');
+    setEventLabel('EVENT');
   }
 
   //constants for rodal-overlay visibility 
@@ -73,9 +75,10 @@ export default function NpmCal() {
     ]);
 
   //check if event is valid -> required: title, start, end, label, start<end
-  function checkEvent() {
+  function checkEvent(method) {
     if(eventTitle && eventStart && eventEnd && eventStart<eventEnd){
-      postEvent();
+      if(method=='put'){putEvent();}
+      if(method=='post'){postEvent();}
       setAddVisible(false);
       setEditVisible(false);
       resetEvent();
@@ -122,12 +125,26 @@ export default function NpmCal() {
       }
   }
 
-  function addZero(i) {
-    if (i < 10) {
-      i = "0" + i;
+  function putEvent(){
+    try {
+        const requestBody = JSON.stringify({
+            id: eventId,
+            title: eventTitle,
+            start: new Date (eventStart),
+            end: new Date(eventEnd),
+            desc: eventDesc,
+            label: eventLabel,
+        });
+
+        console.log(eventId);
+        const response = api.put('/events/'+eventId, requestBody) 
+
+    } catch (error) {
+        alert(`postEvent-Error: \n${handleError(error)}`);
     }
-    return i;
   }
+
+  function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
 
   function toDatetimeLocal(date){
     var
@@ -140,17 +157,6 @@ export default function NpmCal() {
     return YYYY+'-'+MM+'-'+DD+'T'+HH+':'+II;
   }
 
-  function toDatetimeLocalInvertedMD(date){
-    var
-    YYYY = date.getFullYear(),
-    MM = addZero(date.getMonth() + 1),
-    DD = addZero(date.getDate()),
-    HH = addZero(date.getHours()),
-    II = addZero(date.getMinutes());
-
-    return YYYY+'-'+DD+'-'+MM+'T'+HH+':'+II;
-  }
-
   function handleSelect({start, end}) {
     setEventStart(toDatetimeLocal(start));
     setEventEnd(toDatetimeLocal(end));
@@ -160,6 +166,7 @@ export default function NpmCal() {
   return (
     <div>
     <Calendar
+      popup
       selectable
       events={events}
       views={Views.week}
@@ -167,10 +174,10 @@ export default function NpmCal() {
       showMultiDayTimes
       defaultDate={new Date()}
       components={{
-        timeSlotWrapper: ColoredDateCellWrapper,
+        eventWrapper: ColoredDateCellWrapper,
       }}
       localizer={localizer}
-      onSelectEvent={event => {setEventVisible(true); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}
+      onSelectEvent={event => {setEventVisible(true); setEventId(event.id); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}
       onSelectSlot={e => handleSelect(e)}
     />
     <CircleButton
@@ -180,7 +187,7 @@ export default function NpmCal() {
       <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => {setAddVisible(false); resetEvent();}}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
-          <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEventTitle(e.target.value)}/>
+        <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEventTitle(e.target.value)}/>
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={eventStart} onChange={e => {setEventStart(e.target.value)}}/>
           <EventLabel>End:</EventLabel>
@@ -196,7 +203,7 @@ export default function NpmCal() {
           <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEventDesc(e.target.value)}></InputArea>
         </EventInfo>
         <br/> 
-        <RectButtonSmall onClick={() => checkEvent()}>Submit</RectButtonSmall>
+        <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
     {/*Overlay for giving DETAILS of an event*/}
     <Rodal height='250' customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
@@ -213,11 +220,11 @@ export default function NpmCal() {
     <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc='true' onClose={() => setEditVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {eventTitle}</div><br/>
         <EventInfo>
-          <div>Title:</div><InputField placeholder={eventTitle}></InputField>
-          <div>Start:</div>
-            <InputField type='datetime-local' value={toDatetimeLocalInvertedMD(new Date(eventStart))} onChange={e => {setEventStart(e.target.value)}}/>
-          <div>End:</div>
-            <InputField type='datetime-local' value={toDatetimeLocalInvertedMD(new Date(eventEnd))} onChange={e => {setEventEnd(e.target.value)}}/>
+          <div>Title:</div><InputField value={eventTitle} onChange={e => {setEventTitle(e.target.value)}}></InputField>
+          <EventLabel>Start:</EventLabel>
+            <InputField type='datetime-local' onChange={e => {setEventStart(e.target.value)}}/>
+          <EventLabel>End:</EventLabel>
+            <InputField type='datetime-local' onChange={e => {setEventEnd(e.target.value)}}/>
           <div>Type:</div><div>
           <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}}>
             {eventLabels.map(({ label, value }) => (
@@ -227,7 +234,7 @@ export default function NpmCal() {
           <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEventDesc(e.target.value)}></InputArea>
         </EventInfo>
         <br/>
-        <div><RectButtonSmall onClick={() => checkEvent()}>Submit</RectButtonSmall></div>
+        <div><RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall></div>
       </Rodal>
 
       <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc='true' onClose={() => setWarningVisible(false)}>
