@@ -56,6 +56,34 @@ export const Module = props => {
     )
 }
 
+export const JoinModule = props => {
+    const history = useHistory()
+
+    return (
+        <ModuleBox>
+            <InboxLabel>{props.name}</InboxLabel>
+            <InboxButtonContainer style={{width: '30%'}}>
+                <RectButtonSmall
+                    onClick={() => {
+                    }}
+                >
+                    Join
+                </RectButtonSmall>
+            </InboxButtonContainer>
+            <InboxButtonContainer>
+                <RectButtonSmall
+                    width="100%"
+                    onClick={() => {
+                        history.push('/moduleDetail');
+                    }}
+                >
+                    Info
+                </RectButtonSmall>
+            </InboxButtonContainer>
+        </ModuleBox>
+    )
+}
+
 
 
 export function ModuleList(props) {
@@ -66,6 +94,21 @@ export function ModuleList(props) {
             {modules.map(module => {
                 return (
                     <Module name={module.name} description={module.description}/>
+                );
+            })}
+        </ShadowScrollbars>
+    )
+
+}
+
+export function JoinModuleList(props) {
+    const modules = props.modules
+
+    return (
+        <ShadowScrollbars style={{height: 430}}>
+            {modules.map(module => {
+                return (
+                    <JoinModule name={module.name} description={module.description}/>
                 );
             })}
         </ShadowScrollbars>

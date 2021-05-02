@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {useHistory, withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
+import {CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
-import {Module, ModuleList} from "./Module";
+import {JoinModuleList} from "./Module";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -22,10 +22,10 @@ const BigContainer = styled.div`
 
 const Line = styled.div`
   display grid;
-  grid-template-columns: 40% 40% 15%;
+  grid-template-columns: 3fr 1fr 1fr;
   grid-template-rows: 1;
   grid-column-gap: 1em;
-  width: 99%;
+  width: 100%;
   height: 70px;
 `;
 
@@ -44,8 +44,7 @@ const ButtonContainer = styled.div`
 `;
 
 
-
-export function Modules() {
+export function JoinModules() {
     const [modules, setModules] = useState([])
     const history = useHistory()
 
@@ -71,27 +70,26 @@ export function Modules() {
         getModules();
     }, []);
 
-        return (
-            <BaseContainer>
-                <NavBar/>
-                <PageTitle>My Modules</PageTitle>
-                <BigContainer>
-                    <Line>
-                        <Label>Module Name</Label>
-                        <Label>Description</Label>
-                    </Line>
-                    <ModuleList modules={modules}/>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                history.push('/joinModules');
-                            }}
-                        >
-                            Join a Module!
-                        </RectButtonBig>
-                    </ButtonContainer>
-                </BigContainer>
-            </BaseContainer>
-        )
+    return (
+        <BaseContainer>
+            <NavBar/>
+            <PageTitle>JOIN A MODULE</PageTitle>
+            <BigContainer>
+                <Line style={{textAlign: 'left'}}>
+                    <Label>Module Name</Label>
+                </Line>
+                <JoinModuleList modules={modules}/>
+                <ButtonContainer>
+                    <RectButtonBig
+                        width="100%"
+                        onClick={() => {
+                            history.push('/modules');
+                        }}
+                    >
+                        GET BACK TO MY MODULES
+                    </RectButtonBig>
+                </ButtonContainer>
+            </BigContainer>
+        </BaseContainer>
+    )
 }

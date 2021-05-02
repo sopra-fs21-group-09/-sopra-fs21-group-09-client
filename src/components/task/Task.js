@@ -221,12 +221,20 @@ export function TasksForHome(props){
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
+    const nxtMonthsTaskItem = nxtMonthsTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+
+
     return (
         <div>
-            <DateLabelHome>Today</DateLabelHome>
-            {todaysTaskItem}
-            <DateLabelHome>Tomorrow</DateLabelHome>
-            {tomorrowsTaskItem}
+            {todaysTaskItem.length!=0 ? <DateLabelHome>Today</DateLabelHome> : ''}
+                {todaysTaskItem}
+            {tomorrowsTaskItem.length!=0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
+                {tomorrowsTaskItem}
+            {nxtMonthsTaskItem.length!=0 ? <DateLabelHome>Next Month</DateLabelHome> : ''}
+                {nxtMonthsTaskItem}
         </div>
     )
 

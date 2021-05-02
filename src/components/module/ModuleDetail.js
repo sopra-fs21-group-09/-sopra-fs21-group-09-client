@@ -112,7 +112,7 @@ const TextField2 = styled.label`
 export const ModuleDetail = props => {//props is ID
 
     const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
-    let history = useHistory()
+    //const history = useHistory()
 
     function getNewRandomColor() {
         let boxes = document.getElementsByClassName("Box");
@@ -146,6 +146,9 @@ export const ModuleDetail = props => {//props is ID
         getNewRandomColor();
 
     }, []);
+
+    //const joinModulesGroup = () => history.push('/joinModuleGroup');
+    //const backToModules = () => history.push('/modules');
 
 
         return (
@@ -196,7 +199,7 @@ export const ModuleDetail = props => {//props is ID
                                 <SmallCircleButton
                                     width="100%"
                                     onClick={() => {
-                                        history.push('/joinModuleGroup');
+                                        //joinModulesGroup();
                                     }}
                                 >
                                     <span style={{fontSize: 25}}>
@@ -211,7 +214,7 @@ export const ModuleDetail = props => {//props is ID
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            <Redirect to="/modules" /> //TODO: fix
+                            //backToModules();
                         }}
                     >
                         Back to your Modules
