@@ -67,8 +67,13 @@ export function Tasks(){
             const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
 
             console.log('posted!!!!')
-            document.getElementById("input").value = null;
             console.log(taskDate)
+            const print = new Date(taskDate)
+            var dateString = new Date(taskDate).toISOString().substring(0,10);
+            var dateString = new Date(taskDate).toISOString().split("T")[0];
+            console.log('dateString'+dateString)
+
+            document.getElementById("input").value = null;
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);

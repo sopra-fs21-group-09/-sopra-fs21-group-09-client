@@ -109,12 +109,14 @@ const TextField2 = styled.label`
   line-height:200%;
 `;
 
-export const ModuleDetail = props => {//props is ID
+export function ModuleDetail(props){//props is ID
 
     const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
     //const history = useHistory()
 
-    getNewRandomColor()
+    function getRandomColors(){
+        getNewRandomColor()
+    }
 
     /**
      * HTTP GET request is sent to the backend.
@@ -133,7 +135,7 @@ export const ModuleDetail = props => {//props is ID
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        getNewRandomColor();
+        getRandomColors();
 
     }, []);
 
