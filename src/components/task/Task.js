@@ -59,7 +59,7 @@ export const Task = props => {
     async function markAsDone(){
         try {
             console.log('markAsDone')
-            const response = await api.delete('/task/'+props.id);
+            const response = await api.delete('/tasks/'+props.id);
 
         } catch (error) {
             //alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
