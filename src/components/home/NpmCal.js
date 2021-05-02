@@ -8,6 +8,7 @@ import 'rodal/lib/rodal.css'
 import {CircleButton, RectButtonSmall} from '../../views/Button'
 import { InputField, InputArea } from '../../views/Labels'
 import { api, handleError } from '../../helpers/api'
+import events2 from './Events'
 
 const EventInfo = styled.div`
   display grid;
@@ -25,7 +26,6 @@ const EventLabel = styled.div`
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
     style: {
-      background: '#026C8D'
     },
   })
 
@@ -174,7 +174,7 @@ export default function NpmCal() {
       showMultiDayTimes
       defaultDate={new Date()}
       components={{
-        eventWrapper: ColoredDateCellWrapper,
+        timeSlotWrapper: ColoredDateCellWrapper,
       }}
       localizer={localizer}
       onSelectEvent={event => {setEventVisible(true); setEventId(event.id); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}

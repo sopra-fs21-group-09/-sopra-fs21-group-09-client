@@ -196,36 +196,5 @@ export default [
     desc: 'Test',
     label: 'Meeting',
   },
-  {
-    "desc": null,
-    "end": "Thu Apr 01 2021 00:00:00 GMT+0200 (Mitteleuropäische Sommerzeit)",
-    "id": 106,
-    "label": "EXAM",
-    "start": "Thu Apr 01 2021 00:00:00 GMT+0200 (Mitteleuropäische Sommerzeit)",
-    "title": "npmformat",
-  },
-  {
-    "id": 104,
-    "title": "backend format",
-    "start": new Date('2021-05-01T15:10:00.000+00:00'),
-    "end": new Date('2021-05-01T17:10:00.000+00:00'),
-    "desc": null,
-    "label": "EXAM"
-  },
-  { //valid
-    "id": 124,
-    "title": "test localestring3",
-    "start": new Date('2021-05-01T22:11:00.000+00:00'),
-    "end": new Date('2021-05-02T01:11:00.000+00:00'),
-    "desc": null,
-    "label": null
-  },
-  /*{ //invalid
-    "id": 124,
-    "title": "test localestring5",
-    "start": "2021-05-01T22:11:00.000+00:00",
-    "end": "2021-05-02T01:11:00.000+00:00",
-    "desc": null,
-    "label": null
-  },*/
+
 ]
