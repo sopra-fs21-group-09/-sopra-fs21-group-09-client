@@ -1,8 +1,8 @@
 import React from "react";
-import {RectButtonBig, SmallCircleButton} from "../../views/Button";
+import {SmallCircleButton} from "../../views/Button";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import styled from "styled-components";
-import {Colors} from "../../views/design/Colors";
+import {Colors, getNewRandomColor} from "../../views/design/Colors";
 import {BaseContainer} from "../../views/Layout";
 import {NavBar} from "../navigation/navBar";
 import {PageTitle} from "../../views/Labels";
@@ -43,6 +43,7 @@ class MyGroups extends React.Component {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
+        // Load all groups the user is currently a part of
         try {
             let usersGroups = null;
 
@@ -56,6 +57,10 @@ class MyGroups extends React.Component {
         } catch (error) {
             alert(`Something went wrong while getting your groups: \n${handleError(error)}`);
         }
+
+        // Assign random colors to the GroupContainers
+        getNewRandomColor();
+
     }
 
     render() {

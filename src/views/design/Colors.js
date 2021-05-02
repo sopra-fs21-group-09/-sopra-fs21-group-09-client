@@ -17,3 +17,15 @@ export const Colors = {
     DARK_GREY : '#4F4F4F',
     LIGHT_GREY : '#E5E5E5', 
 }
+
+export function getNewRandomColor() {
+    let boxes = document.getElementsByClassName("Box");
+    console.log(boxes.length);
+    let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
+        '#99CC00', '#d3c331', '#67d363', '#3b96d3'];
+    let i;
+    for (i = 0; i < boxes.length; i++) {
+        // Pick a random color from the array 'colors'.
+        boxes[i].style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    }
+}

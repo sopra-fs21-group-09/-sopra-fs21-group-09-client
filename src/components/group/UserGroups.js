@@ -1,10 +1,12 @@
-import {useHistory} from "react-router";
 import React from "react";
 import styled from "styled-components";
+import { Colors } from "../../views/design/Colors";
 
+
+//Constants we need for this page
 const random = () => Math.floor(Math.random() * 255);
 
-export const GroupContainer = styled.div`
+const GroupContainer = styled.div`
   &:hover {
         transform: translateY(-2px);
         cursor: pointer; 
@@ -18,7 +20,7 @@ export const GroupContainer = styled.div`
   border-radius: 20%;
 `;
 
-export const GroupName = styled.label`
+const GroupName = styled.label`
   color: white;
   width: 80%;
   height: 80%;
@@ -38,23 +40,14 @@ export const GroupName = styled.label`
 
 /**
  * @FunctionalComponent
+ * This displays all the groups the user is currently a part of in the MyGroup page
  */
 const UserGroups = ({ userGroup }) => {
-    const history = useHistory();
-
     return (
-        <GroupContainer>
+        <GroupContainer className={"Box"}>
             <GroupName>{userGroup.name}</GroupName>
         </GroupContainer>
     )
 };
 
 export default UserGroups;
-
-let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
-    '#99CC00', '#d3c331', '#67d363', '#3b96d3'];
-
-function getNewRandomColor(){
-    let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
-        '#99CC00', '#d3c331', '#67d363', '#3b96d3'];
-}

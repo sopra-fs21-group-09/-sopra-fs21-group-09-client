@@ -38,6 +38,7 @@ export const InboxButtonContainer = styled.div`
   width: 80%;
 `;
 
+//define display of Settings of each group
 function groupPrivacy(privacy) {
     if (privacy === true){
         return "Public";
@@ -48,6 +49,7 @@ function groupPrivacy(privacy) {
 
 /**
  * @FunctionalComponent
+ * This displays all AppGroups that the user is currently not a part of
  */
 const AllAppGroups = ({ group }) => {
     const history = useHistory();
@@ -56,7 +58,7 @@ const AllAppGroups = ({ group }) => {
 
     /**
      * HTTP GET request is sent to the backend.
-     * If the request is successful, the groups are shown
+     * If the request is successful, the user joins a public group
      */
     function JoinPublicGroup(id) {
         try {
@@ -69,7 +71,7 @@ const AllAppGroups = ({ group }) => {
 
     /**
      * HTTP POST request is sent to the backend.
-     * If the request is successful, user joins private group
+     * If the request is successful, the user joins private group
      */
     function JoinPrivateGroup() {
         try {
@@ -85,7 +87,7 @@ const AllAppGroups = ({ group }) => {
         }
     }
 
-    // Define display of settings of Groups
+    // Define display of Enroll of each Group
     let settings;
     if (group.memberLimit === 0){
          settings = "unlimited";
