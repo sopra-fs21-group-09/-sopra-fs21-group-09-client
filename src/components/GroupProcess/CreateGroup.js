@@ -7,7 +7,7 @@ import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
-import {Group} from "../group/Group";
+import {Group} from "../group/AllAppGroups";
 
 //Constants we need for this page
 const BigContainer = styled.div`

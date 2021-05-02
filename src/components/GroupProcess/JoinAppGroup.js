@@ -8,7 +8,7 @@ import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
-import Group from "../group/Group";
+import AllAppGroups from "../group/AllAppGroups";
 import {Spinner} from "../../views/design/Spinner";
 
 //Constants we need for this page
@@ -112,7 +112,7 @@ class JoinAppGroup extends React.Component {
                         <ShadowScrollbars style={{height: 430}}>
                             {this.state.groups.map(group => {
                                 return (
-                                    <Group group={group}/>
+                                    <AllAppGroups group={group}/>
                                 );
                             })}
                         </ShadowScrollbars>

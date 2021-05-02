@@ -4,7 +4,7 @@ import styled from "styled-components";
 import {DateLabel} from "../task/Tasks";
 import {Task} from "../task/Task";
 import ShadowScrollbars from "../../views/design/Scrollbars";
-import Group from "../group/Group";
+import Group from "../group/AllAppGroups";
 import {useHistory} from "react-router-dom";
 
 const ModuleBox = styled.div`
