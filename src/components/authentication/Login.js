@@ -21,6 +21,15 @@ const Label = styled.label`
   text-transform: uppercase;
 `;
 
+const GenderLabel = styled.label`
+  color: white;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  font-family: Papyrus;
+  text-transform: uppercase;
+`;
+
 const InputField = styled.input`
   &::placeholder {
     color: ${Colors.COLOR13};
@@ -94,6 +103,7 @@ export const Login = () => {
                 <LogoContainer>
                     <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
                 </LogoContainer>
+                <GenderLabel>Because "Bro is just everyone" -Np69, 2021</GenderLabel>
                 <LoginMainContainer>
                     <Label>Username:</Label>
                     <InputField
