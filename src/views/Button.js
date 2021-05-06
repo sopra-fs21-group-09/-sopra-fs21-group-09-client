@@ -67,6 +67,7 @@ export const RectButton = styled.button`
   color: white;
   margin-bottom: 4%;
   border: 1px solid #11244E;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export const RectButtonBig = styled.button`
@@ -89,6 +90,7 @@ export const RectButtonBig = styled.button`
   color: white;
   margin-bottom: 4%;
   border: 1px solid #11244E;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export const RectButtonSmall = styled.button`
@@ -111,6 +113,7 @@ export const RectButtonSmall = styled.button`
   color: white;
   border: 1px solid #11244E;
   margin-right: -22%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export const RectButtonPopUp = styled.button`
@@ -132,6 +135,7 @@ export const RectButtonPopUp = styled.button`
   border-radius: 10px;
   color: white;
   border: 1px solid #11244E;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export class RoundButton extends Component {

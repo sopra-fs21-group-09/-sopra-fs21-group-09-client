@@ -15,9 +15,7 @@ import {withRouter} from "react-router-dom";
 const BigContainer = styled.div`
   width: 100%;
   border: none;
-  margin: 60px 10px;  
   width: 100%;
-  border: none;
 `;
 
 const ScrollContainer = styled.div`

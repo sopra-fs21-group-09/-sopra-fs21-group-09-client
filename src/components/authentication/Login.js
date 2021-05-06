@@ -1,52 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
 import {withRouter, useHistory} from "react-router-dom";
 import BrolatLogo from "../../views/design/logo/BrolatLogo.png";
-import { LogoContainer} from "../../views/design/logo/Logo";
-import {LoginMainContainer} from "../../views/Layout";
-import { RectButton } from '../../views/Button';
+import {ButtonContainer, GenderButton, GenderLabel, InputField, Label, LoginMainContainer, LogoContainer} from "../../views/design/logo/AuthConstants";
+import {RectButton} from '../../views/Button';
 import User from "../profile/User";
 import {Colors} from "../../views/design/Colors";
-
-
-//Constants we need for this page
-const Label = styled.label`
-  color: black;
-  margin-top: 3%;
-  margin-bottom: 2%;
-  margin-left: 7%;
-  margin-right: 7%;
-  text-transform: uppercase;
-`;
-
-const InputField = styled.input`
-  &::placeholder {
-    color: ${Colors.COLOR13};
-  }
-  height: 35px;
-  padding-left: 15px;
-  margin-left: 7%;
-  margin-right: 7%;
-  border: none;
-  margin-bottom: 20px;
-  background: white;
-  border-radius: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
+import Rodal from "rodal";
 
 export const Login = () => {
-    const [username, setUsername] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [token, setToken] = useState(null)
-    const [date, setDate] = useState(null)
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [visible, setVisible] = useState(false);
 
     const history = useHistory()
 
@@ -69,8 +35,6 @@ export const Login = () => {
             localStorage.setItem('token', user.token);
             localStorage.setItem('id', user.id);
 
-            console.log(response.data);
-
             // Login successfully worked --> navigate to the route /home
             history.push('/home');
 
@@ -81,6 +45,7 @@ export const Login = () => {
 
     // this will run, when the component is first initialized
     useEffect(() => {
+        //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR13;
     }, []);
 
@@ -93,7 +58,16 @@ export const Login = () => {
             <BaseContainer>
                 <LogoContainer>
                     <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
+                    <GenderButton
+                        onClick={() => {
+                            setVisible(true);
+                        }}
+                    ></GenderButton>
                 </LogoContainer>
+                {/*Overlay for button */}
+                <Rodal height='100' width='390' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                    <div><GenderLabel>Because a "Bro is just everyone" - Np69, 2021</GenderLabel></div>
+                </Rodal>
                 <LoginMainContainer>
                     <Label>Username:</Label>
                     <InputField

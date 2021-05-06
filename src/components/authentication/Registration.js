@@ -1,156 +1,122 @@
-import React from 'react';
-import styled from 'styled-components';
-import { BaseContainer } from '../../views/Layout';
-import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {BaseContainer} from '../../views/Layout';
+import {api, handleError} from '../../helpers/api';
+import {useHistory, withRouter} from "react-router-dom";
 import BrolatLogo from "../../views/design/logo/BrolatLogo.png";
-import { LogoContainer} from "../../views/design/logo/Logo";
-import {LoginMainContainer} from "../../views/Layout";
-import { RectButton } from '../../views/Button';
+import {ButtonContainer, GenderButton, GenderLabel, InputField, Label, LoginMainContainer, LogoContainer} from "../../views/design/logo/AuthConstants";
+import {RectButton} from '../../views/Button';
 import User from "../profile/User";
 import {Colors} from "../../views/design/Colors";
+import Rodal from "rodal";
 
-//Constants we need for this page
-const Label = styled.label`
-  color: black;
-  margin-top: 3%;
-  margin-bottom: 2%;
-  margin-left: 7%;
-  margin-right: 7%;
-  text-transform: uppercase;
-`;
+export const Registration = () => {
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [name, setName] = useState(null);
+    const [visible, setVisible] = useState(false);
 
-const InputField = styled.input`
-  &::placeholder {
-    color: #4F4F4F;
-  }
-  height: 35px;
-  padding-left: 15px;
-  margin-left: 7%;
-  margin-right: 7%;
-  border: none;
-  margin-bottom: 20px;
-  background: white;
-  border-radius: 20px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-`;
-
-
-class Registration extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: null,
-            password: null,
-            token: null
-        };
-    }
+    const history = useHistory()
 
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, a new user is returned to the front-end
      * and its token is stored in the localStorage.
      */
-    async registration() {
+    async function registration() {
         try {
             const requestBody = JSON.stringify({
-                name: this.state.name,
-                username: this.state.username,
-                password: this.state.password
+                name: name,
+                username: username,
+                password: password
             });
-            console.log("requestbody");
+
             const response = await api.post('/users', requestBody);
-            console.log("post");
+
             // Get the returned user and update a new object.
             const user = new User(response.data);
 
             // Store the token into the local storage.
             localStorage.setItem('token', user.token);
             localStorage.setItem('id', user.id);
-            console.log(localStorage);
 
             // Login successfully worked --> navigate to the route /game in the GameRouter
-            this.props.history.push(`/home`);
+            history.push(`/home`);
+
         } catch (error) {
             alert(`Something went wrong during the registration: \n${handleError(error)}`);
         }
     }
 
-    componentDidMount() {
+    // this will run, when the component is first initialized
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR13;
-    }
+    }, []);
 
-    /**
-     *  Every time the user enters something in the input field, the state gets updated.
-     * @param key (the key of the state for identifying the field that needs to be updated)
-     * @param value (the value that gets assigned to the identified state key)
-     */
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+    });
 
-    render() {
-        return (
-            <BaseContainer>
-                <LogoContainer>
-                    <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
-                </LogoContainer>
-                <LoginMainContainer>
-                    <Label>Name:</Label>
-                    <InputField
-                        placeholder="Enter your name here..."
-                        onChange={e => {
-                            this.handleInputChange('name', e.target.value);
+    return (
+        <BaseContainer>
+            <LogoContainer>
+                <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
+                <GenderButton
+                    onClick={() => {
+                        setVisible(true);
+                    }}
+                ></GenderButton>
+            </LogoContainer>
+            {/*Overlay for button */}
+            <Rodal height='100' width='390' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                <div><GenderLabel>Because a "Bro is just everyone" - Np69, 2021</GenderLabel></div>
+            </Rodal>
+            <LoginMainContainer>
+                <Label>Name:</Label>
+                <InputField
+                    placeholder="Enter your name here..."
+                    onChange={e => {
+                        setName(e.target.value);                        }}
+                />
+                <Label>Username:</Label>
+                <InputField
+                    placeholder="Enter your username here..."
+                    onChange={e => {
+                        setUsername(e.target.value);                        }}
+                />
+                <Label>Password:</Label>
+                <InputField
+                    placeholder="Enter your password here..."
+                    type="password"
+                    onChange={e => {
+                        setPassword(e.target.value)
+                    }}
+                />
+                <ButtonContainer>
+                    <RectButton
+                        disabled={!name || !username || !password}
+                        width="60%"
+                        onClick={() => {
+                            registration();
                         }}
-                    />
-                    <Label>Username:</Label>
-                    <InputField
-                        placeholder="Enter your username here..."
-                        onChange={e => {
-                            this.handleInputChange('username', e.target.value);
+                    >
+                        Create Account!
+                    </RectButton>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <RectButton
+                        width="60%"
+                        onClick={() => {
+                            history.push(`/login`);
                         }}
-                    />
-                    <Label>Password:</Label>
-                    <InputField
-                        type="password"
-                        placeholder="Enter your password here..."
-                        onChange={e => {
-                            this.handleInputChange('password', e.target.value);
-                        }}
-                    />
-                    <ButtonContainer>
-                        <RectButton
-                            disabled={!this.state.name || !this.state.username || !this.state.password}
-                            width="60%"
-                            onClick={() => {
-                                this.registration();
-                            }}
-                        >
-                            Create Account!
-                        </RectButton>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButton
-                            width="60%"
-                            onClick={() => {
-                                this.props.history.push(`/login`);
-                            }}
-                        >
-                            Already have an account? Login here!
-                        </RectButton>
-                    </ButtonContainer>
-                </LoginMainContainer>
-            </BaseContainer>
-        )
-    }
+                    >
+                        Already have an account? Login here!
+                    </RectButton>
+                </ButtonContainer>
+            </LoginMainContainer>
+        </BaseContainer>
+    )
+
 }
 
 export default withRouter(Registration);

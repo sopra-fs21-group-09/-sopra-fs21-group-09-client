@@ -60,9 +60,9 @@ const AllAppGroups = ({ group }) => {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the user joins a public group
      */
-    function JoinPublicGroup(id) {
+    function JoinPublicGroup() {
         try {
-            api.post(`/users/${localStorage.getItem('id')}/groups/${id}`);
+            api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}`);
             history.push('/myGroups');
         } catch (error) {
             alert(`Something went wrong while joining the group: \n${handleError(error)}`);
@@ -72,6 +72,8 @@ const AllAppGroups = ({ group }) => {
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, the user joins private group
+     * TODO: Error for wrong passwords needs to be displayed
+     * TODO: Privat group only gets displayed in myGroups after reloading the page
      */
     function JoinPrivateGroup() {
         try {
@@ -106,7 +108,7 @@ const AllAppGroups = ({ group }) => {
                     width="100%"
                     onClick={() => {
                         if (group.open === true){
-                            JoinPublicGroup(group.id);
+                            JoinPublicGroup();
                         } else if (group.open === false){
                             setVisible(true);
                         }
@@ -118,6 +120,7 @@ const AllAppGroups = ({ group }) => {
                 <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
                     <div><InputFieldPopUp
                         placeholder="Enter group password here..."
+                        type="password"
                         onChange={e => {
                             setPassword(e.target.value);
                         }}

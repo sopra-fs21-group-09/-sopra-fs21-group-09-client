@@ -1,30 +1,22 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {Colors} from "../../views/design/Colors";
 import {TaskList} from "../task/Task"
 import styled from "styled-components";
 import "./Task.css"
-import {InputField} from "../../views/Labels";
+import {InputField, Label} from "../../views/Labels";
 import Header from "../../views/design/Header";
 import {CircleButton, RectButton} from "../../views/Button";
 import Rodal from "rodal";
-import {Label} from "../../views/Labels";
-import { api, handleError } from '../../helpers/api';
+import {api, handleError} from '../../helpers/api';
 
 
-export const DateLabel = styled.label`
-  margin-top: 10px;
-  font-size: 20px;
-  color: black;  
-`;
-
-const AddButton = styled(CircleButton)`
+export const AddButton = styled(CircleButton)`
     position: 'absolute';
     top: 22px;
     right: 30px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
-
 
 export function Tasks(){
     const [userID, setUserID] = useState('userID')
@@ -116,6 +108,7 @@ export function Tasks(){
                     <Label style={{color: 'black'}}>NEW TASK</Label>
                     <div>Title:
                         <InputField id='input'
+                                    width='75%'
                             onChange={e => {
                                 setTaskName(e.target.value);
                             }}
@@ -134,7 +127,7 @@ export function Tasks(){
                             position: 'absolute',
                             bottom: '0'
                         }}
-                        //disabled={taskName  || taskDate}
+                        disabled={!taskName  || !taskDate}
                         onClick={() => {
                             postTask();
                             setVisible(false);

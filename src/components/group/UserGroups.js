@@ -1,12 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
-import { Colors } from "../../views/design/Colors";
-
+import {useHistory} from "react-router";
+import Rodal from "rodal";
+import {InputFieldPopUp} from "../../views/Labels";
+import {RectButtonPopUp} from "../../views/Button";
 
 //Constants we need for this page
-const random = () => Math.floor(Math.random() * 255);
-
-const GroupContainer = styled.div`
+const GroupContainer = styled.button`
   &:hover {
         transform: translateY(-2px);
         cursor: pointer; 
@@ -14,7 +14,6 @@ const GroupContainer = styled.div`
   display: flex;
   justify-content: center;
   place-self: center;
-  background: rgb(${random()}, ${random()}, ${random()});
   width: 125px;
   height: 125px;
   border-radius: 20%;
@@ -43,10 +42,21 @@ const GroupName = styled.label`
  * This displays all the groups the user is currently a part of in the MyGroup page
  */
 const UserGroups = ({ userGroup }) => {
+    const history = useHistory();
+
     return (
-        <GroupContainer className={"Box"}>
+        <GroupContainer
+            className={"Box"}
+            onClick={() => {
+                history.push({
+                    pathname: '/groupDetail',
+                    state: { detail: userGroup }
+                });
+            }}
+        >
             <GroupName>{userGroup.name}</GroupName>
         </GroupContainer>
+
     )
 };
 

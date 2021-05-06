@@ -12,6 +12,7 @@ import {Modules} from "../../../components/module/Modules";
 import {JoinModules} from "../../../components/module/JoinModules"
 import {ModuleDetail} from "../../../components/module/ModuleDetail";
 import MyGroups from "../../../components/group/MyGroups";
+import GroupDetail from "../../../components/group/GroupDetail";
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
@@ -128,6 +129,14 @@ class AppRouter extends React.Component {
                   </HomeGuard>
               )}
             />
+            <Route
+              path="/groupDetail"
+              render={() => (
+                  <HomeGuard>
+                      <GroupDetail />
+                  </HomeGuard>
+              )}
+              />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>
