@@ -7,6 +7,7 @@ import ShadowScrollbars from "../../views/design/Scrollbars";
 import Group from "../group/AllAppGroups";
 import {useHistory} from "react-router-dom";
 import {ModuleDetail} from "./ModuleDetail";
+import {api, handleError} from "../../helpers/api";
 
 const ModuleBox = styled.div`
   height: 60px;
@@ -33,25 +34,44 @@ const InboxButtonContainer = styled.div`
   width: 80%;
 `;
 
+async function postModule(id){
+    try {
+        const response = await api.post('/users/'+localStorage.getItem('id')+'/modules/'+id)
+
+    } catch (error) {
+        alert(`Something went wrong during post module: \n${handleError(error)}`);
+    }
+}
+
+function infoButton(history, module){
+    return(
+    <InboxButtonContainer>
+        <RectButtonSmall
+            width="100%"
+            onClick={() => {
+                history.push({
+                    pathname: '/moduleDetail',
+                    module: module
+                });
+                //history.push('/moduleDetail');
+                //{ModuleDetail(props.id)}
+            }}
+        >
+            Info
+        </RectButtonSmall>
+    </InboxButtonContainer>
+    )
+}
+
 
 export const Module = props => {
     const history = useHistory()
 
     return (
         <ModuleBox>
-            <InboxLabel>{props.name}</InboxLabel>
-            <InboxLabel>{props.description}</InboxLabel>
-            <InboxButtonContainer>
-                <RectButtonSmall
-                    width="100%"
-                    onClick={() => {
-                        history.push('/moduleDetail');
-                        {ModuleDetail(props.id)}
-                    }}
-                >
-                    Info
-                </RectButtonSmall>
-            </InboxButtonContainer>
+            <InboxLabel>{props.module.name}</InboxLabel>
+            <InboxLabel>{props.module.description}</InboxLabel>
+            {infoButton(history, props.module)}
         </ModuleBox>
     )
 }
@@ -61,25 +81,18 @@ export const JoinModule = props => {
 
     return (
         <ModuleBox>
-            <InboxLabel>{props.name}</InboxLabel>
+            <InboxLabel>{props.module.name}</InboxLabel>
             <InboxButtonContainer style={{width: '30%'}}>
                 <RectButtonSmall
                     onClick={() => {
+                        postModule(props.module.id);
+                        history.push('/modules');
                     }}
                 >
                     Join
                 </RectButtonSmall>
             </InboxButtonContainer>
-            <InboxButtonContainer>
-                <RectButtonSmall
-                    width="100%"
-                    onClick={() => {
-                        history.push('/moduleDetail');
-                    }}
-                >
-                    Info
-                </RectButtonSmall>
-            </InboxButtonContainer>
+            {infoButton(history, props.module)}
         </ModuleBox>
     )
 }
@@ -93,7 +106,7 @@ export function ModuleList(props) {
         <ShadowScrollbars style={{height: 430}}>
             {modules.map(module => {
                 return (
-                    <Module name={module.name} description={module.description}/>
+                    <Module module={module}/>
                 );
             })}
         </ShadowScrollbars>
@@ -108,7 +121,7 @@ export function JoinModuleList(props) {
         <ShadowScrollbars style={{height: 430}}>
             {modules.map(module => {
                 return (
-                    <JoinModule name={module.name} description={module.description}/>
+                    <JoinModule module={module}/>
                 );
             })}
         </ShadowScrollbars>

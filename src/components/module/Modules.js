@@ -55,7 +55,7 @@ export function Modules() {
      */
     async function getModules() {
         try {
-            const response = await api.get('/modules')
+            const response = await api.get('/users/'+localStorage.getItem('id')+'/modules')
 
             setModules(response.data)
 
@@ -70,6 +70,11 @@ export function Modules() {
         console.log('Run only when initialized')
         getModules();
     }, []);
+
+    useEffect(() => {
+        document.body.style.backgroundColor = Colors.COLOR11;
+        getModules();
+    }, [history]);
 
         return (
             <BaseContainer>

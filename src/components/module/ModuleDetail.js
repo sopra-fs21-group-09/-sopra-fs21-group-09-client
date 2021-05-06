@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import {withRouter, useLocation} from "react-router-dom";
 import {SmallCircleButton, CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors, getNewRandomColor } from "../../views/design/Colors";
@@ -109,9 +109,48 @@ const TextField2 = styled.label`
   line-height:200%;
 `;
 
-export function ModuleDetail(props){//props is ID
+const DetailContainer = props => {
+    return(
+        <LeftContainer>
+            <Label>Info</Label>
+            <Line>
+                <IconHolder>
+                    <span style={{fontSize: 35}}>
+                        <i className="far fa-user"></i>
+                    </span>
+                </IconHolder>
+                <TextField1>{module ? module.prof_name : 'Not Loaded Yet'}</TextField1>
+            </Line>
+            <Line>
+                <IconHolder>
+                                <span style={{fontSize: 35}}>
+                                    <i className="far fa-calendar"></i>
+                                </span>
+                </IconHolder>
+                <TextField1>Monday, 14.00-16.00</TextField1><br />
+            </Line>
+            <Line>
+                <IconHolder>
+                                <span style={{fontSize: 35}}>
+                                    <i className="fas fa-video"></i>
+                                </span>
+                </IconHolder>
+                <TextField1>{module ? module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
+            </Line>
+            <Label>Deadlines</Label><br />
+            <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+        </LeftContainer>
+    )
+}
+
+export function ModuleDetail(props){//props is id
 
     const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
+    const location = useLocation();
+    const [module, setModule] = useState()
     //const history = useHistory()
 
     function getRandomColors(){
@@ -136,8 +175,13 @@ export function ModuleDetail(props){//props is ID
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
         getRandomColors();
-
     }, []);
+
+    useEffect(() => {
+        console.log(location.pathname); // result: '/secondpage'
+        console.log(location.module); // result: 'some_value'
+        setModule(location.module)
+    }, [location]);
 
     //const joinModulesGroup = () => history.push('/joinModuleGroup');
     //const backToModules = () => history.push('/modules');
@@ -146,7 +190,7 @@ export function ModuleDetail(props){//props is ID
         return (
             <BaseContainer>
                 <NavBar/>
-                <PageTitle>ModuleDetail</PageTitle>
+                <PageTitle>Module Detail</PageTitle>
                 <BigContainer>
                     <LeftContainer>
                         <Label>Info</Label>
@@ -156,7 +200,7 @@ export function ModuleDetail(props){//props is ID
                                     <i className="far fa-user"></i>
                                 </span>
                             </IconHolder>
-                            <TextField1>Prof. Thomas Fritz</TextField1>
+                            <TextField1>{module ? module.prof_name : 'Not Loaded Yet'}</TextField1>
                         </Line>
                         <Line>
                             <IconHolder>
@@ -172,7 +216,7 @@ export function ModuleDetail(props){//props is ID
                                     <i className="fas fa-video"></i>
                                 </span>
                             </IconHolder>
-                        <TextField1>https://zoom.us/...</TextField1><br />
+                        <TextField1>{module ? module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
                         </Line>
                         <Label>Deadlines</Label><br />
                         <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
@@ -180,6 +224,7 @@ export function ModuleDetail(props){//props is ID
                         <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
                         <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
                     </LeftContainer>
+                    {/*<DetailContainer module={module}/>*/}
                     <RightContainer>
                         <Label>Joined Groups</Label>
                         <ShadowScrollbars style={{height: 420}}>
