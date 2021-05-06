@@ -1,16 +1,12 @@
 import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
 import React, {useState} from "react";
-import {CalendarContainer} from "../home/Calendar";
-import {api, handleError} from "../../helpers/api";
-import User from "../profile/User";
-import {DateLabel} from "./Tasks";
-import {today} from "../home/Dates";
+import {api} from "../../helpers/api";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
-  heigth: 50%;
+  height: 50%;
 `;
 
 export const TaskContainer = styled.div`
@@ -19,9 +15,9 @@ export const TaskContainer = styled.div`
     background: ${Colors.TASK};
     color: white;
   }
-  width: 100%;
+  width: 90%;
   padding: 4px 0px 5px 10px;
-  margin: 5px 0px 0px 0px;
+  margin: 5px 0px 0px 5%;
   border: 3px solid #018692;
   border-radius: 45px;
   align-items: center;
@@ -52,6 +48,18 @@ export const DateLabelHome = styled.label`
   margin-top: 10px;
   font-size: 12px;
   color: white;  
+`;
+
+export const DateLabel = styled.label`
+  margin-left: 5%;
+  font-size: 20px;
+  color: orange;
+`;
+
+const InfoLabel = styled.label`
+  margin-left: 6.5%;
+  font-size: 18px;
+  color: black;  
 `;
 
 export const Task = props => {
@@ -191,16 +199,19 @@ export function TaskList(props) {
             <div class='column'>
                 <DateLabel>Today</DateLabel>
                 <ShadowScrollbars style={{height: 320}}>
+                    <InfoLabel>{todaysTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {todaysTaskItem}
                 </ShadowScrollbars>
             </div>
             <div class='column'>
                 <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
                 <ShadowScrollbars style={{height: 160}}>
+                    <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {tomorrowsTaskItem}
                 </ShadowScrollbars>
                 <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
                 <ShadowScrollbars style={{height: 160}}>
+                    <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsTaskItem}
                 </ShadowScrollbars>
 

@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {RectButtonSmall} from "../../views/Button";
 import styled from "styled-components";
-import {DateLabel} from "../task/Tasks";
-import {Task} from "../task/Task";
+import {DateLabel, Task} from "../task/Task";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import Group from "../group/AllAppGroups";
 import {useHistory} from "react-router-dom";
