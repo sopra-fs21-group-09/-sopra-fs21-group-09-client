@@ -14,7 +14,6 @@ import { AddButton} from "../task/Tasks";
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
-  background: green;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 `;
@@ -22,13 +21,11 @@ const BigContainer = styled.div`
 const LeftContainer = styled.div`
   width: 100%;
   padding-left: 5%;
-  background: orange;
 `;
 
 const RightContainer = styled.div`
   width: 100%;
   padding-left: 5%;
-  background: blue;
 `;
 
 const Label = styled.label`
@@ -155,7 +152,7 @@ export const GroupDetail = () => {
                                         position: 'absolute',
                                         bottom: '0'
                                     }}
-                                    //disabled={taskName  || taskDate}
+                                    disabled={!taskName  || !taskDate}
                                     onClick={() => {
                                         postGroupTask();
                                         setVisible(false);
@@ -167,7 +164,7 @@ export const GroupDetail = () => {
                         <GroupTaskList tasks={tasks}/>
                     </div>
                 </LeftContainer>
-                <RightContainer>Right</RightContainer>
+                <RightContainer>Here will be the Chat/Whiteboard</RightContainer>
             </BigContainer>
         </BaseContainer>
     )

@@ -1,9 +1,16 @@
 import React from "react";
 import {Task, todaysTasks, tomorrowsTasks, nxtMonthsTasks, otherTasks} from "../task/Task";
 import styled from "styled-components";
+import {Colors} from "../../views/design/Colors";
 
 const DateLabel = styled.label`
+  margin-left: -1.5%;
   font-size: 20px;
+  color: orange;  
+`;
+
+const InfoLabel = styled.label`
+  font-size: 18px;
   color: black;  
 `;
 
@@ -39,10 +46,15 @@ export function GroupTaskList(props) {
             <div>
                 <DateLabel>Today</DateLabel><br/>
                 {todayTaskItem}
-                <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel><br/>
+                <InfoLabel>{todayTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
+
+                <DateLabel>Tomorrow</DateLabel><br/>
                 {tomorrowsTaskItem}
-                <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
+                <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
+
+                <DateLabel>Next Month</DateLabel><br/>
                 {nxtMonthsTaskItem}
+                <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
             </div>
     )
 
