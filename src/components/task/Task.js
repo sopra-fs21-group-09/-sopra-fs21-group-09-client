@@ -6,6 +6,7 @@ import {api, handleError} from "../../helpers/api";
 import User from "../profile/User";
 import {DateLabel} from "./Tasks";
 import {today} from "../home/Dates";
+import ShadowScrollbars from "../../views/design/Scrollbars";
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
@@ -189,13 +190,20 @@ export function TaskList(props) {
         <div class='row'>
             <div class='column'>
                 <DateLabel>Today</DateLabel>
-                {todaysTaskItem}
+                <ShadowScrollbars style={{height: 320}}>
+                    {todaysTaskItem}
+                </ShadowScrollbars>
             </div>
             <div class='column'>
                 <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
-                {tomorrowsTaskItem}
+                <ShadowScrollbars style={{height: 160}}>
+                    {tomorrowsTaskItem}
+                </ShadowScrollbars>
                 <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
-                {nxtMonthsTaskItem}
+                <ShadowScrollbars style={{height: 160}}>
+                    {nxtMonthsTaskItem}
+                </ShadowScrollbars>
+
                 {/*<DateLabel>{otherTasks!=[]? 'No Date': 'x'}</DateLabel>
                 {otherTaskItem}*/}
             </div>

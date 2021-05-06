@@ -1,7 +1,7 @@
 import React from "react";
 import {Task, todaysTasks, tomorrowsTasks, nxtMonthsTasks, otherTasks} from "../task/Task";
 import styled from "styled-components";
-import {Colors} from "../../views/design/Colors";
+import ShadowScrollbars from "../../views/design/Scrollbars";
 
 const DateLabel = styled.label`
   margin-left: -1.5%;
@@ -45,15 +45,21 @@ export function GroupTaskList(props) {
     return (
             <div>
                 <DateLabel>Today</DateLabel><br/>
-                {todayTaskItem}
+                <ShadowScrollbars style={{height: 80}}>
+                    {todayTaskItem}
+                </ShadowScrollbars>
                 <InfoLabel>{todayTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
 
                 <DateLabel>Tomorrow</DateLabel><br/>
-                {tomorrowsTaskItem}
+                <ShadowScrollbars style={{height: 80}}>
+                    {tomorrowsTaskItem}
+                </ShadowScrollbars>
                 <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
 
                 <DateLabel>Next Month</DateLabel><br/>
-                {nxtMonthsTaskItem}
+                <ShadowScrollbars style={{height: 80}}>
+                    {nxtMonthsTaskItem}
+                </ShadowScrollbars>
                 <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
             </div>
     )
