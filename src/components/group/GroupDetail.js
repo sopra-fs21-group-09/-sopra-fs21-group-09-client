@@ -6,10 +6,10 @@ import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
 import {InputField, PageTitle} from "../../views/Labels";
 import Rodal from "rodal";
-import {RectButton} from "../../views/Button";
+import {CircleButton, RectButton} from "../../views/Button";
 import {GroupTaskList} from "./GroupTasks";
 import {api, handleError} from "../../helpers/api";
-import { AddButton} from "../task/Tasks";
+import {ButtonContainer} from "../../views/design/logo/AuthConstants";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -26,6 +26,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   width: 100%;
   padding-left: 5%;
+  border: 1px solid #11244E;
 `;
 
 const Label = styled.label`
@@ -33,6 +34,21 @@ const Label = styled.label`
   margin-left: 2%;
   color: orange;
   font-size: 25px;
+`;
+
+const AddButton = styled(CircleButton)`
+    position: 'absolute';
+    display: flex;
+    justify-content: center;
+    top: 22px;
+    width: 95px;
+    height: 30px;
+    right: 30px;
+    border-radius: 20px;
+    background: ${Colors.BUTTON};
+    color: white;
+    border: 1px solid #11244E;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 export const GroupDetail = () => {
@@ -95,8 +111,7 @@ export const GroupDetail = () => {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-
-        console.log('Runs only when initialized')
+        console.log(location.state.detail.name);
         getGroupTasks()
     }, [location]);
 
@@ -104,15 +119,11 @@ export const GroupDetail = () => {
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getGroupTasks()
-        console.log('Runs only when tasks are added')
-        console.log(document.getElementById("input").value)
-
     }, [visible]);
 
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('runs every other time')
     })
 
     // this will run when the component mounts and anytime the stateful data changes
@@ -122,13 +133,12 @@ export const GroupDetail = () => {
     return (
         <BaseContainer>
             <NavBar/>
-            <PageTitle>Group Details</PageTitle>
+            <PageTitle>{location.state.detail.name} Details</PageTitle>
             <BigContainer>
                 <LeftContainer>
                     <div style={{padding: '0px'}}>
-                        <AddButton
-                            onClick={() => setVisible(true)}>
-                            <i className="fas fa-plus fa-2x"/>
+                        <AddButton>
+                            Leave Group
                         </AddButton>
                         <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
                             <Label style={{color: 'black'}}>NEW TASK</Label>
@@ -162,6 +172,12 @@ export const GroupDetail = () => {
                             </div>
                         </Rodal>
                         <GroupTaskList tasks={tasks}/>
+                        <ButtonContainer>
+                            <RectButton
+                                onClick={() => setVisible(true)}>
+                                Add Task
+                            </RectButton>
+                        </ButtonContainer>
                     </div>
                 </LeftContainer>
                 <RightContainer>Here will be the Chat/Whiteboard</RightContainer>

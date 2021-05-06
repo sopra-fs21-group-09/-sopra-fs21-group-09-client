@@ -45,22 +45,23 @@ export function GroupTaskList(props) {
     return (
             <div>
                 <DateLabel>Today</DateLabel><br/>
-                <ShadowScrollbars style={{height: 80}}>
+                <ShadowScrollbars style={{height: 120}}>
+                    <InfoLabel>{todayTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {todayTaskItem}
-                </ShadowScrollbars>
-                <InfoLabel>{todayTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
+                </ShadowScrollbars><br/>
 
                 <DateLabel>Tomorrow</DateLabel><br/>
-                <ShadowScrollbars style={{height: 80}}>
+                <ShadowScrollbars style={{height: 120}}>
+                    <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {tomorrowsTaskItem}
-                </ShadowScrollbars>
-                <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
+                </ShadowScrollbars><br/>
 
                 <DateLabel>Next Month</DateLabel><br/>
-                <ShadowScrollbars style={{height: 80}}>
+                <ShadowScrollbars style={{height: 120}}>
+                    <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsTaskItem}
-                </ShadowScrollbars>
-                <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel><br/>
+                </ShadowScrollbars><br/>
+
             </div>
     )
 
