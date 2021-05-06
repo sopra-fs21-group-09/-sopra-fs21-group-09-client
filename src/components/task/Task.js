@@ -101,7 +101,7 @@ function tomorrowsDate(){
 }
 
 
-function todaysTasks(props) {
+export function todaysTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
     for (var i = 0; i < tasks.length; i++) {
@@ -115,7 +115,7 @@ function todaysTasks(props) {
 
 }
 
-function tomorrowsTasks(props) {
+export function tomorrowsTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
     for (var i = 0; i < tasks.length; i++) {
@@ -129,7 +129,7 @@ function tomorrowsTasks(props) {
 
 }
 
-function nxtMonthsTasks(props) {
+export function nxtMonthsTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
     for (var i = 0; i < tasks.length; i++) {
@@ -144,7 +144,7 @@ function nxtMonthsTasks(props) {
 }
 
 
-function otherTasks(props) {
+export function otherTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
     for (var i = 0; i < tasks.length; i++) {

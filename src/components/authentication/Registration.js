@@ -57,65 +57,66 @@ export const Registration = () => {
     useEffect(() => {
     });
 
-        return (
-            <BaseContainer>
-                <LogoContainer>
-                    <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
-                    <GenderButton
+    return (
+        <BaseContainer>
+            <LogoContainer>
+                <img src={BrolatLogo} height='200px' width='430px'  alt={"example"}/>
+                <GenderButton
+                    onClick={() => {
+                        setVisible(true);
+                    }}
+                ></GenderButton>
+            </LogoContainer>
+            {/*Overlay for button */}
+            <Rodal height='100' width='390' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                <div><GenderLabel>Because a "Bro is just everyone" - Np69, 2021</GenderLabel></div>
+            </Rodal>
+            <LoginMainContainer>
+                <Label>Name:</Label>
+                <InputField
+                    placeholder="Enter your name here..."
+                    onChange={e => {
+                        setName(e.target.value);                        }}
+                />
+                <Label>Username:</Label>
+                <InputField
+                    placeholder="Enter your username here..."
+                    onChange={e => {
+                        setUsername(e.target.value);                        }}
+                />
+                <Label>Password:</Label>
+                <InputField
+                    placeholder="Enter your password here..."
+                    type="password"
+                    onChange={e => {
+                        setPassword(e.target.value)
+                    }}
+                />
+                <ButtonContainer>
+                    <RectButton
+                        disabled={!name || !username || !password}
+                        width="60%"
                         onClick={() => {
-                            setVisible(true);
+                            registration();
                         }}
-                    ></GenderButton>
-                </LogoContainer>
-                {/*Overlay for button */}
-                <Rodal height='100' width='390' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
-                    <div><GenderLabel>Because a "Bro is just everyone" - Np69, 2021</GenderLabel></div>
-                </Rodal>
-                <LoginMainContainer>
-                    <Label>Name:</Label>
-                    <InputField
-                        placeholder="Enter your name here..."
-                        onChange={e => {
-                            setName(e.target.value);                        }}
-                    />
-                    <Label>Username:</Label>
-                    <InputField
-                        placeholder="Enter your username here..."
-                        onChange={e => {
-                            setUsername(e.target.value);                        }}
-                    />
-                    <Label>Password:</Label>
-                    <InputField
-                        placeholder="Enter your password here..."
-                        type="password"
-                        onChange={e => {
-                            setPassword(e.target.value)
+                    >
+                        Create Account!
+                    </RectButton>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <RectButton
+                        width="60%"
+                        onClick={() => {
+                            history.push(`/login`);
                         }}
-                    />
-                    <ButtonContainer>
-                        <RectButton
-                            disabled={!name || !username || !password}
-                            width="60%"
-                            onClick={() => {
-                                registration();
-                            }}
-                        >
-                            Create Account!
-                        </RectButton>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButton
-                            width="60%"
-                            onClick={() => {
-                                history.push(`/login`);
-                            }}
-                        >
-                            Already have an account? Login here!
-                        </RectButton>
-                    </ButtonContainer>
-                </LoginMainContainer>
-            </BaseContainer>
-        )
+                    >
+                        Already have an account? Login here!
+                    </RectButton>
+                </ButtonContainer>
+            </LoginMainContainer>
+        </BaseContainer>
+    )
+
 }
 
 export default withRouter(Registration);

@@ -18,7 +18,7 @@ export const DateLabel = styled.label`
   color: black;  
 `;
 
-const AddButton = styled(CircleButton)`
+export const AddButton = styled(CircleButton)`
     position: 'absolute';
     top: 22px;
     right: 30px;

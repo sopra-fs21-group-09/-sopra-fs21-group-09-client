@@ -48,7 +48,10 @@ const UserGroups = ({ userGroup }) => {
         <GroupContainer
             className={"Box"}
             onClick={() => {
-                history.push('/groupDetail');
+                history.push({
+                    pathname: '/groupDetail',
+                    state: { detail: userGroup.id }
+                });
             }}
         >
             <GroupName>{userGroup.name}</GroupName>
