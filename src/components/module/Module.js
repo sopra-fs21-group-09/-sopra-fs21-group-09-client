@@ -52,8 +52,6 @@ function infoButton(history, module){
                     pathname: '/moduleDetail',
                     module: module
                 });
-                //history.push('/moduleDetail');
-                //{ModuleDetail(props.id)}
             }}
         >
             Info

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import {useLocation, withRouter} from "react-router-dom";
 import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
@@ -75,19 +75,17 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-class JoinModuleGroup extends React.Component {
-    constructor() {
-        super();
-        this.state = {
+export function JoinModuleGroup (props) {
+    const location = useLocation();
+    const [moduleId, setModuleId] = useState('')
+    const [moduleName, setModuleName] = useState('')
 
-        };
-    }
 
     /**
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async joinModuleGroup() {
+    async function joinModuleGroup() {
         try {
 
         } catch (error) {
@@ -95,161 +93,157 @@ class JoinModuleGroup extends React.Component {
         }
     }
 
-    componentDidMount() {
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-    }
+        setModuleId(location.moduleId)
+        setModuleName(location.moduleName)
+    }, []);
 
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
 
-    render() {
-        return (
-            <BaseContainer>
-                <NavBar/>
-                <PageTitle>"Module Name" Groups</PageTitle>
-                <BigContainer>
-                    <Line>
-                        <Label>Group Name</Label>
-                        <Label>Creator</Label>
-                        <Label>Settings</Label>
-                        <Label>Enroll</Label>
-                    </Line>
-                    <ShadowScrollbars style={{height: 430}}>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                        <ModuleBox>
-                            <InboxLabel>Group 1</InboxLabel>
-                            <InboxLabelName>Samuele Walzer</InboxLabelName>
-                            <InboxLabel>Private</InboxLabel>
-                            <InboxLabel>4/6</InboxLabel>
-                            <InboxButtonContainer>
-                                <RectButtonSmall
-                                    width="100%"
-                                    onClick={() => {
-                                    }}
-                                >
-                                    Join
-                                </RectButtonSmall>
-                            </InboxButtonContainer>
-                        </ModuleBox>
-                    </ShadowScrollbars>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/createGroup');
-                            }}
-                        >
+    return (
+        <BaseContainer>
+            <NavBar/>
+            <PageTitle>{moduleName? moduleName : 'Loading'} Groups</PageTitle>
+            <BigContainer>
+                <Line>
+                    <Label>Group Name</Label>
+                    <Label>Creator</Label>
+                    <Label>Settings</Label>
+                    <Label>Enroll</Label>
+                </Line>
+                <ShadowScrollbars style={{height: 430}}>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                    <ModuleBox>
+                        <InboxLabel>Group 1</InboxLabel>
+                        <InboxLabelName>Samuele Walzer</InboxLabelName>
+                        <InboxLabel>Private</InboxLabel>
+                        <InboxLabel>4/6</InboxLabel>
+                        <InboxButtonContainer>
+                            <RectButtonSmall
+                                width="100%"
+                                onClick={() => {
+                                }}
+                            >
+                                Join
+                            </RectButtonSmall>
+                        </InboxButtonContainer>
+                    </ModuleBox>
+                </ShadowScrollbars>
+                <ButtonContainer>
+                    <RectButtonBig
+                        width="100%"
+                        onClick={() => {
+                            this.props.history.push('/createGroup');
+                        }}
+                    >
 
-                            Create your own group
-                        </RectButtonBig>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/moduleDetail');
-                            }}
-                        >
-                            Back to module details
-                        </RectButtonBig>
-                    </ButtonContainer>
-                </BigContainer>
-            </BaseContainer>
-        )
-    }
+                        Create your own group
+                    </RectButtonBig>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <RectButtonBig
+                        width="100%"
+                        onClick={() => {
+                            this.props.history.push('/moduleDetail');
+                        }}
+                    >
+                        Back to module details
+                    </RectButtonBig>
+                </ButtonContainer>
+            </BigContainer>
+        </BaseContainer>
+    )
+
+
 }
 
-export default withRouter(JoinModuleGroup);

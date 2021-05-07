@@ -11,6 +11,7 @@ import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
 import { Redirect } from 'react-router';
+import {Deadline} from "../home/Calendar";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -109,9 +110,21 @@ const TextField2 = styled.label`
   line-height:200%;
 `;
 
-const DetailContainer = props => {
+export const Deadlines = props => {
     return(
-        <LeftContainer>
+        <div>
+            <Label>Deadlines</Label><br />
+            <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+            <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+        </div>
+    )
+}
+
+export const Info = props => {
+    return(
+        <div>
             <Label>Info</Label>
             <Line>
                 <IconHolder>
@@ -119,30 +132,58 @@ const DetailContainer = props => {
                         <i className="far fa-user"></i>
                     </span>
                 </IconHolder>
-                <TextField1>{module ? module.prof_name : 'Not Loaded Yet'}</TextField1>
+                <TextField1>{props.module ? props.module.prof_name : 'Not Loaded Yet'}</TextField1>
             </Line>
             <Line>
                 <IconHolder>
-                                <span style={{fontSize: 35}}>
-                                    <i className="far fa-calendar"></i>
-                                </span>
+                    <span style={{fontSize: 35}}>
+                        <i className="far fa-calendar"></i>
+                    </span>
                 </IconHolder>
                 <TextField1>Monday, 14.00-16.00</TextField1><br />
             </Line>
             <Line>
                 <IconHolder>
-                                <span style={{fontSize: 35}}>
-                                    <i className="fas fa-video"></i>
-                                </span>
+                    <span style={{fontSize: 35}}>
+                        <i className="fas fa-video"></i>
+                    </span>
                 </IconHolder>
-                <TextField1>{module ? module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
+                <TextField1>{props.module ? props.module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
             </Line>
-            <Label>Deadlines</Label><br />
-            <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-        </LeftContainer>
+        </div>
+    )
+}
+
+export const JoinedGroups = props => {
+    console.log('in JoinedGroups')
+    console.log(props.module)
+    return(
+        <RightContainer>
+            <Label>Joined Groups</Label>
+            <ShadowScrollbars style={{height: 420}}>
+                <SmallRightContainer>
+                    <GroupContainer className={"Box"}>09</GroupContainer>
+                    <GroupContainer className={"Box"}>10</GroupContainer>
+                    <GroupContainer className={"Box"}>11</GroupContainer>
+                    <GroupContainer className={"Box"}>12</GroupContainer>
+                    <SmallCircleButton
+                        width="100%"
+                        onClick={() => {
+                            props.history.push({
+                                pathname: '/joinModuleGroup',
+                                moduleId: props.module.id,
+                                moduleName: props.module.name
+                                //module: props.module  TODO: find out why this does not work
+                            });
+                        }}
+                    >
+                                    <span style={{fontSize: 25}}>
+                                        <i className="fas fa-plus"></i>
+                                    </span>
+                    </SmallCircleButton>
+                </SmallRightContainer>
+            </ShadowScrollbars>
+        </RightContainer>
     )
 }
 
@@ -150,8 +191,8 @@ export function ModuleDetail(props){//props is id
 
     const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
     const location = useLocation();
-    const [module, setModule] = useState()
-    //const history = useHistory()
+    const [module, setModule] = useState();
+    const history = useHistory();
 
     function getRandomColors(){
         getNewRandomColor()
@@ -183,9 +224,6 @@ export function ModuleDetail(props){//props is id
         setModule(location.module)
     }, [location]);
 
-    //const joinModulesGroup = () => history.push('/joinModuleGroup');
-    //const backToModules = () => history.push('/modules');
-
 
         return (
             <BaseContainer>
@@ -193,65 +231,16 @@ export function ModuleDetail(props){//props is id
                 <PageTitle>Module Detail</PageTitle>
                 <BigContainer>
                     <LeftContainer>
-                        <Label>Info</Label>
-                        <Line>
-                            <IconHolder>
-                                <span style={{fontSize: 35}}>
-                                    <i className="far fa-user"></i>
-                                </span>
-                            </IconHolder>
-                            <TextField1>{module ? module.prof_name : 'Not Loaded Yet'}</TextField1>
-                        </Line>
-                        <Line>
-                            <IconHolder>
-                                <span style={{fontSize: 35}}>
-                                    <i className="far fa-calendar"></i>
-                                </span>
-                            </IconHolder>
-                        <TextField1>Monday, 14.00-16.00</TextField1><br />
-                        </Line>
-                        <Line>
-                            <IconHolder>
-                                <span style={{fontSize: 35}}>
-                                    <i className="fas fa-video"></i>
-                                </span>
-                            </IconHolder>
-                        <TextField1>{module ? module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
-                        </Line>
-                        <Label>Deadlines</Label><br />
-                        <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                        <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                        <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-                        <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
+                        <Info module={module}/>
+                        <Deadlines/>
                     </LeftContainer>
-                    {/*<DetailContainer module={module}/>*/}
-                    <RightContainer>
-                        <Label>Joined Groups</Label>
-                        <ShadowScrollbars style={{height: 420}}>
-                            <SmallRightContainer>
-                                <GroupContainer className={"Box"}>09</GroupContainer>
-                                <GroupContainer className={"Box"}>10</GroupContainer>
-                                <GroupContainer className={"Box"}>11</GroupContainer>
-                                <GroupContainer className={"Box"}>12</GroupContainer>
-                                <SmallCircleButton
-                                    width="100%"
-                                    onClick={() => {
-                                        //joinModulesGroup();
-                                    }}
-                                >
-                                    <span style={{fontSize: 25}}>
-                                        <i className="fas fa-plus"></i>
-                                    </span>
-                                </SmallCircleButton>
-                            </SmallRightContainer>
-                        </ShadowScrollbars>
-                    </RightContainer>
+                    <JoinedGroups history={history} module={module}/>
                 </BigContainer>
                 <ButtonContainer>
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            //backToModules();
+                            history.push('/modules')
                         }}
                     >
                         Back to your Modules

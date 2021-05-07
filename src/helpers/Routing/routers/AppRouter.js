@@ -16,7 +16,7 @@ import GroupDetail from "../../../components/group/GroupDetail";
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
-import JoinModuleGroup from "../../../components/GroupProcess/JoinModuleGroup";
+import {JoinModuleGroup} from "../../../components/GroupProcess/JoinModuleGroup";
 import {Tasks} from "../../../components/task/Tasks";
 
 class AppRouter extends React.Component {
