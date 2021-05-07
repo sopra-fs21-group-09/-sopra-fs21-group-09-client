@@ -1,16 +1,17 @@
 import React from "react";
-import {Task, todaysTasks, tomorrowsTasks, nxtMonthsTasks, otherTasks} from "../task/Task";
+import {GroupTask, todayGroupTasks, tomorrowsGroupTasks, nxtMonthsGroupTasks, otherGroupTasks} from "./GroupTask";
 import styled from "styled-components";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 
 const DateLabel = styled.label`
-  margin-left: -1.5%;
+  margin-left: 3.5%;
   font-size: 20px;
   color: orange;  
 `;
 
 const InfoLabel = styled.label`
   font-size: 18px;
+  margin-left: 4%;
   color: black;  
 `;
 
@@ -20,46 +21,44 @@ export function GroupTaskList(props) {
         return null;
     }
 
-    const todayTaskItem = todaysTasks(props).map((task) =>
-        <Task name={task.name} description={task.description}
+    const todayGroupTaskItem = todayGroupTasks(props).map((task) =>
+        <GroupTask name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    const tomorrowsTaskItem = tomorrowsTasks(props).map((task) =>
-        <Task name={task.name} description={task.description}
+    const tomorrowsGroupTaskItem = tomorrowsGroupTasks(props).map((task) =>
+        <GroupTask name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    const otherTaskItem = otherTasks(props).map((task) =>
-        <Task name={task.name} description={task.description}
+    const otherGroupTaskItem = otherGroupTasks(props).map((task) =>
+        <GroupTask name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    const nxtMonthsTaskItem = nxtMonthsTasks(props).map((task) =>
-        <Task name={task.name} description={task.description}
+    const nxtMonthsGroupTaskItem = nxtMonthsGroupTasks(props).map((task) =>
+        <GroupTask name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
-
-    console.log('otherTaskItem:'+ otherTaskItem)
 
     return (
             <div>
                 <DateLabel>Today</DateLabel><br/>
                 <ShadowScrollbars style={{height: 120}}>
-                    <InfoLabel>{todayTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
-                    {todayTaskItem}
+                    <InfoLabel>{todayGroupTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+                    {todayGroupTaskItem}
                 </ShadowScrollbars><br/>
 
                 <DateLabel>Tomorrow</DateLabel><br/>
                 <ShadowScrollbars style={{height: 120}}>
-                    <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
-                    {tomorrowsTaskItem}
+                    <InfoLabel>{tomorrowsGroupTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+                    {tomorrowsGroupTaskItem}
                 </ShadowScrollbars><br/>
 
                 <DateLabel>Next Month</DateLabel><br/>
                 <ShadowScrollbars style={{height: 120}}>
-                    <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
-                    {nxtMonthsTaskItem}
+                    <InfoLabel>{nxtMonthsGroupTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+                    {nxtMonthsGroupTaskItem}
                 </ShadowScrollbars><br/>
 
             </div>
