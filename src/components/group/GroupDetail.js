@@ -7,7 +7,7 @@ import {NavBar} from "../navigation/navBar";
 import {InputField, PageTitle} from "../../views/Labels";
 import Rodal from "rodal";
 import {CircleButton, RectButton} from "../../views/Button";
-import {GroupTaskList} from "./GroupTasks";
+import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
 
@@ -20,7 +20,6 @@ const BigContainer = styled.div`
 
 const LeftContainer = styled.div`
   width: 100%;
-  padding-left: 5%;
 `;
 
 const RightContainer = styled.div`
@@ -60,28 +59,26 @@ export const GroupDetail = () => {
     const history = useHistory()
     const location = useLocation();
 
-    async function getGroupTasks(){
+    async function getGroupTasks(id){
         try {
-            /*
-            const response = await api.get('/users/'+ localStorage.getItem('id')+'/tasks')
-
+            console.log(id);
+            const response = await api.get(`/groups/${id}/tasks`)
 
             const array = []
-            var i;
+            let i;
             for (i = 0; i < response.data.length; i++) {
                 array.push(response.data[i]);
             }
 
             setTasks(array)
-*/
+
         } catch (error) {
             alert(`Something went wrong during get Tasks: \n${handleError(error)}`);
         }
     }
 
-    function postGroupTask(){
+    function postGroupTask(id){
         try {
-            /*
             const requestBody = JSON.stringify({
                 name: taskName,
                 description: "bla",
@@ -91,17 +88,15 @@ export const GroupDetail = () => {
                 }
             });
 
-            const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
+            const response = api.post(`/groups/${id}/tasks`, requestBody)
 
-            console.log('posted!!!!')
-            console.log(taskDate)
             const print = new Date(taskDate)
-            var dateString = new Date(taskDate).toISOString().substring(0,10);
-            var dateString = new Date(taskDate).toISOString().split("T")[0];
+            let dateString = new Date(taskDate).toISOString().substring(0, 10);
+            dateString = new Date(taskDate).toISOString().split("T")[0];
             console.log('dateString'+dateString)
 
             document.getElementById("input").value = null;
-*/
+
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);
         }
@@ -112,13 +107,13 @@ export const GroupDetail = () => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
         console.log(location.state.detail.name);
-        getGroupTasks()
+        getGroupTasks(location.state.detail.id)
     }, [location]);
 
     // this will run only when TaskDate
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
-        getGroupTasks()
+        getGroupTasks(location.state.detail.id)
     }, [visible]);
 
 
@@ -164,9 +159,10 @@ export const GroupDetail = () => {
                                     }}
                                     disabled={!taskName  || !taskDate}
                                     onClick={() => {
-                                        postGroupTask();
+                                        postGroupTask(location.state.detail.id);
+                                        console.log("Works")
                                         setVisible(false);
-                                        getGroupTasks();
+                                        getGroupTasks(location.state.detail.id);
                                     }}>
                                     Submit</RectButton>
                             </div>

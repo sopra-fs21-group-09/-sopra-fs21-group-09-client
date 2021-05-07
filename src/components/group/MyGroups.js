@@ -46,7 +46,7 @@ class MyGroups extends React.Component {
             let usersGroups = null;
 
             usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
-
+            console.log(usersGroups)
             this.setState({
                 groups: usersGroups.data,
                 loading: false
