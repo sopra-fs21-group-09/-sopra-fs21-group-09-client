@@ -9,6 +9,7 @@ import {CircleButton, RectButtonSmall} from '../../views/Button'
 import { InputField, InputArea } from '../../views/Labels'
 import { api, handleError } from '../../helpers/api'
 import events2 from './Events'
+import e from 'cors';
 
 const EventInfo = styled.div`
   display grid;
@@ -39,21 +40,22 @@ export default function NpmCal() {
   useEffect(() => {getEvents()}, []);
   useEffect(() => {getEvents(); console.log('mounted or updated');}, [calendar]);
 
-  //set initial values for event details
-  const [eventId, setEventId] = useState();
-  const [eventTitle, setEventTitle] = useState();
-  const [eventStart, setEventStart] = useState(toDatetimeLocal(new Date()));
-  const [eventEnd, setEventEnd] = useState(toDatetimeLocal(new Date()));
-  const [eventDesc, setEventDesc] = useState();
-  const [eventLabel, setEventLabel] = useState('EVENT');
+  const initialState = {
+    id: "",
+    title: "",
+    start: new Date(),
+    end: new Date(),
+    allDay: false,
+    desc: "",
+    label: "EVENT"
+  };
+
+  const [event, setEvent] = useState(initialState);
+  const [events, setEvents] = useState([]);
 
   //reset event so when one event submitted, initial values appear in add-overlay
   function resetEvent(){
-    setEventTitle('');
-    setEventStart(toDatetimeLocal(new Date()));
-    setEventEnd(toDatetimeLocal(new Date()));
-    setEventDesc('');
-    setEventLabel('EVENT');
+    setEvent(initialState);
   }
 
   //constants for rodal-overlay visibility 
@@ -76,7 +78,7 @@ export default function NpmCal() {
 
   //check if event is valid -> required: title, start, end, label, start<end
   function checkEvent(method) {
-    if(eventTitle && eventStart && eventEnd && eventStart<eventEnd){
+    if(event.title && event.start && event.end && event.start<event.end){
       if(method=='put'){putEvent();}
       if(method=='post'){postEvent();}
       setAddVisible(false);
@@ -89,8 +91,6 @@ export default function NpmCal() {
       setWarningVisible(true);
     }
   }
-
-  const [events, setEvents] = useState([]);
   
   async function getEvents(){
     try {
@@ -111,11 +111,12 @@ export default function NpmCal() {
   function postEvent(){
       try {
           const requestBody = JSON.stringify({
-              title: eventTitle,
-              start: new Date (eventStart),
-              end: new Date(eventEnd),
-              desc: eventDesc,
-              label: eventLabel,
+              title: event.title,
+              start: event.start,
+              end: event.end,
+              allDay: event.allDay,
+              desc: event.desc,
+              label: event.label,
           });
 
           const response = api.post('/users/'+ localStorage.getItem('id') +'/events', requestBody) 
@@ -128,16 +129,15 @@ export default function NpmCal() {
   function putEvent(){
     try {
         const requestBody = JSON.stringify({
-            id: eventId,
-            title: eventTitle,
-            start: new Date (eventStart),
-            end: new Date(eventEnd),
-            desc: eventDesc,
-            label: eventLabel,
+            id: event.id,
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            desc: event.desc,
+            label: event.label,
         });
 
-        console.log(eventId);
-        const response = api.put('/events/'+eventId, requestBody) 
+        const response = api.put('/events/'+event.id, requestBody) 
 
     } catch (error) {
         alert(`postEvent-Error: \n${handleError(error)}`);
@@ -157,14 +157,9 @@ export default function NpmCal() {
     return YYYY+'-'+MM+'-'+DD+'T'+HH+':'+II;
   }
 
-  function handleSelect({start, end}) {
-    setEventStart(toDatetimeLocal(start));
-    setEventEnd(toDatetimeLocal(end));
-    setAddVisible(true);
-  }
-
   return (
     <div>
+    <RectButtonSmall onClick={() => console.log(event)}></RectButtonSmall>
     <Calendar
       popup
       selectable
@@ -177,61 +172,67 @@ export default function NpmCal() {
         timeSlotWrapper: ColoredDateCellWrapper,
       }}
       localizer={localizer}
-      onSelectEvent={event => {setEventVisible(true); setEventId(event.id); setEventTitle(event.title); setEventStart(event.start.toLocaleString()); setEventEnd(event.end.toLocaleString()); setEventLabel(event.label); setEventDesc(event.desc);}}
-      onSelectSlot={e => handleSelect(e)}
+      onSelectEvent={e => {setEvent(e); setEventVisible(true); }}
+      onSelectSlot={e => {setEvent({...event, start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
       style={{position: 'absolute', bottom: 0, right: 0, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
       onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
+
       {/*Overlay for ADDING Event */}
-      <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => {setAddVisible(false); resetEvent();}}>
+      <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
-        <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEventTitle(e.target.value)}/>
+        <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel>Start:</EventLabel>
-            <InputField type='datetime-local' value={eventStart} onChange={e => {setEventStart(e.target.value)}}/>
+            <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
-            <InputField type='datetime-local' value={eventEnd} onChange={e => {setEventEnd(e.target.value)}}/>
+            <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
+          <EventLabel>All Day:</EventLabel>
+            <input type='checkbox' onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
           <EventLabel>Label:</EventLabel>
           <div>
             <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} 
-                    onChange={e => setEventLabel(e.target.value)}>
+                    onChange={e => setEvent({ ...event, label: e.target.value})}>
               {eventLabels.map(({ label, value }) => (
               <option key={value} value={value}>{label}</option>))}
             </select>
           </div>
-          <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEventDesc(e.target.value)}></InputArea>
+          <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
         </EventInfo>
         <br/> 
         <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
+
     {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height='250' customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
-        <div style={{fontSize: '20px', fontWeight: 'bold'}}>{eventTitle}</div><br/>
+    <Rodal height='300' customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
+        <div style={{fontSize: '20px', fontWeight: 'bold'}}>{event.title}</div><br/>
         <EventInfo>
-          <div>Start:</div><div>{eventStart}</div>
-          <div>End:</div><div>{eventEnd}</div>
-          <div>Label:</div><div>{eventLabel}</div>
-          <div>Description:</div><div>{eventDesc}</div>
+          <div>Start:</div><div>{event.start.toLocaleString()}</div>
+          <div>End:</div><div>{event.end.toLocaleString()}</div>
+          <div>All Day:</div><div>{event.allDay.toString()}</div>
+          <div>Label:</div><div>{event.label}</div>
+          <div>Description:</div><div>{event.desc}</div>
         </EventInfo><br/><br/>
         <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
     </Rodal>
+
     {/*Overlay for EDITING event*/}
     <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc='true' onClose={() => setEditVisible(false)}>
-        <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {eventTitle}</div><br/>
+        <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
         <EventInfo>
-          <div>Title:</div><InputField value={eventTitle} onChange={e => {setEventTitle(e.target.value)}}></InputField>
+          <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}></InputField>
           <EventLabel>Start:</EventLabel>
-            <InputField type='datetime-local' onChange={e => {setEventStart(e.target.value)}}/>
+            <InputField type='datetime-local' onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
-            <InputField type='datetime-local' onChange={e => {setEventEnd(e.target.value)}}/>
-          <div>Type:</div><div>
-          <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}}>
+            <InputField type='datetime-local' onChange={e => setEvent({ ...event, end: e.target.value})}/>
+          <div>Label:</div><div>
+          <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} onChange={e => setEvent({ ...event, label: e.target.value})}>
             {eventLabels.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>
-          <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEventDesc(e.target.value)}></InputArea>
+          <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
         </EventInfo>
         <br/>
         <div><RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall></div>
