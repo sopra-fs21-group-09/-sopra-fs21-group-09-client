@@ -5,7 +5,7 @@ import moment from 'moment'
 import '../../../node_modules/react-big-calendar/lib/css/react-big-calendar.css'
 import Rodal from 'rodal'
 import 'rodal/lib/rodal.css'
-import {CircleButton, RectButtonSmall} from '../../views/Button'
+import {CircleButton, RectButtonSmall, DeleteButton} from '../../views/Button'
 import { InputField, InputArea } from '../../views/Labels'
 import { api, handleError } from '../../helpers/api'
 import events2 from './Events'
@@ -18,10 +18,31 @@ const EventInfo = styled.div`
   grid-column-gap: 1em;
 `;
 
+const DoubleButton = styled.div`
+  display grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+  margin-top: 10px;
+  alignItems: center; 
+  justifyContent:center;
+
+`;
+
 const EventLabel = styled.div`
   color: ${props => props.warning ? 'red' : 'black'};
   padding-top: '5px';
   font-weight: 'bold';
+`;
+
+const trashStyle = styled.div`
+  color: red;
+  display: flex;
+  alignItems: center; 
+  justifyContent:center;
+  &:hover {
+    color: white;
+  }
 `;
 
 const ColoredDateCellWrapper = ({ children }) =>
@@ -63,9 +84,16 @@ export default function NpmCal() {
   const [eventVisible, setEventVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
 
-  //set warning for invalid inputs
+  //show warning for invalid inputs
   const [warningVisible, setWarningVisible] = useState(false);
   const [warning, setWarning] = useState(false);
+
+  //show approval for successfull state 
+  const [approvalVisible, setApprovalVisible] = useState(false);
+  const [approval, setApproval] = useState(false);
+
+  //show deletion warning
+  const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
 
   //event-label dropdown menu 
   const [eventLabels] = React.useState([ //TODO: Set default event type
@@ -78,18 +106,26 @@ export default function NpmCal() {
 
   //check if event is valid -> required: title, start, end, label, start<end
   function checkEvent(method) {
-    if(event.title && event.start && event.end && event.start<event.end){
-      if(method=='put'){putEvent();}
-      if(method=='post'){postEvent();}
-      setAddVisible(false);
-      setEditVisible(false);
-      resetEvent();
-      getEvents();
-      setCalendar(calendar+1);
+    {/*if(event.title && event.start && event.end && event.start<event.end){
+      
     } else {
       setWarning("Make sure you filled out title, start, end and selected a label!");
       setWarningVisible(true);
+    }*/}
+    if(method=='put'){
+      putEvent();
+      setApproval(event.title + " has been updated!");
     }
+    if(method=='post'){
+      postEvent();
+      setApproval(event.title + " has been created!");
+    }
+    setAddVisible(false);
+    setEditVisible(false);
+    setApprovalVisible(true);
+    resetEvent();
+    getEvents();
+    setCalendar(calendar+1);
   }
   
   async function getEvents(){
@@ -105,6 +141,22 @@ export default function NpmCal() {
 
     } catch (error) {
       alert(`getEvent-Error: \n${handleError(error)}`);
+    }
+  }
+
+  async function deleteEvent() {
+    try {
+      await api.delete('/events/'+ event.id)
+      setDeleteWarningVisible(false);
+      setEventVisible(false);
+      setEditVisible(false);
+      setApproval('Your event has been deleted')
+      setApprovalVisible(true);
+      resetEvent();
+      getEvents();
+      setCalendar(calendar+1);
+    } catch (error){
+      alert(`deleteEvent-Error: \n${handleError(error)}`);
     }
   }
     
@@ -146,7 +198,8 @@ export default function NpmCal() {
 
   function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
 
-  function toDatetimeLocal(date){
+  function toDatetimeLocal(d){
+    var date = new Date(d);
     var
     YYYY = date.getFullYear(),
     MM = addZero(date.getMonth() + 1),
@@ -159,7 +212,7 @@ export default function NpmCal() {
 
   return (
     <div>
-    <RectButtonSmall onClick={() => console.log(event)}></RectButtonSmall>
+    <RectButtonSmall style={{}} onClick={() => {console.log(event); setDeleteWarningVisible(true);}}></RectButtonSmall>
     <Calendar
       popup
       selectable
@@ -180,7 +233,7 @@ export default function NpmCal() {
       onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
 
       {/*Overlay for ADDING Event */}
-      <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
+      <Rodal height='430' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
         <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
@@ -214,7 +267,12 @@ export default function NpmCal() {
           <div>Label:</div><div>{event.label}</div>
           <div>Description:</div><div>{event.desc}</div>
         </EventInfo><br/><br/>
-        <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
+        <DoubleButton style={{gridTemplateColumns: '75% 15%'}}>
+          <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
+          <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
+            <i class="far fa-trash-alt" aria-hidden="true"></i>
+          </DeleteButton>
+        </DoubleButton>
     </Rodal>
 
     {/*Overlay for EDITING event*/}
@@ -223,9 +281,9 @@ export default function NpmCal() {
         <EventInfo>
           <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}></InputField>
           <EventLabel>Start:</EventLabel>
-            <InputField type='datetime-local' onChange={e => setEvent({ ...event, start: e.target.value})}/>
+            <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
-            <InputField type='datetime-local' onChange={e => setEvent({ ...event, end: e.target.value})}/>
+            <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
           <div>Label:</div><div>
           <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} onChange={e => setEvent({ ...event, label: e.target.value})}>
             {eventLabels.map(({ label, value }) => (
@@ -241,6 +299,18 @@ export default function NpmCal() {
       <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc='true' onClose={() => setWarningVisible(false)}>
         <i class="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>{warning}</div>
+      </Rodal>
+      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc='true' onClose={() => setApprovalVisible(false)}>
+        <i class="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <div style={{textAlign:'center', marginTop: '10px'}}>{approval}</div>
+      </Rodal>
+      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc='true' onClose={() => setDeleteWarningVisible(false)}>
+        <i class="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <div style={{textAlign:'center', marginTop: '10px'}}>Are you sure you want to delete {event.title}?</div>
+        <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
+          <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>
+          <RectButtonSmall onClick={() => setDeleteWarningVisible(false)}>NO</RectButtonSmall>
+        </DoubleButton>
       </Rodal>
   </div>
 )} 
