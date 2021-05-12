@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
-import {CircleButton, RectButton} from '../../views/Button';
+import {useHistory, withRouter} from "react-router-dom";
+import {RectButton} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar.jsx"
@@ -19,7 +19,7 @@ const BigContainer = styled.div`
 `;
 
 const Label = styled.label`
-  color: black;
+  color: orange;
   margin-top: 4%;
   margin-bottom: 4%;
   text-transform: uppercase;
@@ -27,25 +27,22 @@ const Label = styled.label`
 `;
 
 const Label2 = styled.label`
-  color: black;
+  color: orange;
   margin-top: 1%;
   margin-bottom: 1%;
   text-transform: uppercase;
   line-height:200%;
 `;
 
-const InfoField = styled.input`
-  &::placeholder {
-    color: #4F4F4F;
-    font-size: 1vw;
-  }
+const InfoField = styled.div`
   height: 35px;
-  width: 250px;
-  padding-left: 15px;
+  width: 270px;
+  display: flex;
+  justify-content: center;
+  padding-top: 1%;
   margin-left: 7%;
   margin-right: 7%;
   margin-top: 2.5%;
-  border: none;
   background: ${Colors[12]};
   border-radius: 20px;
   float: right;
@@ -69,94 +66,86 @@ const ColorSquare = styled.div`
   border: black;
 `;
 
-class Profile extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: null,
-            password: null,
-            token: null,
-            date: null
-        };
+const Profile = () => {
+    const [user, setUser] = useState({username: ''});
+    const history = useHistory()
+
+
+    async function checkMatrikelNr(response) {
+        if (response.data.matrikel_nr == null){
+            response.data.matrikel_nr = "Matrikelnumber not defined yet";
+        }
+        return response.data
     }
 
     /**
      * HTTP GET request is sent to the backend.
      * If the request is successful, the user info is shown
      */
-    async profile() {
+    async function getProfileInfo() {
         try {
+            const response = await api.get(`/users/${localStorage.getItem('id')}`);
 
+            await checkMatrikelNr(response);
+
+            setUser(response.data);
+
+            console.log(response.data);
+            console.log(response.data.matrikel_nr);
+            console.log("Hello");
         } catch (error) {
             alert(`Something went wrong while fetching the user info: \n${handleError(error)}`);
         }
     }
 
-    componentDidMount() {
+    // this will run, when the component is first initialized
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-    }
 
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
+        // display User info
+        getProfileInfo();
 
-    render() {
+    }, []);
+
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+    });
+
         return (
             <BaseContainer>
                 <NavBar/>
                 <PageTitle>Brofile</PageTitle>
                 <BigContainer>
                     <h1>Name</h1>
+                    <Label>Name</Label>
+                    <InfoField>{user.name}</InfoField><br />
                     <Label>Username</Label>
-                    <InfoField
-                        placeholder="Username displayed here"
-                        onChange={e => {
-                            this.handleInputChange('username', e.target.value);
-                        }}
-                    /><br />
-                    <Label>Birthday</Label>
-                    <InfoField
-                        placeholder="Birthday displayed here"
-                        onChange={e => {
-                            this.handleInputChange('birthday', e.target.value);
-                        }}
-                    /><br />
+                    <InfoField>{user.username}</InfoField><br />
                     <Label>Matrikelnumber</Label>
-                    <InfoField
-                        placeholder="Matrikelnumber displayed here"
-                        onChange={e => {
-                            this.handleInputChange('matrikelnumber', e.target.value);
-                        }}
-                    /><br />
+                    <InfoField>{user.matrikel_nr}</InfoField><br />
                     <h1>Colors</h1>
                     <Label2>Lectures</Label2>
                     <ColorSquare style={{
-                        backgroundColor: 'blue',
+                        backgroundColor: Colors.LECTURES,
                         }}></ColorSquare><br />
                     <Label2>Exercises</Label2>
                     <ColorSquare style={{
-                        backgroundColor: Colors.COLOR10,
+                        backgroundColor: Colors.EXERCISES,
                     }}></ColorSquare><br />
                     <Label2>Deadlines</Label2>
                     <ColorSquare style={{
-                        backgroundColor: 'blue',
+                        backgroundColor: Colors.DEADLINES,
                     }}></ColorSquare><br />
                     <Label2>Meetings</Label2>
                     <ColorSquare style={{
-                        backgroundColor: 'yellow',
-                    }}></ColorSquare><br />
-                    <Label2>Events</Label2>
-                    <ColorSquare style={{
-                        backgroundColor: Colors.EXERCISES,
+                        backgroundColor: Colors.MEETING,
                     }}></ColorSquare>
                     <ButtonContainer>
                         <RectButton
                             width="60%"
                             onClick={() => {
-                                this.props.history.push(`/edit`);
+                                history.push(`/edit`);
                             }}
                         >
                             Edit your Brofile here!
@@ -165,7 +154,7 @@ class Profile extends React.Component {
                 </BigContainer>
             </BaseContainer>
         )
-    }
+
 }
 
 export default withRouter(Profile);
