@@ -96,6 +96,8 @@ export const RectButtonBig = styled.button`
 export const RectButtonSmall = styled.button`
   &:hover {
     transform: translateY(-2px);
+    background: white;
+    color: ${Colors.BUTTON};
   }
   padding: 6px;
   font-weight: 800;
@@ -111,8 +113,30 @@ export const RectButtonSmall = styled.button`
   background: ${Colors.BUTTON};
   border-radius: 10px;
   color: white;
-  border: 1px solid #11244E;
   margin-right: -22%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+`;
+
+export const DeleteButton = styled.button`
+  &:hover {
+    transform: translateY(-2px);
+    background: red;
+    color: white;
+  }
+  padding: 6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 18px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  align-items: center;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
+  transition: all 0.3s ease;
+  background: white;
+  border-radius: 10px;
+  color: red;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
