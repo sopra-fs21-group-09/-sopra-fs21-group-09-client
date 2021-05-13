@@ -108,12 +108,12 @@ class CreateGroup extends React.Component {
                 open: this.state.open,
                 memberLimit: this.state.memberLimit
             });
-            if (this.state.moduleId){//TODO: STEFFI find out why moduleID is null when coming from joinModuleGroup
-                console.log('MOUDLE ID state'+this.state.moduleId)
-                const response = await api.post(`/modules/${module.id}/users/${localStorage.getItem('id')}/groups`, requestBody);
+            //CREATES GROUP FOR MODULE
+            if (this.state.moduleId){
+                const response = await api.post(`/modules/${this.state.moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
             }
+            //CREATES GROUP FOR USER
             else{
-                console.log('ELSEE')
                 const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
             }
 
@@ -151,6 +151,9 @@ class CreateGroup extends React.Component {
     }
 
     render() {
+        if (this.props.location.state){
+            this.state.moduleId = this.props.location.state.moduleId
+        }
         return (
             <BaseContainer>
                 <NavBar/>
@@ -211,6 +214,7 @@ class CreateGroup extends React.Component {
                         <RectButtonBig
                             width="100%"
                             onClick={() => {
+                                console.log(this.state)
                                 this.createGroup();
                             }}
                         >
