@@ -92,7 +92,7 @@ class CreateGroup extends React.Component {
         this.InputOne = React.createRef();
         this.InputTwo = React.createRef();
         this.state = {
-
+            moduleId: null
         };
     }
 
@@ -108,8 +108,14 @@ class CreateGroup extends React.Component {
                 open: this.state.open,
                 memberLimit: this.state.memberLimit
             });
-
-            const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
+            if (this.state.moduleId){//TODO: STEFFI find out why moduleID is null when coming from joinModuleGroup
+                console.log('MOUDLE ID state'+this.state.moduleId)
+                const response = await api.post(`/modules/${module.id}/users/${localStorage.getItem('id')}/groups`, requestBody);
+            }
+            else{
+                console.log('ELSEE')
+                const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
+            }
 
             // Login successfully worked --> navigate to the route /game in the GameRouter
             this.props.history.push(`/myGroups`);

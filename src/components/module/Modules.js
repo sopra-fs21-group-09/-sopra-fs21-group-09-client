@@ -58,6 +58,7 @@ export function Modules() {
             const response = await api.get('/users/'+localStorage.getItem('id')+'/modules')
 
             setModules(response.data)
+            console.log(response.data)
 
         } catch (error) {
             alert(`Something went wrong during get Modules: \n${handleError(error)}`);

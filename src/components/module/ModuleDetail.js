@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
@@ -12,11 +12,12 @@ import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
 import { Redirect } from 'react-router';
 import {Deadline} from "../home/Calendar";
+import {Task, todaysTasks} from "../task/Task";
 
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
-  height: 550px;
+  height: 750px;
   border: none;
   margin-bottom: 20px;
   columns: 2;
@@ -58,6 +59,7 @@ const GroupContainer = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 20%;
+  font-size: 15px;
 `;
 
 const Label = styled.label`
@@ -155,39 +157,45 @@ export const Info = props => {
 }
 
 export const JoinedGroups = props => {
-    console.log('in JoinedGroups')
-    console.log(props.module)
-    return(
-        <RightContainer>
-            <Label>Joined Groups</Label>
-            <ShadowScrollbars style={{height: 420}}>
-                <SmallRightContainer>
-                    <GroupContainer className={"Box"}>09</GroupContainer>
-                    <GroupContainer className={"Box"}>10</GroupContainer>
-                    <GroupContainer className={"Box"}>11</GroupContainer>
-                    <GroupContainer className={"Box"}>12</GroupContainer>
-                    <SmallCircleButton
-                        width="100%"
-                        onClick={() => {
-                            props.history.push({
-                                pathname: '/joinModuleGroup',
-                                moduleId: props.module.id,
-                                moduleName: props.module.name
-                                //module: props.module  TODO: find out why this does not work
-                            });
-                        }}
-                    >
+
+    useLayoutEffect(() => {
+        getNewRandomColor();
+    })
+
+    if (props.module){
+        const groupItems = props.module.groups.map((group) =>
+            <GroupContainer className={"Box"}>{group.name}</GroupContainer>
+        );
+        console.log(groupItems)
+
+        return(
+            <SmallRightContainer>
+                {groupItems}
+                <SmallCircleButton
+                    width="100%"
+                    onClick={() => {
+                        props.history.push({
+                            pathname: '/joinModuleGroup',
+                            moduleId: props.module.id,
+                            moduleName: props.module.name
+                            //module: props.module  TODO: find out why this does not work
+                        });
+                    }}
+                >
                                     <span style={{fontSize: 25}}>
                                         <i className="fas fa-plus"></i>
                                     </span>
-                    </SmallCircleButton>
-                </SmallRightContainer>
-            </ShadowScrollbars>
-        </RightContainer>
-    )
+                </SmallCircleButton>
+            </SmallRightContainer>
+        )
+    }
+    else {
+        return (<div></div>)
+    }
+
 }
 
-export function ModuleDetail(props){//props is id
+export function ModuleDetail(props){//props is empty unless pushed from joinModuleGroup then you can access props.moduleId
 
     const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
     const location = useLocation();
@@ -202,10 +210,24 @@ export function ModuleDetail(props){//props is id
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
      */
-    async function moduleDetail() {
+    async function getModuleDetail() {
         try {
-            const response = await api.get('/users/'+ localStorage.getItem('id')+'/modules')
-
+            //const response = await api.get('/users/'+ localStorage.getItem('id')+'/modules')
+            if (module){
+                const response = await api.get('modules/'+module.id)
+                console.log('MODULE IN MODULEDETAIL')
+                console.log(response.data)
+                setModule(response.data)
+            }
+            /*else if (props.moduleId){
+                const response = await api.get('modules/'+module.id)
+                console.log('MODULE IN MODULEDETAIL')
+                console.log(response.data)
+                setModule(response.data)
+            }*/
+            else {
+                console.log('MODULE NOT SET YET, CANNOT GET MODULE')
+            }
         } catch (error) {
             alert(`Something went wrong during getting the moduleDetail: \n${handleError(error)}`);
         }
@@ -216,13 +238,26 @@ export function ModuleDetail(props){//props is id
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
         getRandomColors();
+        console.log('inital useEffect')
     }, []);
 
     useEffect(() => {
+        console.log('useEffect Location')
         console.log(location.pathname); // result: '/secondpage'
         console.log(location.module); // result: 'some_value'
         setModule(location.module)
+        if (!location.module){
+            console.log('GETS MODULE DETAILS')
+            getModuleDetail()
+        }
     }, [location]);
+
+    useEffect(() => {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = Colors.COLOR11;
+        console.log('MODULE')
+        console.log(module)
+    });
 
 
         return (
@@ -234,7 +269,12 @@ export function ModuleDetail(props){//props is id
                         <Info module={module}/>
                         <Deadlines/>
                     </LeftContainer>
-                    <JoinedGroups history={history} module={module}/>
+                    <RightContainer>
+                        <Label>Joined Groups</Label>
+                        <ShadowScrollbars style={{height: 750}}>
+                            <JoinedGroups history={history} module={module}/>
+                        </ShadowScrollbars>
+                    </RightContainer>
                 </BigContainer>
                 <ButtonContainer>
                     <RectButtonBig

@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {useLocation, withRouter} from "react-router-dom";
+import {useHistory, useLocation, withRouter} from "react-router-dom";
 import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
+import AllAppGroups from "../group/AllAppGroups";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -79,17 +80,32 @@ export function JoinModuleGroup (props) {
     const location = useLocation();
     const [moduleId, setModuleId] = useState('')
     const [moduleName, setModuleName] = useState('')
+    const [groups, setGroups] = useState([])
+    const history = useHistory()
 
 
     /**
      * HTTP GET request is sent to the backend.
      * If the request is successful, the modules are shown
+     *
+     * POST:
+     * const response = await api.post('modules/'+moduleId+'/users/'+localStorage.getItem('id')+'/groups')
+     * modules/{moduleId}/users/{userId}/groups
      */
-    async function joinModuleGroup() {
+    async function getModuleGroups() {
         try {
-
+            if (moduleId){
+                const response = await api.get('/modules/'+moduleId)
+                //localhost:8080/modules/1/users/1/groups
+                console.log('MODULE GROUPS ')
+                console.log(response.data)
+                setGroups(response.data.groups)
+            }
+            else {
+                console.log('MODULE ID NOT SET YET, CANNOT GET MODULES GROUPS')
+            }
         } catch (error) {
-            alert(`Something went wrong while joining the group: \n${handleError(error)}`);
+            alert(`Something went wrong while getting the Groups of a Module: \n${handleError(error)}`);
         }
     }
 
@@ -99,6 +115,12 @@ export function JoinModuleGroup (props) {
         setModuleId(location.moduleId)
         setModuleName(location.moduleName)
     }, []);
+
+    useEffect(() => {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = Colors.COLOR11;
+        getModuleGroups();
+    }, [moduleId]);
 
 
     return (
@@ -113,132 +135,39 @@ export function JoinModuleGroup (props) {
                     <Label>Enroll</Label>
                 </Line>
                 <ShadowScrollbars style={{height: 430}}>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
-                    <ModuleBox>
-                        <InboxLabel>Group 1</InboxLabel>
-                        <InboxLabelName>Samuele Walzer</InboxLabelName>
-                        <InboxLabel>Private</InboxLabel>
-                        <InboxLabel>4/6</InboxLabel>
-                        <InboxButtonContainer>
-                            <RectButtonSmall
-                                width="100%"
-                                onClick={() => {
-                                }}
-                            >
-                                Join
-                            </RectButtonSmall>
-                        </InboxButtonContainer>
-                    </ModuleBox>
+                    {}
+                        {groups.map(group => {
+                            return (
+                                <AllAppGroups group={group}/>
+                            );
+                        })}
                 </ShadowScrollbars>
                 <ButtonContainer>
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            this.props.history.push('/createGroup');
-                        }}
+                            history.push({
+                                pathname: '/createGroup',
+                                state: {
+                                    moduleId: moduleId
+                                }})
+                            }}
                     >
-
                         Create your own group
                     </RectButtonBig>
                 </ButtonContainer>
                 <ButtonContainer>
-                    <RectButtonBig
+                    {/*<RectButtonBig
                         width="100%"
                         onClick={() => {
-                            this.props.history.push('/moduleDetail');
+                            history.push({
+                                pathname: '/moduleDetail',
+                                moduleId: moduleId
+                            });
                         }}
                     >
                         Back to module details
-                    </RectButtonBig>
+                    </RectButtonBig>*/}
                 </ButtonContainer>
             </BigContainer>
         </BaseContainer>
