@@ -106,6 +106,7 @@ export const GroupDetail = () => {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+
         console.log(location.state.detail.name);
         getGroupTasks(location.state.detail.id)
     }, [location]);
