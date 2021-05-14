@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { api, handleError } from '../../helpers/api';
-import { RectButton } from '../../views/Button';
-import { withRouter } from 'react-router-dom';
+import { RectButton, RectButtonEdit } from '../../views/Button';
+import {useHistory, withRouter} from 'react-router-dom';
 import {Colors} from "../../views/design/Colors";
 import User from "../profile/User";
+import Rodal from "rodal";
+import {GenderLabel} from "../../views/design/logo/AuthConstants";
 
 //Constants we need for this page
 const EditMainContainer = styled.div`
@@ -24,10 +26,16 @@ const EditMainContainer = styled.div`
   border-radius: 20px;
 `;
 
-const ButtonContainer = styled.div`
+const Line = styled.div`
+  margin-bottom: 3%;
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  align-items: center;
+`;
+
+const ButtonContainer = styled.div`
+     display: flex;
+     justify-content: center;
+     margin-top: 3%;
 `;
 
 const Title = styled.label`
@@ -41,7 +49,7 @@ const Title = styled.label`
 
 const Label = styled.label`
   color: white;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   text-transform: uppercase;
 `;
 
@@ -50,122 +58,206 @@ const InputField = styled.input`
     color: rgba(255, 255, 255, 1.0);
   }
   height: 35px;
+  width: 80%;
   padding-left: 15px;
-  margin-left: -4px;
   border: none;
-  margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.2);
   color: white;
   border-radius: 20px;
 `;
 
-class Edit extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            user: null,
-            loading: true
-        };
+export const Edit = () => {
+    const [username, setUsername] = useState(null);
+    const [name, setName] = useState(null);
+    const [matrikelNr, setMatrikelNr] = useState(null);
+
+    // These constants are used to disable the edit button of each respective variable after hitting edit
+    const [disableName, setDisableName] = useState(false);
+    const [disableUsername, setDisableUsername] = useState(false);
+    const [disableMatrikel, setDisableMatrikel] = useState(false);
+
+    const history = useHistory()
+
+    // Here we want to check if that the matrikel number has the format xx-xxx-xxx, otherwise give warning
+    function checkMatrikelNrFormat(){
+        if (matrikelNr.length !== 10){
+            setMatrikelNr(0);
+            console.log(matrikelNr);
+        }
     }
 
     /**
      * HTTP PUT request is sent to the backend.
-     * If the request is successful, the user info is updated and returned to the front-end
-     * and its token is stored in the localStorage.
+     * If the request is successful, the name of the user is updated and returned to the front-end.
      */
-    async edit() {
+    async function editName() {
         try {
+            // get Userinfo to fill out the missing variables in put requests
+            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+
             const requestBody = JSON.stringify({
-                id: this.state.id,
-                username: this.state.username,
-                birthday: this.state.birthday,
-                matrikel_nr: this.state.matrikel_nr
+                name: name,
+                username: current.data.username,
+                matrikelNr: current.data.matrikelNr
             });
 
+            // Edit is sent to backend
             const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
 
-            // Get the returned user and update a new object.
-            const user = new User(response.data);
-
-            // Store the token into the local storage.
-            localStorage.setItem('token', user.token);
-
-            // Login successfully worked --> navigate to the route /game in the GameRouter
-            this.props.history.push(`/game/Profile`);
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
         }
     }
 
     /**
-     *  Every time the user enters something in the input field, the state gets updated.
-     * @param key (the key of the state for identifying the field that needs to be updated)
-     * @param value (the value that gets assigned to the identified state key)
+     * HTTP PUT request is sent to the backend.
+     * If the request is successful, the username of the user is updated and returned to the front-end.
      */
-    handleInputChange(key, value) {
-        this.setState({ [key]: value });
+    async function editUsername() {
+        try {
+            // get Userinfo to fill out the missing variables in put requests
+            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+
+            const requestBody = JSON.stringify({
+                name: current.data.name,
+                username: username,
+                matrikelNr: current.data.matrikelNr
+            });
+
+            // Edit is sent to backend
+            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+
+        } catch (error) {
+            alert(`Something went wrong while editing the user: \n${handleError(error)}`);
+        }
+    }
+    /**
+     * HTTP PUT request is sent to the backend.
+     * If the request is successful, the matrikel number of the user is updated
+     * and returned to the front-end.
+     */
+    async function editMatrikel() {
+        try {
+            checkMatrikelNrFormat();
+
+            // get Userinfo to fill out the missing variables in put requests
+            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+
+            const requestBody = JSON.stringify({
+                name: current.data.name,
+                username: current.data.username,
+                matrikelNr: matrikelNr
+            });
+
+            // Edit is sent to backend
+            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+
+        } catch (error) {
+            alert(`Something went wrong while editing the user: \n${handleError(error)}`);
+        }
     }
 
-    async componentDidMount() {
+    function clearNameField(){
+        document.getElementById("nameField").value = "";
+    }
+
+    function clearUsernameField(){
+        document.getElementById("usernameField").value = "";
+    }
+
+    function clearMatrikelField(){
+        document.getElementById("matrikelField").value = "";
+    }
+
+    // this will run, when the component is first initialized
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
-        try {
+    }, []);
 
-        } catch (error) {
-            alert(`Something went wrong while fetching the users: \n${handleError(error)}`);
-        }
-    }
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+    });
 
-    render() {
-            return (
-                <EditMainContainer>
-                    <Title>Here you can edit your profile:</Title>
-                    <Label>Change Username:</Label>
-                    <InputField
-                        placeholder="Enter your new username here..."
-                        onChange={e => {
-                            this.handleInputChange('username', e.target.value);
-                        }}
-                    />
-                    <Label>Change Birthday:</Label>
-                    <InputField
-                        placeholder="Enter your birthday here..."
-                        onChange={e => {
-                            this.handleInputChange('birthday', e.target.value);
-                        }}
-                    />
-                    <Label>Change Matrikelnumber:</Label>
-                    <InputField
-                        placeholder="Enter your Matrikelnumber here..."
-                        onChange={e => {
-                            this.handleInputChange('matrikelnumber', e.target.value);
-                        }}
-                    />
-                    <ButtonContainer>
-                        <RectButton
-                            disabled={!this.state.username || !this.state.birthday || !this.state.matrikel_nr}
-                            width="60%"
-                            onClick={() => {
-                                this.edit();
-                            }}
-                        >
-                            Change your Brofile Information!
-                        </RectButton>
-                    </ButtonContainer>
-                    <ButtonContainer>
-                        <RectButton
-                            width="100%"
-                            onClick={() => {
-                                this.props.history.push('/profile');
-                            }}
-                        >
-                            Back to Profile
-                        </RectButton>
-                    </ButtonContainer>
-                </EditMainContainer>
-            );
-        }
+    return (
+        <EditMainContainer>
+            <Title>Here you can edit your profile:</Title>
+            <Label>Change Name:</Label>
+            <Line>
+                <InputField
+                    placeholder="Change your new name here..."
+                    id="nameField"
+                    onChange={e => {
+                        setName(e.target.value);
+                        setDisableName(true);
+                    }}
+                />
+                <RectButtonEdit
+                    disabled={!disableName}
+                    onClick={() => {
+                        editName();
+                        clearNameField();
+                        setDisableName(false);
+                    }}
+                >
+                    Edit!
+                </RectButtonEdit>
+            </Line>
+            <Label>Change Username:</Label>
+            <Line>
+                <InputField
+                    placeholder="Change your username here..."
+                    id="usernameField"
+                    onChange={e => {
+                        setUsername(e.target.value);
+                        setDisableUsername(true);
+                    }}
+                />
+                <RectButtonEdit
+                    disabled={!disableUsername}
+                    onClick={() => {
+                        editUsername();
+                        clearUsernameField();
+                        setDisableUsername(false);
+                    }}
+                >
+                    Edit!
+                </RectButtonEdit>
+            </Line>
+            <Label>Change Matrikelnumber:</Label>
+            <Line>
+                <InputField
+                    placeholder="Enter your Matrikelnumber here..."
+                    id="matrikelField"
+                    onChange={e => {
+                        setMatrikelNr(e.target.value);
+                        setDisableMatrikel(true);
+                    }}
+                />
+                <RectButtonEdit
+                    disabled={!disableMatrikel}
+                    onClick={() => {
+                        editMatrikel();
+                        clearMatrikelField();
+                        setDisableMatrikel(false);
+                    }}
+                >
+                    Edit!
+                </RectButtonEdit>
+            </Line>
+            <ButtonContainer>
+                <RectButton
+                    width="100%"
+                    onClick={() => {
+                        history.push('/profile');
+                    }}
+                >
+                    Back to Profile
+                </RectButton>
+            </ButtonContainer>
+        </EditMainContainer>
+    );
 
 }
 

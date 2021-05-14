@@ -162,6 +162,26 @@ export const RectButtonPopUp = styled.button`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
+export const RectButtonEdit = styled.button`
+  &:hover {
+    transform: translateY(-2px);
+  }
+  width: 60px;
+  padding: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  cursor: ${props => (props.disabled ? "default" : "pointer")};
+  opacity: ${props => (props.disabled ? 0.4 : 1)};
+  transition: all 0.3s ease;
+  background: ${Colors.BUTTON};
+  border-radius: 20px;
+  color: white;
+  border: 1px solid #11244E;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin-left: 5%;
+`;
+
 export class RoundButton extends Component {
     render(){
         return<div className="roundButton" />;
