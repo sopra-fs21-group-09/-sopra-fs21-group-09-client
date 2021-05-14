@@ -7,7 +7,6 @@ import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
-import {Group} from "../group/AllAppGroups";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -108,13 +107,14 @@ class CreateGroup extends React.Component {
                 open: this.state.open,
                 memberLimit: this.state.memberLimit
             });
+
             //CREATES GROUP FOR MODULE
             if (this.state.moduleId){
-                const response = await api.post(`/modules/${this.state.moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
+                await api.post(`/modules/${this.state.moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
             }
             //CREATES GROUP FOR USER
             else{
-                const response = await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
+                await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
             }
 
             // Login successfully worked --> navigate to the route /game in the GameRouter

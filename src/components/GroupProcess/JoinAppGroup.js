@@ -67,12 +67,22 @@ class JoinAppGroup extends React.Component {
             allGroups = await api.get(`/groups`);
             groupsWithoutUser = await api.get(`/groups`);
 
+            //get all groups in which the user is enrolled
             usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
 
             // Get all groups where the user is not in
             for (let i = 0; i < allGroups.data.length; i++){
                 for (let z = 0; z < usersGroups.data.length; z++){
                     if (allGroups.data[i].id === usersGroups.data[z].id){
+                        delete groupsWithoutUser.data[i];
+                    }
+                }
+            }
+
+            // Delete all groups which are full
+            for (let i = 0; i < groupsWithoutUser.data.length; i++){
+                if (groupsWithoutUser.data[i] !== undefined && groupsWithoutUser.data[i].memberLimit !== 0){
+                    if (groupsWithoutUser.data[i].memberCount >= groupsWithoutUser.data[i].memberLimit){
                         delete groupsWithoutUser.data[i];
                     }
                 }
@@ -94,6 +104,7 @@ class JoinAppGroup extends React.Component {
         this.setState({ [key]: value });
     }
 
+    //TODO: too long group name is problematic
     render() {
         return (
             <BaseContainer>

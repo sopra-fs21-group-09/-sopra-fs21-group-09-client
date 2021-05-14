@@ -96,7 +96,7 @@ const Home = props => {
     return (
         <HomeContainer>
             <NavBar/>
-            <PageTitle>Welcome Home, {user.name}</PageTitle>
+            <PageTitle>Welcome Home, {user.username}</PageTitle>
             <CalendarContainer>
                 <NpmCal></NpmCal>
             </CalendarContainer>

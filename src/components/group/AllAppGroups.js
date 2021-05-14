@@ -60,9 +60,9 @@ const AllAppGroups = ({ group }) => {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the user joins a public group
      */
-    function JoinPublicGroup() {
+    async function JoinPublicGroup() {
         try {
-            api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}`);
+            await api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}`);
             history.push('/myGroups');
         } catch (error) {
             alert(`Something went wrong while joining the group: \n${handleError(error)}`);
@@ -72,16 +72,15 @@ const AllAppGroups = ({ group }) => {
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, the user joins private group
-     * TODO: Error for wrong passwords needs to be displayed
-     * TODO: Privat group only gets displayed in myGroups after reloading the page
+     * TODO: if password isn't set it still works
      */
-    function JoinPrivateGroup() {
+    async function JoinPrivateGroup() {
         try {
             const requestBody = JSON.stringify({
                 password: password,
             });
 
-            api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
+            await api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
             history.push(`/myGroups`);
 
         } catch (error) {
@@ -89,7 +88,7 @@ const AllAppGroups = ({ group }) => {
         }
     }
 
-    // Define display of Enroll of each Group
+    // Define Enroll for each Group
     let settings;
     if (group.memberLimit === 0){
          settings = "unlimited";
