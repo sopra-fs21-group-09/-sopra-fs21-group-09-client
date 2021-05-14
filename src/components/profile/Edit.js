@@ -4,14 +4,9 @@ import { api, handleError } from '../../helpers/api';
 import { RectButton, RectButtonEdit } from '../../views/Button';
 import {useHistory, withRouter} from 'react-router-dom';
 import {Colors} from "../../views/design/Colors";
-import User from "../profile/User";
-import Rodal from "rodal";
-import {GenderLabel} from "../../views/design/logo/AuthConstants";
 
 //Constants we need for this page
 const EditMainContainer = styled.div`
-  height: ${props => props.height}px;
-  background: ${props => props.background};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -79,10 +74,10 @@ export const Edit = () => {
     const history = useHistory()
 
     // Here we want to check if that the matrikel number has the format xx-xxx-xxx, otherwise give warning
-    function checkMatrikelNrFormat(){
-        if (matrikelNr.length !== 10){
-            setMatrikelNr(0);
-            console.log(matrikelNr);
+    function CheckMatrikelNrFormat(){
+        if (matrikelNr.length !== 10 || matrikelNr[2] !== "-" || matrikelNr[6] !== "-") {
+            throw new Error("Matrikel Number does not have the correct format. " +
+                "Please try the format 'xx-xxx-xxx'.")
         }
     }
 
@@ -102,7 +97,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
@@ -125,7 +120,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
@@ -138,7 +133,8 @@ export const Edit = () => {
      */
     async function editMatrikel() {
         try {
-            checkMatrikelNrFormat();
+
+            CheckMatrikelNrFormat();
 
             // get Userinfo to fill out the missing variables in put requests
             const current = await api.get(`/users/${localStorage.getItem('id')}`);
@@ -150,7 +146,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            const response = await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
@@ -253,7 +249,7 @@ export const Edit = () => {
                         history.push('/profile');
                     }}
                 >
-                    Back to Profile
+                    Back to Brofile
                 </RectButton>
             </ButtonContainer>
         </EditMainContainer>
