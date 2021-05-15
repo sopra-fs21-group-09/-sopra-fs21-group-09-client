@@ -45,7 +45,7 @@ export function Tasks(){
         }
     }
 
-    function postTask(){
+    async function postTask(){
         try {
             const requestBody = JSON.stringify({
                 name: taskName,
@@ -56,16 +56,11 @@ export function Tasks(){
                 }
             });
 
-            const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
-
-            console.log('posted!!!!')
-            console.log(taskDate)
-            const print = new Date(taskDate)
-            var dateString = new Date(taskDate).toISOString().substring(0,10);
-            var dateString = new Date(taskDate).toISOString().split("T")[0];
-            console.log('dateString'+dateString)
+            await api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
 
             document.getElementById("input").value = null;
+
+            getTasks();
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);
@@ -131,7 +126,6 @@ export function Tasks(){
                         onClick={() => {
                             postTask();
                             setVisible(false);
-                            getTasks();
                         }}>
                         Submit</RectButton>
                     </div>

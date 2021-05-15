@@ -114,14 +114,14 @@ const CreateGroup = () => {
             //CREATES GROUP FOR MODULE
             if (moduleId){
                 await api.post(`/modules/${moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
+                history.push(`/moduleDetail`);
             }
             //CREATES GROUP FOR USER
             else{
                 await api.post(`/users/${localStorage.getItem('id')}/groups`, requestBody);
+                history.push(`/myGroups`);
             }
 
-            // Login successfully worked --> navigate to the route /game in the GameRouter
-            history.push(`/myGroups`);
         } catch (error) {
             alert(`Something went wrong during group creation: \n${handleError(error)}`);
         }
