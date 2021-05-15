@@ -91,9 +91,11 @@ const CreateGroup = () => {
     const [name, setName] = useState(null);
     const [password, setPassword] = useState(null);
     const [open, setOpen] = useState(null);
-    const [memberLimit, setMemberLimit] = useState(null);
-    const [moduleId, setModuleId] = useState(null)
-    const history = useHistory()
+    const [memberLimit, setMemberLimit] = useState(0);
+    const [settings, setSettings] = useState(true);
+    const [limitation, setLimitation] = useState(true);
+    const [moduleId, setModuleId] = useState(null);
+    const history = useHistory();
     const location = useLocation();
 
     /**
@@ -129,15 +131,11 @@ const CreateGroup = () => {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Haallooo')
         setModuleId(location.moduleId)
-        console.log(moduleId)
     }, []);
 
     // this will run when the component mounts and anytime the stateful data changes
     useEffect(() => {
-        console.log('Haallooo2')
-        console.log(moduleId)
     }, [moduleId]);
 
 
@@ -155,13 +153,6 @@ const CreateGroup = () => {
             setMemberLimit(null);
         }
     }
-
-    // Here we need to set the module id in order to link the created group to the respective module
-    /*
-    if (location.state){
-        setModuleId(location.state.moduleId);
-    }
-    */
 
     return (
         <BaseContainer>
@@ -181,9 +172,8 @@ const CreateGroup = () => {
                     <Label>Settings</Label>
                     <div onChange={setPrivacy.bind(this)} style={{fontSize:25}}>
                         <InLine>
-                            <input type="radio" value="True" name="privacy" style={{height: 25, width: 25}} /> Private:
+                            <input type="radio" value="True" name="privacy" style={{height: 25, width: 25}} onClick={() => setSettings(true)}/> Private:
                             <InputFieldRadio
-                                type="password"
                                 ref={inputOne}
                                 style={{fontSize: 17}}
                                 placeholder="Set password..."
@@ -195,7 +185,7 @@ const CreateGroup = () => {
                             />
                         </InLine>
                         <InLine>
-                            <input type="radio" value="False" name="privacy" style={{height: 25, width: 25}}/> Public
+                            <input type="radio" value="False" name="privacy" style={{height: 25, width: 25}} onClick={ ()=> setSettings(false)}/> Public
                         </InLine>
                     </div>
                 </NextLine>
@@ -203,24 +193,26 @@ const CreateGroup = () => {
                     <Label>Limitations</Label>
                     <div onChange={setPrivacy.bind(this)} style={{fontSize:25}}>
                         <InLine>
-                            <input type="radio" value="One" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
+                            <input type="radio" value="One" name="limitation" style={{height: 25, width: 25}} onClick={() => setLimitation(true)}/> Limited Group Size:
                             <InputFieldRadio
                                 ref={inputTwo}
+                                type="number"
                                 style={{fontSize: 17, width: 120}}
                                 placeholder="Enter Size..."
                                 disabled
                                 onChange={e => {
-                                    setMemberLimit(e.target.value)
+                                    setMemberLimit(e.target.value);
                                 }}
                             />
                         </InLine>
                         <InLine>
-                            <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}}/> Unlimited
+                            <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}} onClick={() => setLimitation(false)}/> Unlimited
                         </InLine>
                     </div>
                 </NextLine>
                 <ButtonContainer>
                     <RectButtonBig
+                        disabled={!name|| (settings && !password) || (limitation && !memberLimit)}
                         width="100%"
                         onClick={() => {
                             createGroup();
