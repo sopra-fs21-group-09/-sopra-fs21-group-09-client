@@ -116,7 +116,7 @@ const AllAppGroups = ({ group }) => {
                     Join
                 </RectButtonSmall>
                 {/*Overlay for password */}
-                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>
+                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc={true} onClose={() => setVisible(false)}>
                     <div><InputFieldPopUp
                         placeholder="Enter group password here..."
                         type="password"

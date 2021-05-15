@@ -2,17 +2,13 @@ import React, {useEffect, useLayoutEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter, useLocation} from "react-router-dom";
-import {SmallCircleButton, CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
+import {useLocation} from "react-router-dom";
+import {SmallCircleButton, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors, getNewRandomColor } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
-import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
-import { Redirect } from 'react-router';
-import {Deadline} from "../home/Calendar";
-import {Task, todaysTasks} from "../task/Task";
 
 //Constants we need for this page
 const BigContainer = styled.div`

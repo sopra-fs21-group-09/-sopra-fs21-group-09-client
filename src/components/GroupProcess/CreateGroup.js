@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import {useHistory, useLocation, withRouter} from "react-router-dom";
 import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
@@ -85,32 +85,33 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-class CreateGroup extends React.Component {
-    constructor() {
-        super();
-        this.InputOne = React.createRef();
-        this.InputTwo = React.createRef();
-        this.state = {
-            moduleId: null
-        };
-    }
+const CreateGroup = () => {
+    let inputOne = React.createRef();
+    let inputTwo = React.createRef();
+    const [name, setName] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [open, setOpen] = useState(null);
+    const [memberLimit, setMemberLimit] = useState(null);
+    const [moduleId, setModuleId] = useState(null)
+    const history = useHistory()
+    const location = useLocation();
 
     /**
      * HTTP GET request is sent to the backend.
      * If the request is successful, the group is created
      */
-    async createGroup() {
+    async function createGroup() {
         try {
             const requestBody = JSON.stringify({
-                name: this.state.name,
-                password: this.state.password,
-                open: this.state.open,
-                memberLimit: this.state.memberLimit
+                name: name,
+                password: password,
+                open: open,
+                memberLimit: memberLimit
             });
 
             //CREATES GROUP FOR MODULE
-            if (this.state.moduleId){
-                await api.post(`/modules/${this.state.moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
+            if (moduleId){
+                await api.post(`/modules/${moduleId}/users/${localStorage.getItem('id')}/groups`, requestBody);
             }
             //CREATES GROUP FOR USER
             else{
@@ -118,113 +119,120 @@ class CreateGroup extends React.Component {
             }
 
             // Login successfully worked --> navigate to the route /game in the GameRouter
-            this.props.history.push(`/myGroups`);
+            history.push(`/myGroups`);
         } catch (error) {
             alert(`Something went wrong during group creation: \n${handleError(error)}`);
         }
     }
 
-    componentDidMount() {
+    // this will run, when the component is first initialized
+    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-    }
+        console.log('Haallooo')
+        setModuleId(location.moduleId)
+        console.log(moduleId)
+    }, []);
 
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+        console.log('Haallooo2')
+        console.log(moduleId)
+    }, [moduleId]);
 
-    setPrivacy(event) {
+
+    function setPrivacy(event) {
         if (event.target.value === "True"){
-            this.InputOne.current.removeAttribute("disabled");
-            this.state.open = false;
+            inputOne.current.removeAttribute("disabled");
+            setOpen(false);
         } else if (event.target.value === "False"){
-            this.InputOne.current.setAttribute("disabled", "");
-            this.state.open = true;
+            inputOne.current.setAttribute("disabled", "");
+            setOpen(true);
         } else if (event.target.value === "One"){
-            this.InputTwo.current.removeAttribute("disabled");
+            inputTwo.current.removeAttribute("disabled");
         } else if (event.target.value === "Zero"){
-            this.InputTwo.current.setAttribute("disabled", "");
-            this.state.memberLimit = null;
+            inputTwo.current.setAttribute("disabled", "");
+            setMemberLimit(null);
         }
     }
 
-    render() {
-        if (this.props.location.state){
-            this.state.moduleId = this.props.location.state.moduleId
-        }
-        return (
-            <BaseContainer>
-                <NavBar/>
-                <PageTitle>Create a new group</PageTitle>
-                <BigContainer>
-                    <FirstLine>
-                        <Label>Name:</Label>
-                        <InputField
-                            placeholder="Enter group name..."
-                            onChange={e => {
-                                this.handleInputChange('name', e.target.value);
-                            }}
-                        />
-                    </FirstLine>
-                    <NextLine>
-                        <Label>Settings</Label>
-                        <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
-                            <InLine>
-                                <input type="radio" value="True" name="privacy" style={{height: 25, width: 25}} /> Private:
-                                <InputFieldRadio
-                                    type="password"
-                                    ref={this.InputOne}
-                                    style={{fontSize: 17}}
-                                    placeholder="Set password..."
-                                    disabled
-                                    id="privacy"
-                                    onChange={e => {
-                                        this.handleInputChange('password', e.target.value);
-                                    }}
-                                />
-                            </InLine>
-                            <InLine>
-                                <input type="radio" value="False" name="privacy" style={{height: 25, width: 25}}/> Public
-                            </InLine>
-                        </div>
-                    </NextLine>
-                    <NextLine>
-                        <Label>Limitations</Label>
-                        <div onChange={this.setPrivacy.bind(this)} style={{fontSize:25}}>
-                            <InLine>
-                                <input type="radio" value="One" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
-                                <InputFieldRadio
-                                    ref={this.InputTwo}
-                                    style={{fontSize: 17, width: 120}}
-                                    placeholder="Enter Size..."
-                                    disabled
-                                    onChange={e => {
-                                        this.handleInputChange('memberLimit', e.target.value);
-                                    }}
-                                />
-                            </InLine>
-                            <InLine>
-                                <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}}/> Unlimited
-                            </InLine>
-                        </div>
-                    </NextLine>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                console.log(this.state)
-                                this.createGroup();
-                            }}
-                        >
-                            Create
-                        </RectButtonBig>
-                    </ButtonContainer>
-                </BigContainer>
-            </BaseContainer>
-        )
+    // Here we need to set the module id in order to link the created group to the respective module
+    /*
+    if (location.state){
+        setModuleId(location.state.moduleId);
     }
+    */
+
+    return (
+        <BaseContainer>
+            <NavBar/>
+                <PageTitle>Create a new group</PageTitle>
+            <BigContainer>
+                <FirstLine>
+                    <Label>Name:</Label>
+                    <InputField
+                        placeholder="Enter group name..."
+                        onChange={e => {
+                            setName(e.target.value);
+                        }}
+                    />
+                </FirstLine>
+                <NextLine>
+                    <Label>Settings</Label>
+                    <div onChange={setPrivacy.bind(this)} style={{fontSize:25}}>
+                        <InLine>
+                            <input type="radio" value="True" name="privacy" style={{height: 25, width: 25}} /> Private:
+                            <InputFieldRadio
+                                type="password"
+                                ref={inputOne}
+                                style={{fontSize: 17}}
+                                placeholder="Set password..."
+                                disabled
+                                id="privacy"
+                                onChange={e => {
+                                    setPassword(e.target.value);
+                                }}
+                            />
+                        </InLine>
+                        <InLine>
+                            <input type="radio" value="False" name="privacy" style={{height: 25, width: 25}}/> Public
+                        </InLine>
+                    </div>
+                </NextLine>
+                <NextLine>
+                    <Label>Limitations</Label>
+                    <div onChange={setPrivacy.bind(this)} style={{fontSize:25}}>
+                        <InLine>
+                            <input type="radio" value="One" name="limitation" style={{height: 25, width: 25}} /> Limited Group Size:
+                            <InputFieldRadio
+                                ref={inputTwo}
+                                style={{fontSize: 17, width: 120}}
+                                placeholder="Enter Size..."
+                                disabled
+                                onChange={e => {
+                                    setMemberLimit(e.target.value)
+                                }}
+                            />
+                        </InLine>
+                        <InLine>
+                            <input type="radio" value="Zero" name="limitation" style={{height: 25, width: 25}}/> Unlimited
+                        </InLine>
+                    </div>
+                </NextLine>
+                <ButtonContainer>
+                    <RectButtonBig
+                        width="100%"
+                        onClick={() => {
+                            createGroup();
+                        }}
+                    >
+                        Create
+                    </RectButtonBig>
+                </ButtonContainer>
+            </BigContainer>
+        </BaseContainer>
+    )
+
 }
 
 export default withRouter(CreateGroup);

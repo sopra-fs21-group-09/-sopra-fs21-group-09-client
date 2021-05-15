@@ -233,7 +233,7 @@ export default function NpmCal() {
       onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
 
       {/*Overlay for ADDING Event */}
-      <Rodal height='430' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
+      <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc={true} onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
         <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
@@ -258,7 +258,7 @@ export default function NpmCal() {
       </Rodal>
 
     {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height='300' customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
+    <Rodal height={300} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>{event.title}</div><br/>
         <EventInfo>
           <div>Start:</div><div>{event.start.toLocaleString()}</div>
@@ -270,13 +270,13 @@ export default function NpmCal() {
         <DoubleButton style={{gridTemplateColumns: '75% 15%'}}>
           <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
           <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
-            <i class="far fa-trash-alt" aria-hidden="true"></i>
+            <i className="far fa-trash-alt" aria-hidden="true"></i>
           </DeleteButton>
         </DoubleButton>
     </Rodal>
 
     {/*Overlay for EDITING event*/}
-    <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc='true' onClose={() => setEditVisible(false)}>
+    <Rodal height={400} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
         <EventInfo>
           <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}></InputField>
@@ -296,16 +296,16 @@ export default function NpmCal() {
         <div><RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall></div>
       </Rodal>
 
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc='true' onClose={() => setWarningVisible(false)}>
-        <i class="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc={true} onClose={() => setWarningVisible(false)}>
+        <i className="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>{warning}</div>
       </Rodal>
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc='true' onClose={() => setApprovalVisible(false)}>
-        <i class="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc={true} onClose={() => setApprovalVisible(false)}>
+        <i className="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>{approval}</div>
       </Rodal>
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc='true' onClose={() => setDeleteWarningVisible(false)}>
-        <i class="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
+        <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>Are you sure you want to delete {event.title}?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
           <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>

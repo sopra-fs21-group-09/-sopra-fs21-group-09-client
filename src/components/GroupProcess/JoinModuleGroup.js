@@ -98,7 +98,17 @@ export function JoinModuleGroup (props) {
                 const response = await api.get('/modules/'+moduleId)
                 //localhost:8080/modules/1/users/1/groups
                 console.log('MODULE GROUPS ')
-                console.log(response.data)
+                console.log(response.data.groups)
+
+                // Delete all groups which are full
+                for (let z = 0; z < response.data.groups.length; z++){
+                    if (response.data.groups[z] !== undefined && response.data.groups[z].memberLimit !== 0){
+                        if (response.data.groups[z].memberCount >= response.data.groups[z].memberLimit){
+                            delete response.data.groups[z];
+                        }
+                    }
+                }
+
                 setGroups(response.data.groups)
             }
             else {
@@ -112,13 +122,17 @@ export function JoinModuleGroup (props) {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+
         setModuleId(location.moduleId)
+        console.log(moduleId);
         setModuleName(location.moduleName)
     }, []);
 
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+        console.log("Hello")
+        console.log(moduleId)
         getModuleGroups();
     }, [moduleId]);
 
@@ -148,10 +162,8 @@ export function JoinModuleGroup (props) {
                         onClick={() => {
                             history.push({
                                 pathname: '/createGroup',
-                                state: {
-                                    moduleId: moduleId
-                                }})
-                            }}
+                                moduleId: moduleId
+                        })}}
                     >
                         Create your own group
                     </RectButtonBig>
