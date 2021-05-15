@@ -149,7 +149,7 @@ export function JoinModuleGroup (props) {
                             history.push({
                                 pathname: '/createGroup',
                                 state: {
-                                    moduleId: moduleId
+                                    moduleId: moduleId //TODO: adjust when turning create group too hook
                                 }})
                             }}
                     >

@@ -4,11 +4,11 @@ import {Colors} from "../../views/design/Colors";
 import {TaskList} from "../task/Task"
 import styled from "styled-components";
 import "./Task.css"
-import {InputField, Label} from "../../views/Labels";
+import {Label} from "../../views/Labels";
 import Header from "../../views/design/Header";
 import {CircleButton, RectButton} from "../../views/Button";
-import Rodal from "rodal";
 import {api, handleError} from '../../helpers/api';
+import {AddTask} from "./AddTask";
 
 
 export const AddButton = styled(CircleButton)`
@@ -18,14 +18,13 @@ export const AddButton = styled(CircleButton)`
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
+
+
 export function Tasks(){
-    const [userID, setUserID] = useState('userID')
-    const [visible, setVisible] = useState(false)
-    const [taskName, setTaskName] = useState()
-    const [taskDate, setTaskDate] = useState()
     const [tasks, setTasks] = useState([])
-    const [rerender, setRerender] = useState()
-    const history = useHistory()
+    const [visible, setVisible] = useState(false)
+    const [rodal, setRodal] = useState(AddTask())
+
 
     async function getTasks(){
         try {
@@ -45,34 +44,6 @@ export function Tasks(){
         }
     }
 
-    function postTask(){
-        try {
-            const requestBody = JSON.stringify({
-                name: taskName,
-                description: "bla",
-                deadline: {
-                    time: taskDate,
-                    visible: "true"
-                }
-            });
-
-            const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
-
-            console.log('posted!!!!')
-            console.log(taskDate)
-            const print = new Date(taskDate)
-            var dateString = new Date(taskDate).toISOString().substring(0,10);
-            var dateString = new Date(taskDate).toISOString().split("T")[0];
-            console.log('dateString'+dateString)
-
-            document.getElementById("input").value = null;
-
-        } catch (error) {
-            alert(`Something went wrong during postTasks: \n${handleError(error)}`);
-        }
-    }
-
-
 
     // this will run, when the component is first initialized
     useEffect(() => {
@@ -83,14 +54,10 @@ export function Tasks(){
     }, []);
 
     // this will run only when TaskDate
-    useEffect(() => {
+   useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getTasks()
-        console.log('Runs only when tasks are added')
-        console.log(document.getElementById("input").value)
-
     }, [visible]);
-
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
@@ -99,44 +66,13 @@ export function Tasks(){
 
     return (
         <div style={{padding: '0px'}}>
+            {visible ? rodal : 'x'}
             <AddButton
-                onClick={() => setVisible(true)}>
+                onClick={() => {
+                    setVisible(!visible)
+                }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddButton>
-
-                <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
-                    <Label style={{color: 'black'}}>NEW TASK</Label>
-                    <div>Title:
-                        <InputField id='input'
-                                    width='75%'
-                            onChange={e => {
-                                setTaskName(e.target.value);
-                            }}
-                            placeholder='Enter title here'></InputField></div>
-                    <div>Date:
-                        <InputField id='input'
-                        type="date"
-                        width='80%'
-                        onChange={e => {
-                            setTaskDate(e.target.value)
-                        }}
-                        /></div>
-                    <div style={{alignItems: 'center'}}>
-                        <RectButton
-                        style={{
-                            position: 'absolute',
-                            bottom: '0'
-                        }}
-                        disabled={!taskName  || !taskDate}
-                        onClick={() => {
-                            postTask();
-                            setVisible(false);
-                            getTasks();
-                        }}>
-                        Submit</RectButton>
-                    </div>
-                </Rodal>
-
             <Header title='MY TASKS'>
             </Header>
             <TaskList tasks={tasks}/>
