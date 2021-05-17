@@ -3,6 +3,7 @@ import {Colors} from "../../views/design/Colors";
 import React from "react";
 import {api, handleError} from "../../helpers/api";
 import ShadowScrollbars from "../../views/design/Scrollbars";
+import { DateLabelHome } from "../../views/Labels"
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
@@ -45,12 +46,6 @@ export const TaskButton = styled.button`
   height: 23px;
 `;
 
-export const DateLabelHome = styled.label`
-  margin-top: 10px;
-  font-size: 12px;
-  color: white;  
-`;
-
 export const DateLabel = styled.label`
   margin-left: 5%;
   font-size: 20px;
@@ -74,7 +69,6 @@ export const Task = props => {
         } catch (error) {
             alert(`Something went wrong during deleting the task: \n${handleError(error)}`);
         }
-
     }
 
     return (<TaskContainer>

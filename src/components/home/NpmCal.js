@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Calendar, Views, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
 import '../../../node_modules/react-big-calendar/lib/css/react-big-calendar.css'
@@ -8,17 +8,19 @@ import 'rodal/lib/rodal.css'
 import {CircleButton, RectButtonSmall, DeleteButton} from '../../views/Button'
 import { InputField, InputArea } from '../../views/Labels'
 import { api, handleError } from '../../helpers/api'
-import events2 from './Events'
-import e from 'cors';
 
 const EventInfo = styled.div`
   display grid;
   grid-template-columns: 25% 75%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
+  justifyContent: center;
+  margin-top: 10px;
 `;
 
 const DoubleButton = styled.div`
+  bottom: 0;
+  position: absolute;
   display grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 1;
@@ -26,13 +28,11 @@ const DoubleButton = styled.div`
   margin-top: 10px;
   alignItems: center; 
   justifyContent:center;
-
 `;
 
 const EventLabel = styled.div`
-  color: ${props => props.warning ? 'red' : 'black'};
-  padding-top: '5px';
-  font-weight: 'bold';
+  padding-top: 8px;
+  font-weight: bold;
 `;
 
 const trashStyle = styled.div`
@@ -236,13 +236,13 @@ export default function NpmCal() {
       <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc={true} onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
-        <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
+          <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
-          <EventLabel>All Day:</EventLabel>
-            <input type='checkbox' onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
+          <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
+            <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
           <EventLabel>Label:</EventLabel>
           <div>
             <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} 
@@ -253,7 +253,6 @@ export default function NpmCal() {
           </div>
           <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
         </EventInfo>
-        <br/> 
         <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
 
@@ -266,8 +265,8 @@ export default function NpmCal() {
           <div>All Day:</div><div>{event.allDay.toString()}</div>
           <div>Label:</div><div>{event.label}</div>
           <div>Description:</div><div>{event.desc}</div>
-        </EventInfo><br/><br/>
-        <DoubleButton style={{gridTemplateColumns: '75% 15%'}}>
+        </EventInfo>
+        <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
           <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
           <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
             <i className="far fa-trash-alt" aria-hidden="true"></i>
