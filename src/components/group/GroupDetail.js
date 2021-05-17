@@ -140,7 +140,8 @@ export const GroupDetail = () => {
                                             onChange={e => {
                                                 setTaskName(e.target.value);
                                             }}
-                                            placeholder='Enter title here'></InputField></div>
+                                            placeholder='Enter title here'
+                                /></div>
                             <div>Date:
                                 <InputField id='input'
                                             type="date"

@@ -14,6 +14,7 @@ export const GroupTaskContainer = styled.div`
   margin: 5px 0px 0px 5%;
   border: 3px solid #018692;
   border-radius: 45px;
+  display: flex;
   align-items: center;
   background: #E5E5E5;
 `;

@@ -62,7 +62,7 @@ export const Login = () => {
                         onClick={() => {
                             setVisible(true);
                         }}
-                    ></GenderButton>
+                    />
                 </LogoContainer>
                 {/*Overlay for button */}
                 <Rodal height='100' width='390' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc='true' onClose={() => setVisible(false)}>

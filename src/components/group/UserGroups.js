@@ -1,9 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import {useHistory} from "react-router";
-import Rodal from "rodal";
-import {InputFieldPopUp} from "../../views/Labels";
-import {RectButtonPopUp} from "../../views/Button";
 
 //Constants we need for this page
 const GroupContainer = styled.button`

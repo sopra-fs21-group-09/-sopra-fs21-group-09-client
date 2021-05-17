@@ -229,7 +229,7 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         }
     }
 
-
+    // gets executed first
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
@@ -237,10 +237,14 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         console.log('inital useEffect')
     }, []);
 
+    // gets executed second
     useEffect(() => {
+        /*
         console.log('useEffect Location')
         console.log(location.pathname); // result: '/secondpage'
         console.log(location.module); // result: 'some_value'
+
+         */
         setModule(location.module)
         if (!location.module){
             console.log('GETS MODULE DETAILS')
@@ -248,6 +252,7 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         }
     }, [location]);
 
+    // gets executed third
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;

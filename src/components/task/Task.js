@@ -20,6 +20,7 @@ export const TaskContainer = styled.div`
   margin: 5px 0px 0px 5%;
   border: 3px solid #018692;
   border-radius: 45px;
+  display: flex;
   align-items: center;
   background: #E5E5E5;
 `;
@@ -198,19 +199,19 @@ export function TaskList(props) {
         <div class='row'>
             <div class='column'>
                 <DateLabel>Today</DateLabel>
-                <ShadowScrollbars style={{height: 320}}>
+                <ShadowScrollbars style={{height: 250}}>
                     <InfoLabel>{todaysTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {todaysTaskItem}
                 </ShadowScrollbars>
-            </div>
-            <div class='column'>
                 <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
-                <ShadowScrollbars style={{height: 160}}>
+                <ShadowScrollbars style={{height: 250}}>
                     <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {tomorrowsTaskItem}
                 </ShadowScrollbars>
-                <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
-                <ShadowScrollbars style={{height: 160}}>
+            </div>
+            <div class='column'>
+                <DateLabel>{nxtMonthsTaskItem? 'Later': ''}</DateLabel>
+                <ShadowScrollbars style={{height: 500}}>
                     <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsTaskItem}
                 </ShadowScrollbars>
@@ -252,7 +253,7 @@ export function TasksForHome(props){
                 {todaysTaskItem}
             {tomorrowsTaskItem.length!=0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
                 {tomorrowsTaskItem}
-            {nxtMonthsTaskItem.length!=0 ? <DateLabelHome>Next Month</DateLabelHome> : ''}
+            {nxtMonthsTaskItem.length!=0 ? <DateLabelHome>Later</DateLabelHome> : ''}
                 {nxtMonthsTaskItem}
         </div>
     )

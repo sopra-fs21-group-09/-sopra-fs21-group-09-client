@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
 import {Colors} from "../../views/design/Colors";
-import {TaskList} from "../task/Task"
+import {TaskList} from "./Task"
 import styled from "styled-components";
 import "./Task.css"
 import {InputField, Label} from "../../views/Labels";
@@ -10,7 +9,7 @@ import {CircleButton, RectButton} from "../../views/Button";
 import Rodal from "rodal";
 import {api, handleError} from '../../helpers/api';
 
-
+//Constants we need for this page
 export const AddButton = styled(CircleButton)`
     position: 'absolute';
     top: 22px;
@@ -19,21 +18,17 @@ export const AddButton = styled(CircleButton)`
 `;
 
 export function Tasks(){
-    const [userID, setUserID] = useState('userID')
     const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
     const [taskDate, setTaskDate] = useState()
     const [tasks, setTasks] = useState([])
-    const [rerender, setRerender] = useState()
-    const history = useHistory()
 
     async function getTasks(){
         try {
             const response = await api.get('/users/'+ localStorage.getItem('id')+'/tasks')
 
-
             const array = []
-            var i;
+            let i;
             for (i = 0; i < response.data.length; i++) {
                 array.push(response.data[i]);
             }
@@ -72,7 +67,7 @@ export function Tasks(){
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
-        console.log('Runed only when initialized')
+        console.log('Runs only when initialized')
         getTasks()
 
     }, []);
@@ -107,7 +102,8 @@ export function Tasks(){
                             onChange={e => {
                                 setTaskName(e.target.value);
                             }}
-                            placeholder='Enter title here'></InputField></div>
+                            placeholder='Enter title here'
+                        /></div>
                     <div>Date:
                         <InputField id='input'
                         type="date"

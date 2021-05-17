@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {useHistory, useLocation, withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
+import {useHistory, useLocation} from "react-router-dom";
+import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import ShadowScrollbars from "../../views/design/Scrollbars";
@@ -36,38 +36,6 @@ const Label = styled.label`
   font-size: 25px;
 `;
 
-//This is the div that will be generated with each new group (of course with other divs inside)
-const ModuleBox = styled.div`
-  height: 60px;
-  width: 99%;
-  display grid;
-  grid-template-columns: 25% 30% 15% 10% 15%;
-  grid-template-rows: 1;
-  grid-column-gap: 1em;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: 1px solid black;
-  background: white;
-  border-radius: 10px;
-`;
-
-const InboxLabel = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 30px;
-`;
-
-const InboxLabelName = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 20px;
-`;
-
-const InboxButtonContainer = styled.div`
-  place-self: center;
-  width: 80%;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -76,7 +44,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-export function JoinModuleGroup (props) {
+export function JoinModuleGroup () {
     const location = useLocation();
     const [moduleId, setModuleId] = useState('')
     const [moduleName, setModuleName] = useState('')

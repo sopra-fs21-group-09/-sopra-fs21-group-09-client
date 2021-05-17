@@ -66,7 +66,7 @@ export function JoinModules() {
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Run only when initialized')
+        console.log('JoinModule initialized')
         getModules();
     }, []);
 
