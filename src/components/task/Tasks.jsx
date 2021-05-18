@@ -8,7 +8,8 @@ import {Label} from "../../views/Labels";
 import Header from "../../views/design/Header";
 import {CircleButton, RectButton} from "../../views/Button";
 import {api, handleError} from '../../helpers/api';
-import {AddTask} from "./AddTask";
+import {AddTaskRodal} from "./AddTaskRodal";
+import {add} from "../home/Dates";
 
 
 export const AddButton = styled(CircleButton)`
@@ -19,11 +20,9 @@ export const AddButton = styled(CircleButton)`
 `;
 
 
-
 export function Tasks(){
     const [tasks, setTasks] = useState([])
-    const [visible, setVisible] = useState(false)
-    const [rodal, setRodal] = useState(AddTask())
+    const [displayRodal, setDisplayRodal] = useState(false)
 
 
     async function getTasks(){
@@ -44,32 +43,34 @@ export function Tasks(){
         }
     }
 
-
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         console.log('Runed only when initialized')
         getTasks()
-
     }, []);
 
-    // this will run only when TaskDate
-   useEffect(() => {
+
+
+    useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getTasks()
-    }, [visible]);
+        console.log('displayRodal changed')
+        console.log('displayRodal: '+displayRodal)
+    }, [displayRodal]);
+
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('runs every other time')
     })
+
 
     return (
         <div style={{padding: '0px'}}>
-            {visible ? rodal : 'x'}
+            <AddTaskRodal displayRodal={displayRodal}/>
             <AddButton
                 onClick={() => {
-                    setVisible(!visible)
+                    setDisplayRodal(true)
                 }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddButton>

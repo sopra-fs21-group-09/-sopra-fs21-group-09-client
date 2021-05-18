@@ -30,13 +30,15 @@ export const InputField = styled.input`
   rows: 3; 
 `;
 
-export const AddTask = props => {
-    const [visible, setVisible] = useState(true)
+export function AddTaskRodal(props) {
+    const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
     const [taskDate, setTaskDate] = useState()
     const [deadline, setDeadline] = useState(false)
+    const [displayRodal, setDisplayRodal] = useState(false)
     const [description, setDescription] = useState('')
 
+    //POST:/users/{userId}/tasks
     function postTask(){
         try {
             const requestBody = JSON.stringify({
@@ -57,12 +59,25 @@ export const AddTask = props => {
         }
     }
 
-    // this will run, when the component is first initialized
+    //this runs whenever props change
     useEffect(() => {
-        console.log('Displaying rodal')
-        console.log(visible)
-        //setVisible(true)
-    }, []);
+        console.log('#2 PROPS changed')
+        //if props are set and displayRodal is true
+        if (props && props.displayRodal){
+            //set visible to true
+            setVisible(true)
+            console.log('#2.1 DisplayRodal is True')
+        }
+        //if displayRodal is false
+        if (!props.displayRodal){
+            console.log('#2.2 FIRST RENDER: do not show rodal')
+            //show Rodal next time
+            if (props){
+                setVisible(false)
+                setDisplayRodal(props.displayRodal)
+            }
+        }
+    },[props]);
 
     return(
     <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' onClose={() => setVisible(false)}>
