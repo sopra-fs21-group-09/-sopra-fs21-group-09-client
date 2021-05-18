@@ -2,17 +2,13 @@ import React, {useEffect, useLayoutEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter, useLocation} from "react-router-dom";
-import {SmallCircleButton, CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
+import {useLocation} from "react-router-dom";
+import {SmallCircleButton, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors, getNewRandomColor } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
-import {faAlignCenter} from "@fortawesome/free-solid-svg-icons";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
-import { Redirect } from 'react-router';
-import {Deadline} from "../home/Calendar";
-import {Task, todaysTasks} from "../task/Task";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -233,7 +229,7 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         }
     }
 
-
+    // gets executed first
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
@@ -241,10 +237,14 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         console.log('inital useEffect')
     }, []);
 
+    // gets executed second
     useEffect(() => {
+        /*
         console.log('useEffect Location')
         console.log(location.pathname); // result: '/secondpage'
         console.log(location.module); // result: 'some_value'
+
+         */
         setModule(location.module)
         if (!location.module){
             console.log('GETS MODULE DETAILS')
@@ -252,6 +252,7 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
         }
     }, [location]);
 
+    // gets executed third
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;

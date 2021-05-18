@@ -2,13 +2,12 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {useHistory, withRouter} from "react-router-dom";
-import {CircleButton, RectButtonBig, RectButtonSmall} from '../../views/Button';
+import {useHistory} from "react-router-dom";
+import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
-import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
-import {Module, ModuleList} from "./Module";
+import {ModuleList} from "./Module";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -58,7 +57,6 @@ export function Modules() {
             const response = await api.get('/users/'+localStorage.getItem('id')+'/modules')
 
             setModules(response.data)
-            console.log(response.data)
 
         } catch (error) {
             alert(`Something went wrong during get Modules: \n${handleError(error)}`);
@@ -68,12 +66,13 @@ export function Modules() {
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Run only when initialized')
+        console.log('MyModules initialized')
         getModules();
     }, []);
 
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
+        console.log('Second')
         getModules();
     }, [history]);
 

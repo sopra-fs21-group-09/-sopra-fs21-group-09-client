@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Calendar, Views, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
 import '../../../node_modules/react-big-calendar/lib/css/react-big-calendar.css'
@@ -8,17 +8,19 @@ import 'rodal/lib/rodal.css'
 import {CircleButton, RectButtonSmall, DeleteButton} from '../../views/Button'
 import { InputField, InputArea } from '../../views/Labels'
 import { api, handleError } from '../../helpers/api'
-import events2 from './Events'
-import e from 'cors';
+import { Colors } from '../../views/design/Colors'
 
 const EventInfo = styled.div`
   display grid;
   grid-template-columns: 25% 75%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
+  justifyContent: center;
+  margin-top: 10px;
 `;
 
 const DoubleButton = styled.div`
+  bottom: 0px;
   display grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: 1;
@@ -26,30 +28,37 @@ const DoubleButton = styled.div`
   margin-top: 10px;
   alignItems: center; 
   justifyContent:center;
-
 `;
 
 const EventLabel = styled.div`
-  color: ${props => props.warning ? 'red' : 'black'};
-  padding-top: '5px';
-  font-weight: 'bold';
-`;
-
-const trashStyle = styled.div`
-  color: red;
-  display: flex;
-  alignItems: center; 
-  justifyContent:center;
-  &:hover {
-    color: white;
-  }
+  padding-top: 8px;
+  font-weight: bold;
 `;
 
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
     style: {
     },
-  })
+})
+
+const ColoredEventWrapper = events => {
+  return {
+    style: {
+      background: getEventColor(events),
+      border: getEventColor(events),
+    }
+  }
+}
+
+function getEventColor(e) {
+  if (e.label == 'EVENT') {return Colors.BLUE}
+  if (e.label == 'MEETING') {return Colors.MEETING}
+  if (e.label == 'LECTURE') {return Colors.LECTURES}
+  if (e.label == 'EXERCISE') {return Colors.EXERCISES}
+  if (e.label == 'EXAM') {return Colors.EXAMS}
+  if (e.label == 'PRIVATE') {return Colors.PRIVATE}
+  else {return Colors.DARK_GREY}
+}
 
 //calendar time formatting
 const localizer = momentLocalizer(moment)
@@ -101,7 +110,8 @@ export default function NpmCal() {
       {label: "Lecture", value: "LECTURE"},
       {label: "Exercise", value: "EXERCISE"},
       {label: "Meeting", value: "MEETING"},
-      {label: "Exam", value: "EXAM"},    
+      {label: "Exam", value: "EXAM"},
+      {label: "Private", value: "PRIVATE"},    
     ]);
 
   //check if event is valid -> required: title, start, end, label, start<end
@@ -212,7 +222,6 @@ export default function NpmCal() {
 
   return (
     <div>
-    <RectButtonSmall style={{}} onClick={() => {console.log(event); setDeleteWarningVisible(true);}}></RectButtonSmall>
     <Calendar
       popup
       selectable
@@ -221,8 +230,9 @@ export default function NpmCal() {
       step={60}
       showMultiDayTimes
       defaultDate={new Date()}
+      eventPropGetter={ColoredEventWrapper}
       components={{
-        timeSlotWrapper: ColoredDateCellWrapper,
+        timeSlotWrapper: ColoredDateCellWrapper
       }}
       localizer={localizer}
       onSelectEvent={e => {setEvent(e); setEventVisible(true); }}
@@ -233,16 +243,16 @@ export default function NpmCal() {
       onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
 
       {/*Overlay for ADDING Event */}
-      <Rodal height='430' customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc='true' onClose={() => setAddVisible(false)}>
+      <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc={true} onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
-        <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
+          <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
-          <EventLabel>All Day:</EventLabel>
-            <input type='checkbox' onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
+          <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
+            <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
           <EventLabel>Label:</EventLabel>
           <div>
             <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} 
@@ -253,30 +263,29 @@ export default function NpmCal() {
           </div>
           <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
         </EventInfo>
-        <br/> 
         <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
 
     {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height='300' customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc='true' onClose={() => {setEventVisible(false)}}>
-        <div style={{fontSize: '20px', fontWeight: 'bold'}}>{event.title}</div><br/>
+    <Rodal height={300} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
+        <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis'}}>{event.title}</div><br/>
         <EventInfo>
           <div>Start:</div><div>{event.start.toLocaleString()}</div>
           <div>End:</div><div>{event.end.toLocaleString()}</div>
           <div>All Day:</div><div>{event.allDay.toString()}</div>
           <div>Label:</div><div>{event.label}</div>
           <div>Description:</div><div>{event.desc}</div>
-        </EventInfo><br/><br/>
-        <DoubleButton style={{gridTemplateColumns: '75% 15%'}}>
+        </EventInfo>
+        <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
           <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
           <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
-            <i class="far fa-trash-alt" aria-hidden="true"></i>
+            <i className="far fa-trash-alt" aria-hidden="true"></i>
           </DeleteButton>
         </DoubleButton>
     </Rodal>
 
     {/*Overlay for EDITING event*/}
-    <Rodal height='400' customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc='true' onClose={() => setEditVisible(false)}>
+    <Rodal height={400} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
         <EventInfo>
           <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}></InputField>
@@ -296,17 +305,17 @@ export default function NpmCal() {
         <div><RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall></div>
       </Rodal>
 
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc='true' onClose={() => setWarningVisible(false)}>
-        <i class="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc={true} onClose={() => setWarningVisible(false)}>
+        <i className="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>{warning}</div>
       </Rodal>
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc='true' onClose={() => setApprovalVisible(false)}>
-        <i class="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc={true} onClose={() => setApprovalVisible(false)}>
+        <i className="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
         <div style={{textAlign:'center', marginTop: '10px'}}>{approval}</div>
       </Rodal>
-      <Rodal height='200' width='200' customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc='true' onClose={() => setDeleteWarningVisible(false)}>
-        <i class="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
-        <div style={{textAlign:'center', marginTop: '10px'}}>Are you sure you want to delete {event.title}?</div>
+      <Rodal height={220} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
+        <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete {event.title}?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
           <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>
           <RectButtonSmall onClick={() => setDeleteWarningVisible(false)}>NO</RectButtonSmall>

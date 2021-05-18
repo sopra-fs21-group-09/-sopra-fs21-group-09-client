@@ -55,7 +55,7 @@ export function GroupTaskList(props) {
                     {tomorrowsGroupTaskItem}
                 </ShadowScrollbars><br/>
 
-                <DateLabel>Next Month</DateLabel><br/>
+                <DateLabel>Later</DateLabel><br/>
                 <ShadowScrollbars style={{height: 120}}>
                     <InfoLabel>{nxtMonthsGroupTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsGroupTaskItem}

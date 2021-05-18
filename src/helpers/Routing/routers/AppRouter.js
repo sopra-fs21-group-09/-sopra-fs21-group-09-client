@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import HomeRouter from "./HomeRouter";
 import {HomeGuard} from "../routeProtectors/HomeGuard";
 import {RegistrationGuard} from "../routeProtectors/RegistrationGuard";
 import {LoginGuard} from "../routeProtectors/LoginGuard";

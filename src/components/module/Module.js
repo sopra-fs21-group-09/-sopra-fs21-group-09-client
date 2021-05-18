@@ -1,11 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import {RectButtonSmall} from "../../views/Button";
 import styled from "styled-components";
-import {DateLabel, Task} from "../task/Task";
 import ShadowScrollbars from "../../views/design/Scrollbars";
-import Group from "../group/AllAppGroups";
 import {useHistory} from "react-router-dom";
-import {ModuleDetail} from "./ModuleDetail";
 import {api, handleError} from "../../helpers/api";
 
 const ModuleBox = styled.div`
@@ -33,9 +30,9 @@ const InboxButtonContainer = styled.div`
   width: 80%;
 `;
 
-async function postModule(id){
+async function userJoinModule(id){
     try {
-        const response = await api.post('/users/'+localStorage.getItem('id')+'/modules/'+id)
+        await api.post('/users/'+localStorage.getItem('id')+'/modules/'+id)
 
     } catch (error) {
         alert(`Something went wrong during post module: \n${handleError(error)}`);
@@ -43,6 +40,8 @@ async function postModule(id){
 }
 
 function infoButton(history, module){
+    console.log("Info button gets initialized")
+    console.log(module)
     return(
     <InboxButtonContainer>
         <RectButtonSmall
@@ -52,6 +51,8 @@ function infoButton(history, module){
                     pathname: '/moduleDetail',
                     module: module
                 });
+                //TODO: Talk about it with Steffi
+                localStorage.setItem('moduleInfo', module);
             }}
         >
             Info
@@ -82,7 +83,7 @@ export const JoinModule = props => {
             <InboxButtonContainer style={{width: '30%'}}>
                 <RectButtonSmall
                     onClick={() => {
-                        postModule(props.module.id);
+                        userJoinModule(props.module.id);
                         history.push('/modules');
                     }}
                 >

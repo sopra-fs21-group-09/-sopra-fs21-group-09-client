@@ -77,7 +77,7 @@ export const GroupDetail = () => {
         }
     }
 
-    function postGroupTask(id){
+    async function postGroupTask(id){
         try {
             const requestBody = JSON.stringify({
                 name: taskName,
@@ -88,14 +88,11 @@ export const GroupDetail = () => {
                 }
             });
 
-            const response = api.post(`/groups/${id}/tasks`, requestBody)
-
-            const print = new Date(taskDate)
-            let dateString = new Date(taskDate).toISOString().substring(0, 10);
-            dateString = new Date(taskDate).toISOString().split("T")[0];
-            console.log('dateString'+dateString)
+            await api.post(`/groups/${id}/tasks`, requestBody)
 
             document.getElementById("input").value = null;
+
+            getGroupTasks(location.state.detail.id);
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);
@@ -143,7 +140,8 @@ export const GroupDetail = () => {
                                             onChange={e => {
                                                 setTaskName(e.target.value);
                                             }}
-                                            placeholder='Enter title here'></InputField></div>
+                                            placeholder='Enter title here'
+                                /></div>
                             <div>Date:
                                 <InputField id='input'
                                             type="date"
@@ -161,9 +159,7 @@ export const GroupDetail = () => {
                                     disabled={!taskName  || !taskDate}
                                     onClick={() => {
                                         postGroupTask(location.state.detail.id);
-                                        console.log("Works")
                                         setVisible(false);
-                                        getGroupTasks(location.state.detail.id);
                                     }}>
                                     Submit</RectButton>
                             </div>

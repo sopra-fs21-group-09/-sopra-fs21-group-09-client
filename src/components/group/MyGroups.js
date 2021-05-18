@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {SmallCircleButton} from "../../views/Button";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import styled from "styled-components";
@@ -9,7 +9,7 @@ import {PageTitle} from "../../views/Labels";
 import {api, handleError} from "../../helpers/api";
 import {Spinner} from "../../views/design/Spinner";
 import UserGroups from "./UserGroups";
-import {withRouter} from "react-router-dom";
+import {useHistory, withRouter} from "react-router-dom";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -29,28 +29,16 @@ const ScrollContainer = styled.div`
 `;
 
 
-class MyGroups extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            groups: null,
-        };
-    }
+export const MyGroups = () => {
+    const [groups, setGroups] = useState(null);
+    const history = useHistory();
 
-    async componentDidMount(){
-        //Change the whole background for just this file
-        document.body.style.backgroundColor = Colors.COLOR11;
-
-        // Load all groups the user is currently a part of
+    // Load all groups the user is currently a part of
+    async function getUserGroups(){
         try {
-            let usersGroups = null;
+            let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
 
-            usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
-            console.log(usersGroups)
-            this.setState({
-                groups: usersGroups.data,
-                loading: false
-            });
+            setGroups(usersGroups.data)
 
         } catch (error) {
             alert(`Something went wrong while getting your groups: \n${handleError(error)}`);
@@ -61,37 +49,49 @@ class MyGroups extends React.Component {
 
     }
 
-    render() {
-        return (
-            <BaseContainer>
-                <NavBar/>
-                <PageTitle>My GROUPS</PageTitle>
-                {!this.state.groups ? (
-                    <Spinner />
-                ) : (
-                    <BigContainer>
-                        <ShadowScrollbars style={{height: 500}}>
-                            <ScrollContainer>
-                                {this.state.groups.map(group => {
-                                    return (
-                                        <UserGroups userGroup={group}/>
-                                    );
-                                })}
-                                <SmallCircleButton
-                                    onClick={() => {
-                                        this.props.history.push('/joinAppGroup')
-                                    }}>
-                                        <span style={{fontSize: 25}}>
-                                            <i className="fas fa-plus"></i>
-                                        </span>
-                                </SmallCircleButton>
-                            </ScrollContainer>
-                        </ShadowScrollbars>
-                    </BigContainer>
-                )}
-            </BaseContainer>
-        )
-    }
+    // this will run, when the component is first initialized
+    useEffect(() => {
+        // Load all the groups
+        getUserGroups();
+    }, []);
+
+
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = Colors.COLOR11;
+    });
+
+    return (
+        <BaseContainer>
+            <NavBar/>
+            <PageTitle>My GROUPS</PageTitle>
+            {!groups ? (
+                <Spinner />
+            ) : (
+                <BigContainer>
+                    <ShadowScrollbars style={{height: 500}}>
+                        <ScrollContainer>
+                            {groups.map(group => {
+                                return (
+                                    <UserGroups userGroup={group}/>
+                                );
+                            })}
+                            <SmallCircleButton
+                                onClick={() => {
+                                    history.push('/joinAppGroup');
+                                }}>
+                                <span style={{fontSize: 25}}>
+                                    <i className="fas fa-plus"/>
+                                </span>
+                            </SmallCircleButton>
+                        </ScrollContainer>
+                    </ShadowScrollbars>
+                </BigContainer>
+            )}
+        </BaseContainer>
+    )
+
 }
 
 export default withRouter(MyGroups);

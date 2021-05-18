@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {withRouter} from "react-router-dom";
+import {useHistory, withRouter} from "react-router-dom";
 import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
@@ -45,113 +45,104 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-class JoinAppGroup extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            groups: null,
-        };
-    }
+export const JoinAppGroup = () => {
+    const [joinableGroups, setJoinableGroups] = useState(null);
+    const history = useHistory();
 
-    async componentDidMount() {
-        //Change the whole background for just this file
-        document.body.style.backgroundColor = Colors.COLOR11;
-
-        // Get all the Groups
+    // Get all the groups which the user can join
+    async function getJoinableGroups(){
         try {
-            let allGroups = null;
-            let usersGroups = null;
-            let groupsWithoutUser = null;
-
             //get groups 2 times; one for checking, one for deleting
-            allGroups = await api.get(`/groups`);
-            groupsWithoutUser = await api.get(`/groups`);
+            let allGroups = await api.get(`/groups`);
+            let joinableGroups = await api.get(`/groups`);
 
             //get all groups in which the user is enrolled
-            usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+            let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
 
             // Get all groups where the user is not in
             for (let i = 0; i < allGroups.data.length; i++){
                 for (let z = 0; z < usersGroups.data.length; z++){
                     if (allGroups.data[i].id === usersGroups.data[z].id){
-                        delete groupsWithoutUser.data[i];
+                        delete joinableGroups.data[i];
                     }
                 }
             }
 
             // Delete all groups which are full
-            for (let i = 0; i < groupsWithoutUser.data.length; i++){
-                if (groupsWithoutUser.data[i] !== undefined && groupsWithoutUser.data[i].memberLimit !== 0){
-                    if (groupsWithoutUser.data[i].memberCount >= groupsWithoutUser.data[i].memberLimit){
-                        delete groupsWithoutUser.data[i];
+            for (let i = 0; i < joinableGroups.data.length; i++){
+                if (joinableGroups.data[i] !== undefined && joinableGroups.data[i].memberLimit !== 0){
+                    if (joinableGroups.data[i].memberCount >= joinableGroups.data[i].memberLimit){
+                        delete joinableGroups.data[i];
                     }
                 }
             }
 
-            this.setState({
-                groups: groupsWithoutUser.data,
-                loading: false
-            });
+            setJoinableGroups(joinableGroups.data);
 
         } catch (error) {
             alert(`Something went wrong while getting the groups: \n${handleError(error)}`);
         }
     }
 
-    handleInputChange(key, value) {
-        // Example: if the key is username, this statement is the equivalent to the following one:
-        // this.setState({'username': value});
-        this.setState({ [key]: value });
-    }
+    useEffect(() => {
+        // Load all the groups
+        getJoinableGroups();
+    }, []);
+
+
+    // this will run when the component mounts and anytime the stateful data changes
+    useEffect(() => {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = Colors.COLOR11;
+    });
 
     //TODO: too long group name is problematic
-    render() {
-        return (
-            <BaseContainer>
-                <NavBar/>
-                <PageTitle>Groups</PageTitle>
-                {!this.state.groups ? (
-                    <Spinner />
-                ) : (
-                    <BigContainer>
-                        <Line>
-                            <Label>Group Name</Label>
-                            <Label>Creator</Label>
-                            <Label>Settings</Label>
-                            <Label>Enroll</Label>
-                        </Line>
-                        <ShadowScrollbars style={{height: 430}}>
-                            {this.state.groups.map(group => {
-                                return (
-                                    <AllAppGroups group={group}/>
-                                );
-                            })}
-                        </ShadowScrollbars>
-                        <ButtonContainer>
-                            <RectButtonBig
-                                width="100%"
-                                onClick={() => {
-                                    this.props.history.push('/createGroup');
-                                }}
-                            >
-                                Create your own group
-                            </RectButtonBig>
-                        </ButtonContainer>
-                        <ButtonContainer>
-                            <RectButtonBig
-                                width="100%"
-                                onClick={() => {
-                                    this.props.history.push('/myGroups');
-                                }}
-                            >
-                                Back to your groups
-                            </RectButtonBig>
-                        </ButtonContainer>
-                    </BigContainer>
-                )}
-            </BaseContainer>
-        )
-    }
+    return (
+        <BaseContainer>
+            <NavBar/>
+            <PageTitle>Groups</PageTitle>
+            {!joinableGroups ? (
+                <Spinner />
+            ) : (
+                <BigContainer>
+                    <Line>
+                        <Label>Group Name</Label>
+                        <Label>Creator</Label>
+                        <Label>Settings</Label>
+                        <Label>Enroll</Label>
+                    </Line>
+                    <ShadowScrollbars style={{height: 430}}>
+                        {joinableGroups.map(group => {
+                            return (
+                                <AllAppGroups group={group}/>
+                            );
+                        })}
+                    </ShadowScrollbars>
+                    <ButtonContainer>
+                        <RectButtonBig
+                            width="100%"
+                            onClick={() => {
+                                history.push('/createGroup');
+                            }}
+                        >
+                            Create your own group
+                        </RectButtonBig>
+                    </ButtonContainer>
+                    <ButtonContainer>
+                        <RectButtonBig
+                            width="100%"
+                            onClick={() => {
+                                history.push('/myGroups');
+                            }}
+                        >
+                            Back to your groups
+                        </RectButtonBig>
+                    </ButtonContainer>
+                </BigContainer>
+            )}
+        </BaseContainer>
+    )
+
 }
 
 export default withRouter(JoinAppGroup);

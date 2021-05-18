@@ -4,6 +4,7 @@ export const Colors = {
     EXERCISES : '#F1A16A', //exercises
     PRIVATE : '#F3D4A9', //private
     MEETING : '#6AA49B', //meeting
+    EXAMS : '#E63d26', //exams
     TASK : '#018692',
     BLUE : '#026C8D',
     BUTTON : '#0f224b', //button
@@ -20,7 +21,7 @@ export const Colors = {
 
 export function getNewRandomColor() {
     let boxes = document.getElementsByClassName("Box");
-    console.log(boxes.length);
+
     let colors = ['#D3212D', '#0048BA', '#4CE600', '#FF8C19', '#2ac2d3', '#841ed3', '#F19CBB',
         '#99CC00', '#d3c331', '#67d363', '#3b96d3'];
     let i;

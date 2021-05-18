@@ -26,11 +26,15 @@ export const DateLabel = styled.label`
   color: white;  
 `;
 
+export const DateLabelHome = styled.label`
+  margin-top: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: white;  
+`;
+
 export const InputField = styled.input`
-  &::placeholder {
-    color: ${Colors.COLOR13};
-  }
-  padding: 3%;
+  padding: 10px;
   margin-bottom: 2%;
   height: 35px;
   width: 90%;
@@ -40,9 +44,6 @@ export const InputField = styled.input`
 `;
 
 export const InputArea = styled.textarea`
-  &::placeholder {
-    color: ${Colors.COLOR13};
-  }
   resize:none;
   padding: 10px;
   height: 100px;

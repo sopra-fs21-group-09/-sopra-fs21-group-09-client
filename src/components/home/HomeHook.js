@@ -4,6 +4,7 @@ import {withRouter} from "react-router-dom"
 import {CalendarContainer} from "./Calendar"
 import {Upcoming, UpcomingContainer} from "./HomeContainers"
 import {Task, TasksContainer} from "../task/Task"
+import Events from '../home/Events' 
 import {Label, DateLabel} from "../../views/Labels"
 import { Colors } from "../../views/design/Colors"
 import ShadowScrollbars from "../../views/design/Scrollbars"
@@ -103,24 +104,7 @@ const Home = props => {
             <SideBar>
                 <UpcomingContainer>
                     <Label>Upcoming</Label>
-                    <ShadowScrollbars  style={{ height: 340 }}>
-                        <DateLabel>Today</DateLabel>
-                        <Upcoming>Software Engineering</Upcoming>
-                        <Upcoming>SOPRA</Upcoming>
-                        <Upcoming>SWE Midterm</Upcoming>
-                        <DateLabel>Tomorrow</DateLabel>
-                        <Upcoming>Software Engineering</Upcoming>
-                        <Upcoming>SOPRA</Upcoming>
-                        <Upcoming>SWE Midterm</Upcoming>
-                        <DateLabel>23.08.2021</DateLabel>
-                        <Upcoming>Software Engineering</Upcoming>
-                        <Upcoming>SOPRA</Upcoming>
-                        <Upcoming>SWE Midterm</Upcoming>
-                        <DateLabel>24.08.2021</DateLabel>
-                        <Upcoming>Software Engineering</Upcoming>
-                        <Upcoming>SOPRA</Upcoming>
-                        <Upcoming>SWE Midterm</Upcoming>
-                    </ShadowScrollbars>
+                    <Events></Events>
                 </UpcomingContainer>
                 <hr width="95%"/>
                 <TasksContainer>

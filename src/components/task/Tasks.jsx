@@ -1,17 +1,18 @@
 import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {Colors} from "../../views/design/Colors";
-import {TaskList} from "../task/Task"
+import {TaskList} from "./Task"
 import styled from "styled-components";
 import "./Task.css"
 import {Label} from "../../views/Labels";
 import Header from "../../views/design/Header";
 import {CircleButton, RectButton} from "../../views/Button";
+import Rodal from "rodal";
 import {api, handleError} from '../../helpers/api';
 import {AddTaskRodal} from "./AddTaskRodal";
 import {add} from "../home/Dates";
 
-
+//Constants we need for this page
 export const AddButton = styled(CircleButton)`
     position: 'absolute';
     top: 22px;
@@ -31,7 +32,7 @@ export function Tasks(){
 
 
             const array = []
-            var i;
+            let i;
             for (i = 0; i < response.data.length; i++) {
                 array.push(response.data[i]);
             }
@@ -46,8 +47,9 @@ export function Tasks(){
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
-        console.log('Runed only when initialized')
+        console.log('Runs only when initialized')
         getTasks()
+
     }, []);
 
 
@@ -62,6 +64,7 @@ export function Tasks(){
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
+        console.log('runs every other time')
     })
 
 

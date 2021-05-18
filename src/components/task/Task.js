@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
-import React, {useState} from "react";
-import {api} from "../../helpers/api";
+import React from "react";
+import {api, handleError} from "../../helpers/api";
 import ShadowScrollbars from "../../views/design/Scrollbars";
+import { DateLabelHome } from "../../views/Labels"
 
 export const TasksContainer = styled.div`
   margin: 0px 10px 0px 10px;
@@ -20,6 +21,7 @@ export const TaskContainer = styled.div`
   margin: 5px 0px 0px 5%;
   border: 3px solid #018692;
   border-radius: 45px;
+  display: flex;
   align-items: center;
   background: #E5E5E5;
 `;
@@ -44,12 +46,6 @@ export const TaskButton = styled.button`
   height: 23px;
 `;
 
-export const DateLabelHome = styled.label`
-  margin-top: 10px;
-  font-size: 12px;
-  color: white;  
-`;
-
 export const DateLabel = styled.label`
   margin-left: 5%;
   font-size: 20px;
@@ -68,17 +64,16 @@ export const Task = props => {
     async function markAsDone(){
         try {
             console.log('markAsDone')
-            const response = await api.delete('/tasks/'+props.id);
+            await api.delete('/tasks/'+props.id);
 
         } catch (error) {
-            //alert(`Something went wrong during markedAsDone: \n${handleError(error)}`);
+            alert(`Something went wrong during deleting the task: \n${handleError(error)}`);
         }
-
     }
 
     return (<TaskContainer>
         <TaskButton onClick={()=>{setClosed(false); markAsDone();}}>
-            {open ? '' : <i className="fas fa-check fa-xs"></i>}
+            {open ? '' : <i className="fas fa-check fa-xs"/>}
         </TaskButton>
         {props.name}
         {' '}
@@ -89,21 +84,21 @@ export const Task = props => {
 }
 
 function todaysDate(){
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
 
     today = yyyy + '-' + mm + '-' + dd;
     return today;
 }
 
 function tomorrowsDate(){
-    var tomorrow = new Date();
+    let tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    var dd = String(tomorrow.getDate()).padStart(2, '0');
-    var mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = tomorrow.getFullYear();
+    let dd = String(tomorrow.getDate()).padStart(2, '0');
+    let mm = String(tomorrow.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = tomorrow.getFullYear();
 
     tomorrow = yyyy + '-' + mm + '-' + dd;
     return tomorrow;
@@ -113,13 +108,12 @@ function tomorrowsDate(){
 export function todaysTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
-    for (var i = 0; i < tasks.length; i++) {
+    for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].deadline) {
             if (tasks[i].deadline.time.includes(todaysDate())) {
                 taskArray.push(tasks[i])
             }}
     }
-
     return taskArray
 
 }
@@ -127,13 +121,12 @@ export function todaysTasks(props) {
 export function tomorrowsTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
-    for (var i = 0; i < tasks.length; i++) {
+    for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].deadline) {
             if (tasks[i].deadline.time.includes(tomorrowsDate())) {
                 taskArray.push(tasks[i])
             }}
     }
-
     return taskArray
 
 }
@@ -141,13 +134,12 @@ export function tomorrowsTasks(props) {
 export function nxtMonthsTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
-    for (var i = 0; i < tasks.length; i++) {
+    for (let i = 0; i < tasks.length; i++) {
         if (tasks[i].deadline) {
             if (!tasks[i].deadline.time.includes(todaysDate()) && !tasks[i].deadline.time.includes(tomorrowsDate())) {
                 taskArray.push(tasks[i])
             }}
     }
-
     return taskArray
 
 }
@@ -156,7 +148,7 @@ export function nxtMonthsTasks(props) {
 export function otherTasks(props) {
     const tasks = props.tasks;
     const taskArray = []
-    for (var i = 0; i < tasks.length; i++) {
+    for (let i = 0; i < tasks.length; i++) {
         if (!tasks[i].deadline) {
             taskArray.push(tasks[i])
         }
@@ -167,7 +159,6 @@ export function otherTasks(props) {
 
 export function TaskList(props) {
     const tasks = props.tasks;
-    const [tasksToday, setTasksToday] = useState()
     if (!tasks) {
         return null;
     }
@@ -182,36 +173,34 @@ export function TaskList(props) {
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    const otherTaskItem = otherTasks(props).map((task) =>
-        <Task name={task.name} description={task.description}
-              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
-    );
-
     const nxtMonthsTaskItem = nxtMonthsTasks(props).map((task) =>
         <Task name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    console.log('otherTaskItem:'+ otherTaskItem)
+    const otherTaskItem = otherTasks(props).map((task) =>
+        <Task name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
 
     return (
-        <div class='row'>
-            <div class='column'>
+        <div className='row'>
+            <div className='column'>
                 <DateLabel>Today</DateLabel>
-                <ShadowScrollbars style={{height: 320}}>
-                    <InfoLabel>{todaysTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+                <ShadowScrollbars style={{height: 250}}>
+                    <InfoLabel>{todaysTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
                     {todaysTaskItem}
                 </ShadowScrollbars>
-            </div>
-            <div class='column'>
                 <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
-                <ShadowScrollbars style={{height: 160}}>
-                    <InfoLabel>{tomorrowsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+                <ShadowScrollbars style={{height: 250}}>
+                    <InfoLabel>{tomorrowsTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
                     {tomorrowsTaskItem}
                 </ShadowScrollbars>
-                <DateLabel>{nxtMonthsTaskItem? 'Next Month': ''}</DateLabel>
-                <ShadowScrollbars style={{height: 160}}>
-                    <InfoLabel>{nxtMonthsTaskItem.length == 0? '-> No tasks yet!': ''}</InfoLabel>
+            </div>
+            <div className='column'>
+                <DateLabel>{nxtMonthsTaskItem? 'Later': ''}</DateLabel>
+                <ShadowScrollbars style={{height: 500}}>
+                    <InfoLabel>{nxtMonthsTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsTaskItem}
                 </ShadowScrollbars>
 
@@ -225,7 +214,6 @@ export function TaskList(props) {
 
 export function TasksForHome(props){
     const tasks = props.tasks;
-    const [tasksToday, setTasksToday] = useState()
     if (!tasks) {
         return null;
     }
@@ -248,11 +236,11 @@ export function TasksForHome(props){
 
     return (
         <div>
-            {todaysTaskItem.length!=0 ? <DateLabelHome>Today</DateLabelHome> : ''}
+            {todaysTaskItem.length!==0 ? <DateLabelHome>Today</DateLabelHome> : ''}
                 {todaysTaskItem}
-            {tomorrowsTaskItem.length!=0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
+            {tomorrowsTaskItem.length!==0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
                 {tomorrowsTaskItem}
-            {nxtMonthsTaskItem.length!=0 ? <DateLabelHome>Next Month</DateLabelHome> : ''}
+            {nxtMonthsTaskItem.length!==0 ? <DateLabelHome>Later</DateLabelHome> : ''}
                 {nxtMonthsTaskItem}
         </div>
     )
