@@ -271,7 +271,7 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
                         <Deadlines/>
                     </LeftContainer>
                     <RightContainer>
-                        <Label>Joined Groups</Label>
+                        <Label>Groups</Label>
                         <ShadowScrollbars style={{height: 750}}>
                             <JoinedGroups history={history} module={module}/>
                         </ShadowScrollbars>
