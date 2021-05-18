@@ -19,7 +19,7 @@ const Event = styled.div`
   padding-top: 3px;
   padding-left: 7px;
   overflow: hidden;
-  background: ${Colors.BLUE};
+  text-overflow: ellipsis;
   color: white;
 `;
 
@@ -28,6 +28,16 @@ const InfoLabel = styled.label`
   font-size: 18px;
   color: black;
 `;
+
+function getEventColor(e) {
+  if (e.label == 'EVENT') {return Colors.BLUE}
+  if (e.label == 'MEETING') {return Colors.MEETING}
+  if (e.label == 'LECTURE') {return Colors.LECTURES}
+  if (e.label == 'EXERCISE') {return Colors.EXERCISES}
+  if (e.label == 'EXAM') {return Colors.EXAMS}
+  if (e.label == 'PRIVATE') {return Colors.PRIVATE}
+  else {return Colors.DARK_GREY}
+}
 
 export default function Events() {
 
@@ -77,13 +87,13 @@ export default function Events() {
   return (
     <ShadowScrollbars style={{height: 400}}>
       {events.today.length != 0 ? <DateLabelHome>Today</DateLabelHome> : ''}
-      {events.today.map(events => <Event>{events.title}</Event>)}
+      {events.today.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
       <br/>
       {events.tomorrow.length != 0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
-      {events.tomorrow.map(events => <Event>{events.title}</Event>)}
+      {events.tomorrow.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
       <br/>
       {events.thisMonth.length != 0 ? <DateLabelHome>This Month</DateLabelHome> : ''}
-      {events.thisMonth.map(events => <Event>{events.title}</Event>)}
+      {events.thisMonth.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
     </ShadowScrollbars>
   )
 }

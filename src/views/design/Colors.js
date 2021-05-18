@@ -4,6 +4,7 @@ export const Colors = {
     EXERCISES : '#F1A16A', //exercises
     PRIVATE : '#F3D4A9', //private
     MEETING : '#6AA49B', //meeting
+    EXAMS : '#E63d26', //exams
     TASK : '#018692',
     BLUE : '#026C8D',
     BUTTON : '#0f224b', //button
