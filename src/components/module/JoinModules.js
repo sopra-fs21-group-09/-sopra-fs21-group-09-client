@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { BaseContainer } from '../../views/Layout';
 import { api, handleError } from '../../helpers/api';
-import {useHistory, withRouter} from "react-router-dom";
-import {CircleButton, RectButtonSmall, RectButtonBig} from '../../views/Button';
+import {useHistory} from "react-router-dom";
+import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
-import ShadowScrollbars from "../../views/design/Scrollbars";
 import {NavBar} from "../navigation/navBar";
 import {JoinModuleList} from "./Module";
 

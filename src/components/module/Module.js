@@ -40,8 +40,6 @@ async function userJoinModule(id){
 }
 
 function infoButton(history, module){
-    console.log("Info button gets initialized")
-    console.log(module)
     return(
     <InboxButtonContainer>
         <RectButtonSmall
@@ -51,7 +49,6 @@ function infoButton(history, module){
                     pathname: '/moduleDetail',
                     module: module
                 });
-                //TODO: Talk about it with Steffi
                 localStorage.setItem('moduleInfo', module.id);
             }}
         >
@@ -60,7 +57,6 @@ function infoButton(history, module){
     </InboxButtonContainer>
     )
 }
-
 
 export const Module = props => {
     const history = useHistory()

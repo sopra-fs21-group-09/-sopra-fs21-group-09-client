@@ -109,7 +109,7 @@ export const Deadlines = () => {
     )
 }
 
-export const Info = props => {
+export const Info = (module) => {
     return(
         <InfoContainer>
             <Label>Info</Label>
@@ -119,7 +119,7 @@ export const Info = props => {
                         <i className="far fa-user"/>
                     </span>
                 </IconHolder>
-                <TextField1>{props.module ? props.module.prof_name : 'Not Loaded Yet'}</TextField1>
+                <TextField1>{module["module"] ? module["module"].prof_name : 'Not Loaded Yet'}</TextField1>
             </Line>
             <Line>
                 <IconHolder>
@@ -135,7 +135,7 @@ export const Info = props => {
                         <i className="fas fa-video"/>
                     </span>
                 </IconHolder>
-                <TextField1>{props.module ? props.module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
+                <TextField1>{module["module"] ? module["module"].zoom_link : 'Not Loaded Yet'}</TextField1><br />
             </Line>
         </InfoContainer>
     )
@@ -144,9 +144,31 @@ export const Info = props => {
 export function ModuleDetail(){
 
     const [module, setModule] = useState();
-    const [moduleId, setModuleId] = useState('')
+    const [moduleId, setModuleId] = useState('');
     const history = useHistory();
-    const [groups, setGroups] = useState([])
+    const [joinableGroups, setJoinableGroups] = useState([]);
+    let moduleJoined;
+
+
+    /**
+     * HTTP GET request is sent to the backend.
+     * This method checks if a user is part of the module he is watching currently.
+     * If yes, then he is enabled to join groups and create them.
+     * If not, then the group section is not shown.
+     */
+    async function checkIfJoined(){
+        // get all modules of user
+        const response = await api.get('/users/'+localStorage.getItem('id')+'/modules');
+
+        // Check if the user has joined the module he is looking at
+        for (let i = 0; i < response.data.length; i++){
+            if (response.data[i].id == moduleId){
+                moduleJoined = true;
+                document.getElementById("container").style.display = "block";
+            }
+        }
+
+    }
 
     /**
      * HTTP GET request is sent to the backend.
@@ -171,21 +193,24 @@ export function ModuleDetail(){
         try {
 
             if (moduleId){
-                const response = await api.get('/modules/'+moduleId)
-                //localhost:8080/modules/1/users/1/groups
-                console.log('MODULE GROUPS ')
-                console.log(response.data.groups)
+                //get groups 2 times; one for checking, one for deleting
+                let allModuleGroups = await api.get('/modules/'+moduleId);
+                let joinableGroups = await api.get('/modules/'+moduleId);
 
-                // Delete all groups which are full
-                for (let z = 0; z < response.data.groups.length; z++){
-                    if (response.data.groups[z] !== undefined && response.data.groups[z].memberLimit !== 0){
-                        if (response.data.groups[z].memberCount >= response.data.groups[z].memberLimit){
-                            delete response.data.groups[z];
+                //get all groups in which the user is enrolled
+                let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+
+
+                // Get all groups where the user is not in
+                for (let i = 0; i < allModuleGroups.data.groups.length; i++){
+                    for (let z = 0; z < usersGroups.data.length; z++){
+                        if (allModuleGroups.data.groups[i].id === usersGroups.data[z].id){
+                            delete joinableGroups.data.groups[i];
                         }
                     }
                 }
 
-                setGroups(response.data.groups)
+                setJoinableGroups(joinableGroups.data.groups);
             }
             else {
                 console.log('MODULE ID NOT SET YET, CANNOT GET MODULES GROUPS')
@@ -198,23 +223,32 @@ export function ModuleDetail(){
 
     // gets executed first
     useEffect(() => {
+        console.log("first")
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
-        setModuleId(localStorage.getItem('moduleInfo'))
+        setModuleId(localStorage.getItem('moduleInfo'));
 
     }, []);
 
     // gets executed second
     useEffect(() => {
+        console.log("second")
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
         if (moduleId !== undefined){
+            console.log("moduleid defined")
             getModuleDetail();
             getModuleGroups();
+            checkIfJoined();
+
+            if (moduleJoined !== true){
+                console.log(moduleJoined)
+                document.getElementById("container").style.display = "none";
+            }
         }
-    }, [moduleId]);
+    }, [moduleId, moduleJoined]);
 
         return (
             <BaseContainer>
@@ -225,14 +259,14 @@ export function ModuleDetail(){
                         <Info module={module}/>
                         <Deadlines/>
                     </SmallContainer>
-                    <SmallContainer>
+                    <SmallContainer id="container">
                         <Label>Groups</Label>
                         <SmallLine>
                             <SmallLabel>Name</SmallLabel>
                             <SmallLabel>Enroll</SmallLabel>
                         </SmallLine>
-                        <ShadowScrollbars style={{height: 350}} >
-                            {groups.map(group => {
+                        <ShadowScrollbars style={{height: 350}}>
+                            {joinableGroups.map(group => {
                                 return (
                                     <ModuleGroups group={group}/>
                                 );
