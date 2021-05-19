@@ -53,9 +53,21 @@ export function JoinModules() {
      */
     async function getModules() {
         try {
-            const response = await api.get('/modules')
+            const allModules = await api.get('/modules');
+            const joinableModules = await api.get('/modules');
 
-            setModules(response.data)
+            const joinedModules = await api.get('/users/'+localStorage.getItem('id')+'/modules');
+
+            // Get all modules where the user is not in
+            for (let i = 0; i < allModules.data.length; i++){
+                for (let z = 0; z < joinedModules.data.length; z++){
+                    if (allModules.data[i].id === joinedModules.data[z].id){
+                        delete joinableModules.data[i];
+                    }
+                }
+            }
+
+            setModules(joinableModules.data)
 
         } catch (error) {
             alert(`Something went wrong during get Modules: \n${handleError(error)}`);

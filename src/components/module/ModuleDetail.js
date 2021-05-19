@@ -157,6 +157,7 @@ export function ModuleDetail(){
      * If not, then the group section is not shown.
      */
     async function checkIfJoined(){
+
         // get all modules of user
         const response = await api.get('/users/'+localStorage.getItem('id')+'/modules');
 
@@ -199,7 +200,6 @@ export function ModuleDetail(){
 
                 //get all groups in which the user is enrolled
                 let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
-
 
                 // Get all groups where the user is not in
                 for (let i = 0; i < allModuleGroups.data.groups.length; i++){
