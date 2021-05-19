@@ -61,9 +61,10 @@ const InfoLabel = styled.label`
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
 
+    //deletes task
     async function markAsDone(){
         try {
-            console.log('markAsDone')
+            console.log('markAsDone '+ props.id)
             await api.delete('/tasks/'+props.id);
 
         } catch (error) {
