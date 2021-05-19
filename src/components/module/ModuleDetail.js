@@ -1,76 +1,65 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import { BaseContainer } from '../../views/Layout';
-import { api, handleError } from '../../helpers/api';
-import {useLocation} from "react-router-dom";
-import {SmallCircleButton, RectButtonBig} from '../../views/Button';
+import {BaseContainer} from '../../views/Layout';
+import {api, handleError } from '../../helpers/api';
+import {RectButton, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
-import { Colors, getNewRandomColor } from "../../views/design/Colors";
+import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
+import ModuleGroups from "./ModuleGroups";
 
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
-  height: 750px;
+  height: 100%;
   border: none;
   margin-bottom: 20px;
-  columns: 2;
-`;
-
-const LeftContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding-left: 15px;
-  border: none;
-`;
-
-const RightContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  border: none;
-  padding-left: 5%;
-`;
-
-const SmallRightContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(auto-fill, 100px);
-  grid-row-gap: 1em;
+  display grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1;
   grid-column-gap: 1em;
-  width: 100%;
-  border: none;
-  margin-left: -5%;
 `;
 
-//This is the div that will be generated with each new group
-const GroupContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  place-self: center;
-  font-size: 30px;
-  background: red;
-  width: 100px;
-  height: 100px;
-  border-radius: 20%;
-  font-size: 15px;
+const SmallContainer = styled.div`
+  width: 100%;
+  height: 50%;
+  padding-left: 3.5%;
+`;
+
+const InfoContainer = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const Label = styled.label`
-  margin-top: 2%;
   margin-bottom: 2%;
   text-transform: uppercase;
-  line-height:320%;
+  line-height:220%;
   color: ${Colors.COLOR14};
   font-size: 28px;
+`;
+
+const SmallLabel = styled.label`
+  place-self: center;
+  text-transform: uppercase;
+  color: orange;
+  font-size: 20px;
+`;
+
+const SmallLine = styled.div`
+  display grid;
+  grid-template-columns: 40% 25% 30%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+  width: 99%;
+  height: 30px;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding-top: 3%;
 `;
 
 const Line = styled.div`
@@ -108,7 +97,7 @@ const TextField2 = styled.label`
   line-height:200%;
 `;
 
-export const Deadlines = props => {
+export const Deadlines = () => {
     return(
         <div>
             <Label>Deadlines</Label><br />
@@ -122,12 +111,12 @@ export const Deadlines = props => {
 
 export const Info = props => {
     return(
-        <div>
+        <InfoContainer>
             <Label>Info</Label>
             <Line>
                 <IconHolder>
                     <span style={{fontSize: 35}}>
-                        <i className="far fa-user"></i>
+                        <i className="far fa-user"/>
                     </span>
                 </IconHolder>
                 <TextField1>{props.module ? props.module.prof_name : 'Not Loaded Yet'}</TextField1>
@@ -135,7 +124,7 @@ export const Info = props => {
             <Line>
                 <IconHolder>
                     <span style={{fontSize: 35}}>
-                        <i className="far fa-calendar"></i>
+                        <i className="far fa-calendar"/>
                     </span>
                 </IconHolder>
                 <TextField1>Monday, 14.00-16.00</TextField1><br />
@@ -143,64 +132,21 @@ export const Info = props => {
             <Line>
                 <IconHolder>
                     <span style={{fontSize: 35}}>
-                        <i className="fas fa-video"></i>
+                        <i className="fas fa-video"/>
                     </span>
                 </IconHolder>
                 <TextField1>{props.module ? props.module.zoom_link : 'Not Loaded Yet'}</TextField1><br />
             </Line>
-        </div>
+        </InfoContainer>
     )
 }
 
-export const JoinedGroups = props => {
+export function ModuleDetail(){
 
-    useLayoutEffect(() => {
-        getNewRandomColor();
-    })
-
-    if (props.module){
-        const groupItems = props.module.groups.map((group) =>
-            <GroupContainer className={"Box"}>{group.name}</GroupContainer>
-        );
-        console.log(groupItems)
-
-        return(
-            <SmallRightContainer>
-                {groupItems}
-                <SmallCircleButton
-                    width="100%"
-                    onClick={() => {
-                        props.history.push({
-                            pathname: '/joinModuleGroup',
-                            moduleId: props.module.id,
-                            moduleName: props.module.name
-                            //module: props.module  TODO: find out why this does not work
-                        });
-                    }}
-                >
-                                    <span style={{fontSize: 25}}>
-                                        <i className="fas fa-plus"></i>
-                                    </span>
-                </SmallCircleButton>
-            </SmallRightContainer>
-        )
-    }
-    else {
-        return (<div></div>)
-    }
-
-}
-
-export function ModuleDetail(props){//props is empty unless pushed from joinModuleGroup then you can access props.moduleId
-
-    const colors = ['red', 'blue', 'green', 'teal', 'rosybrown', 'tan', 'plum', 'saddlebrown'];
-    const location = useLocation();
     const [module, setModule] = useState();
+    const [moduleId, setModuleId] = useState('')
     const history = useHistory();
-
-    function getRandomColors(){
-        getNewRandomColor()
-    }
+    const [groups, setGroups] = useState([])
 
     /**
      * HTTP GET request is sent to the backend.
@@ -208,24 +154,45 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
      */
     async function getModuleDetail() {
         try {
-            //const response = await api.get('/users/'+ localStorage.getItem('id')+'/modules')
-            if (module){
-                const response = await api.get('modules/'+module.id)
-                console.log('MODULE IN MODULEDETAIL')
-                console.log(response.data)
-                setModule(response.data)
-            }
-            /*else if (props.moduleId){
-                const response = await api.get('modules/'+module.id)
-                console.log('MODULE IN MODULEDETAIL')
-                console.log(response.data)
-                setModule(response.data)
-            }*/
-            else {
-                console.log('MODULE NOT SET YET, CANNOT GET MODULE')
-            }
+
+            const response = await api.get('modules/'+ moduleId)
+            setModule(response.data)
+
         } catch (error) {
             alert(`Something went wrong during getting the moduleDetail: \n${handleError(error)}`);
+        }
+    }
+
+    /**
+     * HTTP GET request is sent to the backend.
+     * If the request is successful, the modules are shown
+     */
+    async function getModuleGroups() {
+        try {
+
+            if (moduleId){
+                const response = await api.get('/modules/'+moduleId)
+                //localhost:8080/modules/1/users/1/groups
+                console.log('MODULE GROUPS ')
+                console.log(response.data.groups)
+
+                // Delete all groups which are full
+                for (let z = 0; z < response.data.groups.length; z++){
+                    if (response.data.groups[z] !== undefined && response.data.groups[z].memberLimit !== 0){
+                        if (response.data.groups[z].memberCount >= response.data.groups[z].memberLimit){
+                            delete response.data.groups[z];
+                        }
+                    }
+                }
+
+                setGroups(response.data.groups)
+            }
+            else {
+                console.log('MODULE ID NOT SET YET, CANNOT GET MODULES GROUPS')
+            }
+
+        } catch (error) {
+            alert(`Something went wrong while getting the Groups of a Module: \n${handleError(error)}`);
         }
     }
 
@@ -233,49 +200,57 @@ export function ModuleDetail(props){//props is empty unless pushed from joinModu
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        getRandomColors();
-        console.log('inital useEffect')
+
+        setModuleId(localStorage.getItem('moduleInfo'))
+
     }, []);
 
     // gets executed second
     useEffect(() => {
-        /*
-        console.log('useEffect Location')
-        console.log(location.pathname); // result: '/secondpage'
-        console.log(location.module); // result: 'some_value'
-
-         */
-        setModule(location.module)
-        if (!location.module){
-            console.log('GETS MODULE DETAILS')
-            getModuleDetail()
-        }
-    }, [location]);
-
-    // gets executed third
-    useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('MODULE')
-        console.log(module)
-    });
 
+        if (moduleId !== undefined){
+            getModuleDetail();
+            getModuleGroups();
+        }
+    }, [moduleId]);
 
         return (
             <BaseContainer>
                 <NavBar/>
                 <PageTitle>Module Detail</PageTitle>
                 <BigContainer>
-                    <LeftContainer>
+                    <SmallContainer>
                         <Info module={module}/>
                         <Deadlines/>
-                    </LeftContainer>
-                    <RightContainer>
-                        <Label>Joined Groups</Label>
-                        <ShadowScrollbars style={{height: 750}}>
-                            <JoinedGroups history={history} module={module}/>
+                    </SmallContainer>
+                    <SmallContainer>
+                        <Label>Groups</Label>
+                        <SmallLine>
+                            <SmallLabel>Name</SmallLabel>
+                            <SmallLabel>Enroll</SmallLabel>
+                        </SmallLine>
+                        <ShadowScrollbars style={{height: 350}} >
+                            {groups.map(group => {
+                                return (
+                                    <ModuleGroups group={group}/>
+                                );
+                            })}
                         </ShadowScrollbars>
-                    </RightContainer>
+                        <ButtonContainer>
+                            <RectButton
+                                width="100%"
+                                onClick={() => {
+                                    history.push({
+                                        pathname: '/createGroup',
+                                        moduleId: moduleId
+                                    })}}
+                            >
+                                Create your own group
+                            </RectButton>
+                        </ButtonContainer>
+                    </SmallContainer>
                 </BigContainer>
                 <ButtonContainer>
                     <RectButtonBig

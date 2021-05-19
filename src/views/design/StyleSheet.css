@@ -55,4 +55,22 @@ li{
     margin: 0;
 }
 
+.input{
+    height: 35px;
+    width: 30%;
+    padding-left: 15px;
+    margin-top: -2%;
+    margin-left: 7%;
+    margin-right: 7%;
+    border: none;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+::placeholder {
+    color: #4F4F4F;
+}
+
 

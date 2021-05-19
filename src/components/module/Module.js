@@ -52,7 +52,7 @@ function infoButton(history, module){
                     module: module
                 });
                 //TODO: Talk about it with Steffi
-                localStorage.setItem('moduleInfo', module);
+                localStorage.setItem('moduleInfo', module.id);
             }}
         >
             Info

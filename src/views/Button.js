@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Colors } from "./design/Colors"
 import React, {Component} from "react";
-import "./design/StyleSheet.css"
+import "./design/StyleSheet.css";
 
 //use styled.HTMLelement
 //use $ to add javascript code

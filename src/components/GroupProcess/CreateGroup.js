@@ -7,12 +7,13 @@ import {RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
+import "../../views/design/StyleSheet.css";
 
 //Constants we need for this page
 const BigContainer = styled.div`
   width: 100%;
   height: 550px;
-  padding-left: 15px;
+  padding-left: 2%;
   border: none;
   margin-bottom: 20px;
 `;
@@ -41,23 +42,6 @@ const Label = styled.label`
   color: ${Colors.COLOR14};
   font-size: 28px;
   margin-bottom: 2%;
-  display: flex;
-  align-items: center;
-`;
-
-const InputField = styled.input`
-  &::placeholder {
-    color: #4F4F4F;
-  }
-  height: 35px;
-  width: 30%;
-  padding-left: 15px;
-  margin-top: -2%;
-  margin-left: 7%;
-  margin-right: 7%;
-  border: none;
-  background: white;
-  border-radius: 20px;
   display: flex;
   align-items: center;
 `;
@@ -157,15 +141,16 @@ const CreateGroup = () => {
     return (
         <BaseContainer>
             <NavBar/>
-                <PageTitle>Create a new group</PageTitle>
+            <PageTitle>Create a new group</PageTitle>
             <BigContainer>
                 <FirstLine>
                     <Label>Name:</Label>
-                    <InputField
+                    <input
+                        type="text"
+                        className="input"
+                        maxlength="10"
                         placeholder="Enter group name..."
-                        onChange={e => {
-                            setName(e.target.value);
-                        }}
+                        onChange={e => {setName(e.target.value);}}
                     />
                 </FirstLine>
                 <NextLine>

@@ -11,7 +11,7 @@ export const ModuleBox = styled.div`
   height: 60px;
   width: 99%;
   display grid;
-  grid-template-columns: 25% 30% 15% 10% 15%;
+  grid-template-columns: 40% 25% 30%;
   grid-template-rows: 1;
   grid-column-gap: 1em;
   margin-top: 1%;
@@ -27,31 +27,16 @@ export const InboxLabel = styled.div`
   font-size: 30px;
 `;
 
-export const InboxLabelName = styled.div`
-  place-self: center;
-  color: black;
-  font-size: 20px;
-`;
-
 export const InboxButtonContainer = styled.div`
   place-self: center;
   width: 80%;
 `;
 
-//define display of Settings of each group
-function groupPrivacy(privacy) {
-    if (privacy === true){
-        return "Public";
-    } else {
-        return "Privat";
-    }
-}
-
 /**
  * @FunctionalComponent
  * This displays all AppGroups that the user is currently not a part of
  */
-const AllAppGroups = ({ group }) => {
+const ModuleGroups = ({ group }) => {
     const history = useHistory();
     const [visible, setVisible] = useState(false);
     const [password, setPassword] = useState(null);
@@ -60,7 +45,7 @@ const AllAppGroups = ({ group }) => {
      * HTTP GET request is sent to the backend.
      * If the request is successful, the user joins a public group
      */
-    async function JoinPublicGroup() {
+    async function JoinPublicModuleGroup() {
         try {
             await api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}`);
             history.push('/myGroups');
@@ -73,7 +58,7 @@ const AllAppGroups = ({ group }) => {
      * HTTP POST request is sent to the backend.
      * If the request is successful, the user joins private group
      */
-    async function JoinPrivateGroup() {
+    async function JoinPrivateModuleGroup() {
         try {
             const requestBody = JSON.stringify({
                 password: password,
@@ -90,7 +75,7 @@ const AllAppGroups = ({ group }) => {
     // Define Enroll for each Group
     let settings;
     if (group.memberLimit === 0){
-         settings = "unlimited";
+        settings = "unlimited";
     } else {
         settings = group.memberCount + "/" + group.memberLimit;
     }
@@ -98,15 +83,13 @@ const AllAppGroups = ({ group }) => {
     return (
         <ModuleBox>
             <InboxLabel>{group.name}</InboxLabel>
-            <InboxLabelName>{group.creator.username}</InboxLabelName>
-            <InboxLabel>{groupPrivacy(group.open)}</InboxLabel>
             <InboxLabel>{settings}</InboxLabel>
             <InboxButtonContainer>
                 <RectButtonSmall
                     width="100%"
                     onClick={() => {
                         if (group.open === true){
-                            JoinPublicGroup();
+                            JoinPublicModuleGroup();
                         } else if (group.open === false){
                             setVisible(true);
                         }
@@ -115,7 +98,7 @@ const AllAppGroups = ({ group }) => {
                     Join
                 </RectButtonSmall>
                 {/*Overlay for password */}
-                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc={true} onClose={() => setVisible(false)}>
+                <Rodal height={200} customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc={true} onClose={() => setVisible(false)}>
                     <div><InputFieldPopUp
                         placeholder="Enter group password here..."
                         type="password"
@@ -125,7 +108,7 @@ const AllAppGroups = ({ group }) => {
                     /></div>
                     <div><RectButtonPopUp
                         onClick={() => {
-                            JoinPrivateGroup();
+                            JoinPrivateModuleGroup();
                         }}
                     >Join Group</RectButtonPopUp></div>
                 </Rodal>
@@ -134,4 +117,4 @@ const AllAppGroups = ({ group }) => {
     );
 };
 
-export default AllAppGroups;
+export default ModuleGroups;

@@ -15,7 +15,6 @@ import GroupDetail from "../../../components/group/GroupDetail";
 import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/HomeHook";
-import {JoinModuleGroup} from "../../../components/GroupProcess/JoinModuleGroup";
 import {Tasks} from "../../../components/task/Tasks";
 
 class AppRouter extends React.Component {
@@ -52,7 +51,7 @@ class AppRouter extends React.Component {
               path="/profile"
               render={() => (
                   <HomeGuard>
-                  <Profile />
+                    <Profile />
                   </HomeGuard>
               )}
             />
@@ -93,14 +92,6 @@ class AppRouter extends React.Component {
               render={() => (
                   <HomeGuard>
                     <MyGroups/>
-                  </HomeGuard>
-              )}
-            />
-            <Route
-              path="/joinModuleGroup"
-              render={() => (
-                  <HomeGuard>
-                      <JoinModuleGroup />
                   </HomeGuard>
               )}
             />
