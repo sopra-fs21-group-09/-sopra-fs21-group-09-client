@@ -253,7 +253,7 @@ export function ModuleDetail(){
         return (
             <BaseContainer>
                 <NavBar/>
-                <PageTitle>Module Detail</PageTitle>
+                <PageTitle>{module ? module.name: ''}</PageTitle>
                 <BigContainer>
                     <SmallContainer>
                         <Info module={module}/>

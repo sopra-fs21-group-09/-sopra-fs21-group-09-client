@@ -51,12 +51,12 @@ const ColoredEventWrapper = events => {
 }
 
 function getEventColor(e) {
-  if (e.label == 'EVENT') {return Colors.BLUE}
-  if (e.label == 'MEETING') {return Colors.MEETING}
-  if (e.label == 'LECTURE') {return Colors.LECTURES}
-  if (e.label == 'EXERCISE') {return Colors.EXERCISES}
-  if (e.label == 'EXAM') {return Colors.EXAMS}
-  if (e.label == 'PRIVATE') {return Colors.PRIVATE}
+  if (e.label === 'EVENT') {return Colors.BLUE}
+  if (e.label === 'MEETING') {return Colors.MEETING}
+  if (e.label === 'LECTURE') {return Colors.LECTURES}
+  if (e.label === 'EXERCISE') {return Colors.EXERCISES}
+  if (e.label === 'EXAM') {return Colors.EXAMS}
+  if (e.label === 'PRIVATE') {return Colors.PRIVATE}
   else {return Colors.DARK_GREY}
 }
 
@@ -122,11 +122,11 @@ export default function NpmCal() {
       setWarning("Make sure you filled out title, start, end and selected a label!");
       setWarningVisible(true);
     }*/}
-    if(method=='put'){
+    if(method==='put'){
       putEvent();
       setApproval(event.title + " has been updated!");
     }
-    if(method=='post'){
+    if(method==='post'){
       postEvent();
       setApproval(event.title + " has been created!");
     }
@@ -142,7 +142,7 @@ export default function NpmCal() {
     try {
       const response = await api.get('/users/'+ localStorage.getItem('id') +'/events')
       
-      for (var i = 0; i < response.data.length; i++) {
+      for (let i = 0; i < response.data.length; i++) {
         response.data[i].start= new Date(response.data[i].start.replace('\"','\''));
         response.data[i].end = new Date(response.data[i].end.replace('\"','\''));
       }
@@ -181,7 +181,7 @@ export default function NpmCal() {
               label: event.label,
           });
 
-          const response = api.post('/users/'+ localStorage.getItem('id') +'/events', requestBody) 
+          api.post('/users/'+ localStorage.getItem('id') +'/events', requestBody)
 
       } catch (error) {
           alert(`postEvent-Error: \n${handleError(error)}`);
@@ -199,7 +199,7 @@ export default function NpmCal() {
             label: event.label,
         });
 
-        const response = api.put('/events/'+event.id, requestBody) 
+        api.put('/events/'+event.id, requestBody)
 
     } catch (error) {
         alert(`postEvent-Error: \n${handleError(error)}`);
@@ -209,8 +209,8 @@ export default function NpmCal() {
   function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
 
   function toDatetimeLocal(d){
-    var date = new Date(d);
-    var
+    let date = new Date(d);
+    let
     YYYY = date.getFullYear(),
     MM = addZero(date.getMonth() + 1),
     DD = addZero(date.getDate()),
@@ -240,7 +240,7 @@ export default function NpmCal() {
     />
     <CircleButton
       style={{position: 'absolute', bottom: 0, right: 0, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
-      onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"></i></CircleButton>
+      onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"/></CircleButton>
 
       {/*Overlay for ADDING Event */}
       <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc={true} onClose={() => setAddVisible(false)}>
@@ -252,7 +252,7 @@ export default function NpmCal() {
           <EventLabel>End:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
           <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
-            <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}></input>
+            <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}/>
           <EventLabel>Label:</EventLabel>
           <div>
             <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} 
@@ -261,13 +261,13 @@ export default function NpmCal() {
               <option key={value} value={value}>{label}</option>))}
             </select>
           </div>
-          <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
+          <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}/>
         </EventInfo>
         <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
 
     {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height={300} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
+    <Rodal height={250} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
         <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis'}}>{event.title}</div><br/>
         <EventInfo>
           <div>Start:</div><div>{event.start.toLocaleString()}</div>
@@ -279,7 +279,7 @@ export default function NpmCal() {
         <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
           <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
           <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
-            <i className="far fa-trash-alt" aria-hidden="true"></i>
+            <i className="far fa-trash-alt" aria-hidden="true"/>
           </DeleteButton>
         </DoubleButton>
     </Rodal>
@@ -288,7 +288,7 @@ export default function NpmCal() {
     <Rodal height={400} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
         <EventInfo>
-          <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}></InputField>
+          <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
@@ -299,22 +299,22 @@ export default function NpmCal() {
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>
-          <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}></InputArea>
+          <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}/>
         </EventInfo>
         <br/>
         <div><RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall></div>
       </Rodal>
 
       <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc={true} onClose={() => setWarningVisible(false)}>
-        <i className="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <i className="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
         <div style={{textAlign:'center', marginTop: '10px'}}>{warning}</div>
       </Rodal>
       <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={approvalVisible} closeOnEsc={true} onClose={() => setApprovalVisible(false)}>
-        <i className="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <i className="fa fa-check-circle fa-5x" aria-hidden="true" style={{color: 'green', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
         <div style={{textAlign:'center', marginTop: '10px'}}>{approval}</div>
       </Rodal>
       <Rodal height={220} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
-        <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}></i>
+        <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
         <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete {event.title}?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
           <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>

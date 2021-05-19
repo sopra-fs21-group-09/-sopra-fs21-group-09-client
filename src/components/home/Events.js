@@ -23,19 +23,13 @@ const Event = styled.div`
   color: white;
 `;
 
-const InfoLabel = styled.label`
-  margin-left: 6.5%;
-  font-size: 18px;
-  color: black;
-`;
-
 function getEventColor(e) {
-  if (e.label == 'EVENT') {return Colors.BLUE}
-  if (e.label == 'MEETING') {return Colors.MEETING}
-  if (e.label == 'LECTURE') {return Colors.LECTURES}
-  if (e.label == 'EXERCISE') {return Colors.EXERCISES}
-  if (e.label == 'EXAM') {return Colors.EXAMS}
-  if (e.label == 'PRIVATE') {return Colors.PRIVATE}
+  if (e.label === 'EVENT') {return Colors.BLUE}
+  if (e.label === 'MEETING') {return Colors.MEETING}
+  if (e.label === 'LECTURE') {return Colors.LECTURES}
+  if (e.label === 'EXERCISE') {return Colors.EXERCISES}
+  if (e.label === 'EXAM') {return Colors.EXAMS}
+  if (e.label === 'PRIVATE') {return Colors.PRIVATE}
   else {return Colors.DARK_GREY}
 }
 
@@ -54,20 +48,20 @@ export default function Events() {
   async function getEvents(){
     try {
       const response = await api.get('/users/'+ localStorage.getItem('id') +'/events')
-      var todayArray = [];
-      var tomorrowArray = [];
-      var thisMonthArray = [];
+      let todayArray = [];
+      let tomorrowArray = [];
+      let thisMonthArray = [];
       
       for (let e of response.data) {
         e.start= new Date(e.start.replace('\"','\''));
         e.end = new Date(e.end.replace('\"','\''));
 
-        if(e.start.getFullYear() == today.getFullYear()){
-          if (e.start.getMonth() == today.getMonth()){
-            if(e.start.getDate() == today.getDate()){
+        if(e.start.getFullYear() === today.getFullYear()){
+          if (e.start.getMonth() === today.getMonth()){
+            if(e.start.getDate() === today.getDate()){
               todayArray.push(e);
             }
-            else if (e.start.getDate() == today.getDate() + 1){
+            else if (e.start.getDate() === today.getDate() + 1){
               tomorrowArray.push(e);
             }
             else {
@@ -86,13 +80,13 @@ export default function Events() {
 
   return (
     <ShadowScrollbars style={{height: 400}}>
-      {events.today.length != 0 ? <DateLabelHome>Today</DateLabelHome> : ''}
+      {events.today.length !== 0 ? <DateLabelHome>Today</DateLabelHome> : ''}
       {events.today.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
       <br/>
-      {events.tomorrow.length != 0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
+      {events.tomorrow.length !== 0 ? <DateLabelHome>Tomorrow</DateLabelHome> : ''}
       {events.tomorrow.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
       <br/>
-      {events.thisMonth.length != 0 ? <DateLabelHome>This Month</DateLabelHome> : ''}
+      {events.thisMonth.length !== 0 ? <DateLabelHome>This Month</DateLabelHome> : ''}
       {events.thisMonth.map(events => <Event style={{background: getEventColor(events)}}>{events.title}</Event>)}
     </ShadowScrollbars>
   )

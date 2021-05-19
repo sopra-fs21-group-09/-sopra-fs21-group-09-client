@@ -46,7 +46,8 @@ export const InputField = styled.input`
 export const InputArea = styled.textarea`
   resize:none;
   padding: 10px;
-  height: 100px;
+  height: 90px;
+  margin-bottom: 10px;
   width: 90%;
   border: none;
   background: ${Colors.LIGHT_GREY};

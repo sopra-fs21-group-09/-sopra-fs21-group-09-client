@@ -102,7 +102,7 @@ export const JoinAppGroup = () => {
                         <Label>Settings</Label>
                         <Label>Enroll</Label>
                     </Line>
-                    <ShadowScrollbars style={{height: 430}}>
+                    <ShadowScrollbars style={{height: 400}}>
                         {joinableGroups.map(group => {
                             return (
                                 <AllAppGroups group={group}/>
