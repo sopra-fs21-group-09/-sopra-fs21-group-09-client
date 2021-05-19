@@ -96,8 +96,6 @@ export const RectButtonBig = styled.button`
 export const RectButtonSmall = styled.button`
   &:hover {
     transform: translateY(-2px);
-    background: white;
-    color: ${Colors.BUTTON};
   }
   font-weight: 800;
   text-transform: uppercase;

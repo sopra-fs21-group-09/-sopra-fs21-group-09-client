@@ -50,7 +50,7 @@ export const JoinAppGroup = () => {
     const history = useHistory();
 
     // Get all the groups which the user can join
-    async function getJoinableGroups(){
+    async function getGroups(){
         try {
             //get groups 2 times; one for checking, one for deleting
             let allGroups = await api.get(`/groups`);
@@ -68,15 +68,6 @@ export const JoinAppGroup = () => {
                 }
             }
 
-            // Delete all groups which are full
-            for (let i = 0; i < joinableGroups.data.length; i++){
-                if (joinableGroups.data[i] !== undefined && joinableGroups.data[i].memberLimit !== 0){
-                    if (joinableGroups.data[i].memberCount >= joinableGroups.data[i].memberLimit){
-                        delete joinableGroups.data[i];
-                    }
-                }
-            }
-
             setJoinableGroups(joinableGroups.data);
 
         } catch (error) {
@@ -86,7 +77,7 @@ export const JoinAppGroup = () => {
 
     useEffect(() => {
         // Load all the groups
-        getJoinableGroups();
+        getGroups();
     }, []);
 
 

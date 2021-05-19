@@ -54,7 +54,21 @@ function groupPrivacy(privacy) {
 const AllAppGroups = ({ group }) => {
     const history = useHistory();
     const [visible, setVisible] = useState(false);
+    let disable = false;
     const [password, setPassword] = useState(null);
+
+    // Define Enroll for each Group
+    let settings;
+    if (group.memberLimit === 0){
+        settings = "unlimited";
+    } else {
+        settings = group.memberCount + "/" + group.memberLimit;
+    }
+
+    // Disable button for groups that are full
+    if (group.memberCount >= group.memberLimit && settings !== "unlimited"){
+        disable = true;
+    }
 
     /**
      * HTTP GET request is sent to the backend.
@@ -87,14 +101,6 @@ const AllAppGroups = ({ group }) => {
         }
     }
 
-    // Define Enroll for each Group
-    let settings;
-    if (group.memberLimit === 0){
-         settings = "unlimited";
-    } else {
-        settings = group.memberCount + "/" + group.memberLimit;
-    }
-
     return (
         <ModuleBox>
             <InboxLabel>{group.name}</InboxLabel>
@@ -104,6 +110,7 @@ const AllAppGroups = ({ group }) => {
             <InboxButtonContainer>
                 <RectButtonSmall
                     width="100%"
+                    disabled={disable}
                     onClick={() => {
                         if (group.open === true){
                             JoinPublicGroup();
@@ -115,7 +122,7 @@ const AllAppGroups = ({ group }) => {
                     Join
                 </RectButtonSmall>
                 {/*Overlay for password */}
-                <Rodal height='200' customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc={true} onClose={() => setVisible(false)}>
+                <Rodal height={200} customStyles={{borderRadius: '20px'}} visible={visible} closeOnEsc={true} onClose={() => setVisible(false)}>
                     <div><InputFieldPopUp
                         placeholder="Enter group password here..."
                         type="password"
