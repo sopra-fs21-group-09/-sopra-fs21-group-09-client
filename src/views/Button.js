@@ -122,6 +122,7 @@ export const DeleteButton = styled.button`
     color: white;
   }
   padding: 6px;
+  margin-left: 3px;
   font-weight: 800;
   text-transform: uppercase;
   font-size: 18px;

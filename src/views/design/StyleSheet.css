@@ -73,4 +73,10 @@ li{
     color: #4F4F4F;
 }
 
+.Desc {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
 
