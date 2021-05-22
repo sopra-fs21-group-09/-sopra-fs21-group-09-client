@@ -110,8 +110,10 @@ export const Deadlines = (props) => {
 
     useEffect(() => {
         setDisplayRodal(false)
-
     }, [props]);
+
+    console.log('PROPS')
+    console.log(props)
 
     return(
         <DeadlineContainer position={'absolute'}>
@@ -216,7 +218,7 @@ export function ModuleDetail(){
             if (moduleId){
                 //get groups 2 times; one for checking, one for deleting
                 let allModuleGroups = await api.get('/modules/'+moduleId);
-                let joinableGroups = await api.get('/modules/'+moduleId); //TODO: ask Jonas why two times the same request
+                let joinableGroups = await api.get('/modules/'+moduleId);
 
                 console.log('MODULE')
                 console.log(joinableGroups.data)
@@ -280,16 +282,7 @@ export function ModuleDetail(){
                 <BigContainer>
                     <SmallContainer>
                         <Info module={module}/>
-                        <Deadlines moduleId={moduleId} tasks={module ? [{
-                            id: 1,
-                            name: "new task",
-                            description: "",
-                            subTasks: [],
-                            deadline: {
-                                time: "2021-05-22T12:00:00",
-                                visible: false
-                            }
-                        }] : []}/>
+                        <Deadlines moduleId={moduleId} tasks={module ? module.tasks : []}/>
                     </SmallContainer>
                     <SmallContainer id="container">
                         <Label>Groups</Label>

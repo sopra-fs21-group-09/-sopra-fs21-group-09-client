@@ -73,7 +73,6 @@ export function Tasks(props){
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('runs every other time')
     })
 
 

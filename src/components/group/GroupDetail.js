@@ -98,7 +98,6 @@ export const GroupDetail = () => {
                             Leave Group
                         </AddButton>
                         <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} groupId={location.state.detail.id}/>
-                        {/*TODO: Ask Jonas about GroupId*/}
                         <GroupTaskList tasks={tasks}/>
                         <ButtonContainer>
                             <RectButton

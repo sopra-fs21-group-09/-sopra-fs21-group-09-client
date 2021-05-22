@@ -46,7 +46,6 @@ export function AddTaskRodal(props) {
         try {
             //POST Deadline to module
             if(props.moduleId){
-                console.log('POSTED MODULE TASK')
                 const requestBody = JSON.stringify({
                     name: taskName,
                     description: description,
@@ -55,14 +54,9 @@ export function AddTaskRodal(props) {
                         visible: deadline
                     }
                 });
-                const response = await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                const response = await api.post('/modules/'+props.moduleId+'/tasks', requestBody)
+
                 console.log('POSTED TO MODULE')
-                setVisible(false)
-                setDisplayRodal(false)
-                history.push({
-                    pathname: '/moduleDetail',
-                    displayRodal: false
-                });
 
                 setVisible(false)
                 setDisplayRodal(false)

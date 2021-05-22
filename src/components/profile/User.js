@@ -1,5 +1,5 @@
 /**
- * User model TODO: where to place user?
+ * User model
  */
 class User {
   constructor(data = {}) {
