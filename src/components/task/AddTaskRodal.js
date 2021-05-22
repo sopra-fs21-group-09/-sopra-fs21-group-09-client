@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {api, handleError} from "../../helpers/api";
 import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
+import {useHistory} from "react-router";
 
 export const ColumnDiv = styled.div`
    display: flex;
@@ -38,9 +39,10 @@ export function AddTaskRodal(props) {
     const [deadline, setDeadline] = useState(false)
     const [displayRodal, setDisplayRodal] = useState(false)
     const [description, setDescription] = useState('')
+    const history = useHistory()
 
     //POST:/users/{userId}/tasks
-    function postTask(){
+    async function postTask(){
         try {
             //POST Deadline to module
             if(props.moduleId){
@@ -53,8 +55,23 @@ export function AddTaskRodal(props) {
                         visible: deadline
                     }
                 });
-                const response = api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                const response = await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                console.log('POSTED TO MODULE')
+                setVisible(false)
+                setDisplayRodal(false)
+                history.push({
+                    pathname: '/moduleDetail',
+                    displayRodal: false
+                });
+
+                setVisible(false)
+                setDisplayRodal(false)
+                history.push({
+                    pathname: '/moduleDetail',
+                    displayRodal: false
+                });
             }
+            //POST tasks to group
             if (props.groupId){
                 console.log('POSTED GROUP TASK')
                 const requestBody = JSON.stringify({
@@ -66,8 +83,14 @@ export function AddTaskRodal(props) {
                     }
                 });
 
-                const respnse = api.post(`/groups/${props.groupId}/tasks`, requestBody)
+                const response = await api.post(`/groups/${props.groupId}/tasks`, requestBody)
 
+                setVisible(false)
+                setDisplayRodal(false)
+                history.push({
+                    pathname: '/groupDetail',
+                    displayRodal: false
+                });
             }
             //POST task to users/{userId}
             else {
@@ -80,7 +103,14 @@ export function AddTaskRodal(props) {
                     }
                 });
 
-                const response = api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                const response = await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+
+                setVisible(false)
+                setDisplayRodal(false)
+                history.push({
+                    pathname: '/tasks',
+                    displayRodal: false
+                });
             }
 
             document.getElementById("input").value = null;

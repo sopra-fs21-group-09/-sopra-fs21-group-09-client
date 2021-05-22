@@ -108,6 +108,11 @@ export const Deadlines = (props) => {
     const [displayRodal, setDisplayRodal] = useState(false)
     const [changeOccurred, setChangeOccurred] = useState(false)
 
+    useEffect(() => {
+        setDisplayRodal(false)
+
+    }, [props]);
+
     return(
         <DeadlineContainer position={'absolute'}>
             <Label>Deadlines</Label><br />

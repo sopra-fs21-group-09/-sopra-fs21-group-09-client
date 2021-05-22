@@ -21,7 +21,7 @@ export const AddButton = styled(CircleButton)`
 `;
 
 
-export function Tasks(){
+export function Tasks(props){
     const [tasks, setTasks] = useState([])
     const [displayRodal, setDisplayRodal] = useState(false)
     const [changeOccurred, setChangeOccurred] = useState(false)
@@ -55,6 +55,11 @@ export function Tasks(){
         getTasks()
 
     }, []);
+
+    useEffect(() => {
+        setDisplayRodal(false)
+        getTasks()
+    }, [props]);
 
 
 
