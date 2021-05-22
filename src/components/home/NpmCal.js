@@ -324,7 +324,7 @@ export default function NpmCal() {
         <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete {event.title}?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
           <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>
-          <RectButtonSmall style={{marginLeft: '12px'}}onClick={() => setDeleteWarningVisible(false)}>NO</RectButtonSmall>
+          <RectButtonSmall style={{marginLeft: '12px'}} onClick={() => setDeleteWarningVisible(false)}>NO</RectButtonSmall>
         </DoubleButton>
       </Rodal>
   </div>

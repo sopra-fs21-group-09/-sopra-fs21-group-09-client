@@ -304,7 +304,8 @@ export function ModuleDetail(){
                                     history.push({
                                         pathname: '/createGroup',
                                         moduleId: moduleId
-                                    })}}
+                                    })
+                                }}
                             >
                                 Create your own group
                             </RectButton>

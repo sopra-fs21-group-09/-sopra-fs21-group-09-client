@@ -69,7 +69,7 @@ const ButtonContainer = styled.div`
   width: 100%;
 `;
 
-const CreateGroup = () => {
+const CreateGroup = (props) => {
     let inputOne = React.createRef();
     let inputTwo = React.createRef();
     const [name, setName] = useState(null);
@@ -115,11 +115,13 @@ const CreateGroup = () => {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+        console.log(props)
         setModuleId(location.moduleId)
     }, []);
 
     // this will run when the component mounts and anytime the stateful data changes
     useEffect(() => {
+        console.log(location.moduleId)
     }, [moduleId]);
 
 
