@@ -61,6 +61,8 @@ function infoButton(history, module){
 export const Module = props => {
     const history = useHistory()
 
+    console.log(props)
+
     return (
         <ModuleBox>
             <InboxLabel>{props.module.name}</InboxLabel>

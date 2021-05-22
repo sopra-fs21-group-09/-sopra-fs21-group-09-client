@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Colors} from "../../views/design/Colors";
-import React, {useState} from "react";
+import React from "react";
 import {api} from "../../helpers/api";
 
 export const GroupTaskContainer = styled.div`

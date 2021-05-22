@@ -31,7 +31,6 @@ export const InputField = styled.input`
   rows: 3; 
 `;
 
-
 export function AddTaskRodal(props) {
     const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
@@ -55,7 +54,7 @@ export function AddTaskRodal(props) {
                         visible: deadline
                     }
                 });
-                const response = await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
                 console.log('POSTED TO MODULE')
                 setVisible(false)
                 setDisplayRodal(false)
@@ -83,17 +82,18 @@ export function AddTaskRodal(props) {
                     }
                 });
 
-                const response = await api.post(`/groups/${props.groupId}/tasks`, requestBody)
+                await api.post(`/groups/${props.groupId}/tasks`, requestBody)
 
                 setVisible(false)
                 setDisplayRodal(false)
                 history.push({
                     pathname: '/groupDetail',
-                    displayRodal: false
+                    detail: {id: props.groupId}
                 });
             }
             //POST task to users/{userId}
             else {
+                console.log('POSTED User TASK')
                 const requestBody = JSON.stringify({
                     name: taskName,
                     description: description,
@@ -151,7 +151,7 @@ export function AddTaskRodal(props) {
                 onChange={e => {
                     setTaskName(e.target.value);
                 }}
-                placeholder='Title ...'></InputField>
+                placeholder='Title ...'/>
         </ColumnDiv>
         <ColumnDiv>
             <TextLabel> Date: </TextLabel>
@@ -166,14 +166,14 @@ export function AddTaskRodal(props) {
         </ColumnDiv>
         <ColumnDiv>
             <TextLabel>Display in Calendar:</TextLabel>
-            <input type='checkbox' onClick={() => setDeadline(true)}></input>
+            <input type='checkbox' onClick={() => setDeadline(true)}/>
         </ColumnDiv>
         <div>
             <InputField
                 id='input'
                 style={{height: '75%'}}
                 onChange={e => { setDescription(e.target.value);}}
-                placeholder='Description ...'></InputField>
+                placeholder='Description ...'/>
         </div>
         <ColumnDiv style={{justifyContent: 'center'}}>
             <RectButton
@@ -181,7 +181,7 @@ export function AddTaskRodal(props) {
                     position: 'absolute',
                     bottom: '0',
                 }}
-                //disabled={!taskName  || !taskDate}
+                disabled={!taskName  || !taskDate}
                 onClick={() => {
                     postTask();
                     setVisible(false);

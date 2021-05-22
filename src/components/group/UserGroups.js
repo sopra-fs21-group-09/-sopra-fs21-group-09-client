@@ -47,7 +47,7 @@ const UserGroups = ({ userGroup }) => {
             onClick={() => {
                 history.push({
                     pathname: '/groupDetail',
-                    state: { detail: userGroup }
+                    detail: userGroup
                 });
             }}
         >

@@ -1,16 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
 import {Colors} from "../../views/design/Colors";
 import {TaskList} from "./Task"
 import styled from "styled-components";
 import "./Task.css"
-import {Label} from "../../views/Labels";
 import Header from "../../views/design/Header";
-import {CircleButton, RectButton} from "../../views/Button";
-import Rodal from "rodal";
+import {CircleButton} from "../../views/Button";
 import {api, handleError} from '../../helpers/api';
 import {AddTaskRodal} from "./AddTaskRodal";
-import {add} from "../home/Dates";
 
 //Constants we need for this page
 export const AddButton = styled(CircleButton)`
@@ -20,11 +16,10 @@ export const AddButton = styled(CircleButton)`
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
-
 export function Tasks(props){
-    const [tasks, setTasks] = useState([])
-    const [displayRodal, setDisplayRodal] = useState(false)
-    const [changeOccurred, setChangeOccurred] = useState(false)
+    const [tasks, setTasks] = useState([]);
+    const [displayRodal, setDisplayRodal] = useState(false);
+    const [changeOccurred, setChangeOccurred] = useState(false);
 
 
     async function getTasks(){
@@ -62,18 +57,16 @@ export function Tasks(props){
     }, [props]);
 
 
-
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getTasks()
         console.log('displayRodal changed')
-        console.log('displayRodal: '+displayRodal)
+        console.log('displayRodal: '+ displayRodal)
     }, [displayRodal]);
 
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('runs every other time')
     })
 
 
