@@ -10,6 +10,8 @@ import {CircleButton, RectButton} from "../../views/Button";
 import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
+import {AddTaskRodal} from "../task/AddTaskRodal";
+import {AddDeadlineButton} from "../module/ModuleDetail";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -28,13 +30,6 @@ const RightContainer = styled.div`
   border: 1px solid #11244E;
 `;
 
-const Label = styled.label`
-  text-transform: uppercase;
-  margin-left: 2%;
-  color: orange;
-  font-size: 25px;
-`;
-
 const AddButton = styled(CircleButton)`
     position: 'absolute';
     display: flex;
@@ -51,12 +46,9 @@ const AddButton = styled(CircleButton)`
 `;
 
 export const GroupDetail = () => {
-
-    const [visible, setVisible] = useState(false)
-    const [taskName, setTaskName] = useState()
-    const [taskDate, setTaskDate] = useState()
+    const [displayRodal, setDisplayRodal] = useState(false)
+    const [changeOccurred, setChangeOccurred] = useState(false)
     const [tasks, setTasks] = useState([])
-    const history = useHistory()
     const location = useLocation();
 
     async function getGroupTasks(id){
@@ -77,27 +69,6 @@ export const GroupDetail = () => {
         }
     }
 
-    async function postGroupTask(id){
-        try {
-            const requestBody = JSON.stringify({
-                name: taskName,
-                description: "bla",
-                deadline: {
-                    time: taskDate,
-                    visible: "true"
-                }
-            });
-
-            await api.post(`/groups/${id}/tasks`, requestBody)
-
-            document.getElementById("input").value = null;
-
-            getGroupTasks(location.state.detail.id);
-
-        } catch (error) {
-            alert(`Something went wrong during postTasks: \n${handleError(error)}`);
-        }
-    }
 
     // this will run, when the component is first initialized
     useEffect(() => {
@@ -107,13 +78,6 @@ export const GroupDetail = () => {
         console.log(location.state.detail.name);
         getGroupTasks(location.state.detail.id)
     }, [location]);
-
-    // this will run only when TaskDate
-    useEffect(() => {
-        document.body.style.backgroundColor = Colors.COLOR13;
-        getGroupTasks(location.state.detail.id)
-    }, [visible]);
-
 
     useEffect(()=>{
         document.body.style.backgroundColor = Colors.COLOR11;
@@ -133,41 +97,15 @@ export const GroupDetail = () => {
                         <AddButton>
                             Leave Group
                         </AddButton>
-                        <Rodal height='300' customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc='true' onClose={() => setVisible(false)}>
-                            <Label style={{color: 'black'}}>NEW TASK</Label>
-                            <div>Title:
-                                <InputField id='input'
-                                            onChange={e => {
-                                                setTaskName(e.target.value);
-                                            }}
-                                            placeholder='Enter title here'
-                                /></div>
-                            <div>Date:
-                                <InputField id='input'
-                                            type="date"
-                                            width='80%'
-                                            onChange={e => {
-                                                setTaskDate(e.target.value)
-                                            }}
-                                /></div>
-                            <div style={{alignItems: 'center'}}>
-                                <RectButton
-                                    style={{
-                                        position: 'absolute',
-                                        bottom: '0'
-                                    }}
-                                    disabled={!taskName  || !taskDate}
-                                    onClick={() => {
-                                        postGroupTask(location.state.detail.id);
-                                        setVisible(false);
-                                    }}>
-                                    Submit</RectButton>
-                            </div>
-                        </Rodal>
+                        <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} groupId={location.state.detail.id}/>
+                        {/*TODO: Ask Jonas about GroupId*/}
                         <GroupTaskList tasks={tasks}/>
                         <ButtonContainer>
                             <RectButton
-                                onClick={() => setVisible(true)}>
+                                onClick={() => {
+                                    setDisplayRodal(true)
+                                    setChangeOccurred(!changeOccurred)
+                                }}>
                                 Add Task
                             </RectButton>
                         </ButtonContainer>

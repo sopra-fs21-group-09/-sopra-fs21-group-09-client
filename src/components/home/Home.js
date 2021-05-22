@@ -90,7 +90,7 @@ const Home = props => {
         document.body.style.backgroundColor = Colors.COLOR11;
         const random = () => Math.floor(Math.random() * 255);
         console.log(random())
-        console.log('taks')
+        console.log('tasks')
         console.log(tasks)
     });
 

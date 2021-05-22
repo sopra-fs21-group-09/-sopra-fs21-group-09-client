@@ -18,7 +18,6 @@ export const TaskContainer = styled.div`
   }
   width: 90%;
   padding: 4px 0px 5px 10px;
-  margin: 5px 0px 0px 5%;
   border: 3px solid #018692;
   border-radius: 45px;
   display: flex;
@@ -72,7 +71,7 @@ export const Task = props => {
         }
     }
 
-    return (<TaskContainer>
+    return (<TaskContainer style={{margin: '5px 0px 0px 5%'}}>
         <TaskButton onClick={()=>{setClosed(false); markAsDone();}}>
             {open ? '' : <i className="fas fa-check fa-xs"/>}
         </TaskButton>
@@ -243,6 +242,28 @@ export function TasksForHome(props){
                 {tomorrowsTaskItem}
             {nxtMonthsTaskItem.length!==0 ? <DateLabelHome>Later</DateLabelHome> : ''}
                 {nxtMonthsTaskItem}
+        </div>
+    )
+
+}
+
+export const Deadline = props => {
+    return (<TaskContainer style={{margin: '5px 0px 0px 0px'}}>
+        <p style={{marginTop:'0px', marginBottom:'0px', marginRight:'25px'}}>{props.time.slice(0,10)+'\t'}</p>
+        {'\t'+props.name}
+    </TaskContainer>)
+}
+
+
+
+export function DeadlinesForModule(props){
+    const deadlines = props.tasks.map((task) =>
+        <Deadline name={task.name} description={task.description}
+              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
+    );
+    return(
+        <div>
+            {deadlines}
         </div>
     )
 

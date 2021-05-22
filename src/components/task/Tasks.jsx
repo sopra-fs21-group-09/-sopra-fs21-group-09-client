@@ -24,6 +24,7 @@ export const AddButton = styled(CircleButton)`
 export function Tasks(){
     const [tasks, setTasks] = useState([])
     const [displayRodal, setDisplayRodal] = useState(false)
+    const [changeOccurred, setChangeOccurred] = useState(false)
 
 
     async function getTasks(){
@@ -36,6 +37,9 @@ export function Tasks(){
             for (i = 0; i < response.data.length; i++) {
                 array.push(response.data[i]);
             }
+
+            console.log('TASKS')
+            console.log(response.data)
 
             setTasks(array)
 
@@ -70,10 +74,11 @@ export function Tasks(){
 
     return (
         <div style={{padding: '0px'}}>
-            <AddTaskRodal displayRodal={displayRodal}/>
+            <AddTaskRodal displayRodal={displayRodal} changedOccured={changeOccurred}/>
             <AddButton
                 onClick={() => {
                     setDisplayRodal(true)
+                    setChangeOccurred(!changeOccurred)//props have to change
                 }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddButton>

@@ -30,6 +30,7 @@ export const InputField = styled.input`
   rows: 3; 
 `;
 
+
 export function AddTaskRodal(props) {
     const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
@@ -41,16 +42,46 @@ export function AddTaskRodal(props) {
     //POST:/users/{userId}/tasks
     function postTask(){
         try {
-            const requestBody = JSON.stringify({
-                name: taskName,
-                description: description,
-                deadline: {
-                    time: taskDate,
-                    visible: deadline
-                }
-            });
+            //POST Deadline to module
+            if(props.moduleId){
+                console.log('POSTED MODULE TASK')
+                const requestBody = JSON.stringify({
+                    name: taskName,
+                    description: description,
+                    deadline: {
+                        time: taskDate,
+                        visible: deadline
+                    }
+                });
+                const response = api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+            }
+            if (props.groupId){
+                console.log('POSTED GROUP TASK')
+                const requestBody = JSON.stringify({
+                    name: taskName,
+                    description: "bla",
+                    deadline: {
+                        time: taskDate,
+                        visible: "true"
+                    }
+                });
 
-            const response = api.post('/users/'+ localStorage.getItem('id')+'/tasks', requestBody)
+                const respnse = api.post(`/groups/${props.groupId}/tasks`, requestBody)
+
+            }
+            //POST task to users/{userId}
+            else {
+                const requestBody = JSON.stringify({
+                    name: taskName,
+                    description: description,
+                    deadline: {
+                        time: taskDate,
+                        visible: deadline
+                    }
+                });
+
+                const response = api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+            }
 
             document.getElementById("input").value = null;
 

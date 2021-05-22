@@ -2,13 +2,15 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {BaseContainer} from '../../views/Layout';
 import {api, handleError } from '../../helpers/api';
-import {RectButton, RectButtonBig} from '../../views/Button';
+import {CircleButton, RectButton, RectButtonBig} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
 import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
 import ModuleGroups from "./ModuleGroups";
+import {DeadlinesForModule} from "../task/Task";
+import {AddTaskRodal} from "../task/AddTaskRodal";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -62,6 +64,11 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const DeadlineContainer = styled.div`
+  position: absolute;
+  width: 30%; 
+`;
+
 const Line = styled.div`
   width: 50%;
   margin-bottom: 2%;
@@ -89,23 +96,31 @@ const TextField1 = styled.label`
   align-items: center;
 `;
 
-const TextField2 = styled.label`
-  color: black;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  text-transform: uppercase;
-  line-height:200%;
+export const AddDeadlineButton = styled(CircleButton)`
+    position: absolute; 
+    top: 0px;
+    right: 0px; 
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    z-index: 0; 
 `;
 
-export const Deadlines = () => {
+export const Deadlines = (props) => {
+    const [displayRodal, setDisplayRodal] = useState(false)
+    const [changeOccurred, setChangeOccurred] = useState(false)
+
     return(
-        <div>
+        <DeadlineContainer position={'absolute'}>
             <Label>Deadlines</Label><br />
-            <TextField2>Quiz 3: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 4: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 5: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-            <TextField2>Quiz 6: Thursday, 24.04.2021, 14.00-16.00</TextField2><br />
-        </div>
+            <DeadlinesForModule tasks={props.tasks}/>
+            <AddDeadlineButton
+                onClick={() => {
+                    setDisplayRodal(true)
+                    setChangeOccurred(!changeOccurred)
+                }}>
+                <i className="fas fa-plus fa-2x"/>
+            </AddDeadlineButton>
+            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={props.moduleId}/>
+        </DeadlineContainer>
     )
 }
 
@@ -196,7 +211,10 @@ export function ModuleDetail(){
             if (moduleId){
                 //get groups 2 times; one for checking, one for deleting
                 let allModuleGroups = await api.get('/modules/'+moduleId);
-                let joinableGroups = await api.get('/modules/'+moduleId);
+                let joinableGroups = await api.get('/modules/'+moduleId); //TODO: ask Jonas why two times the same request
+
+                console.log('MODULE')
+                console.log(joinableGroups.data)
 
                 //get all groups in which the user is enrolled
                 let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
@@ -257,7 +275,16 @@ export function ModuleDetail(){
                 <BigContainer>
                     <SmallContainer>
                         <Info module={module}/>
-                        <Deadlines/>
+                        <Deadlines moduleId={moduleId} tasks={module ? [{
+                            id: 1,
+                            name: "new task",
+                            description: "",
+                            subTasks: [],
+                            deadline: {
+                                time: "2021-05-22T12:00:00",
+                                visible: false
+                            }
+                        }] : []}/>
                     </SmallContainer>
                     <SmallContainer id="container">
                         <Label>Groups</Label>
