@@ -126,7 +126,7 @@ class AppRouter extends React.Component {
                       <GroupDetail />
                   </HomeGuard>
               )}
-              />
+            />
             <Route path="/" exact render={() => <Redirect to={"/registration"} />} />
           </div>
         </Switch>

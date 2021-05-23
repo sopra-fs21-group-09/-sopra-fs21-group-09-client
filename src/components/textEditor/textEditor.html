@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="resources/js/sockjs-0.3.4.js"></script>
+    <script src="resources/js/stomp.js"></script>
+</head>
+<body>
+
+</body>
+</html>
+
+let stompClient = null;
+
+let currChar = String;
+
+// Connect function, groupId with props
+function connect(id) {
+
+
+let socket = new SockJS('/ws');
+
+stompClient = Stomp.over(socket);
+/*
+stompClient.connect({'groupId': id}, function (frame) {
+console.log('Connected: ' + frame);
+stompClient.subscribe('/topic/' + id + '.public.messages', function (sharedDoc) {
+// Show the existing group document
+showSharedDoc(JSON.parse(sharedDoc.body));
+});
+}, function () {})
+
+*/
+};
+
+// Disconnect from server, probably gonna be executed with the back button
+function disconnect() {
+if(stompClient != null) {
+stompClient.disconnect();
+}
+console.log("Disconnected");
+}
+
+// Sends the string to backend, which distributes it to other group members
+function sendData(id) {
+
+let payload = JSON.stringify({groupId : id, char: currChar});
+stompClient.send("/app/", {}, payload);
+currChar = String;
+};
+
+function showSharedDoc(){
+
+}
+
+wss://http://localhost:8080/ws

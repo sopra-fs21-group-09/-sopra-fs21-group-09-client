@@ -10,6 +10,7 @@ import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
 import {AddTaskRodal} from "../task/AddTaskRodal";
+import TextEditor from "../textEditor/TextEditor";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -113,7 +114,11 @@ export const GroupDetail = props => {
                         </ButtonContainer>
                     </div>
                 </LeftContainer>
-                <RightContainer>Here will be the Chat/Whiteboard</RightContainer>
+                <RightContainer>
+                    <TextEditor>
+                        {props.location.detail ? props.location.detail.id : ''}
+                    </TextEditor>
+                </RightContainer>
             </BigContainer>
         </BaseContainer>
     )
