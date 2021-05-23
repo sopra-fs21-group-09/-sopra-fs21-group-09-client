@@ -66,7 +66,7 @@ export const Module = props => {
     return (
         <ModuleBox>
             <InboxLabel>{props.module.name}</InboxLabel>
-            <InboxLabel>{props.module.description}</InboxLabel>
+            <InboxLabel>{props.module.description.slice(0, 30)+'...'}</InboxLabel>
             {infoButton(history, props.module)}
         </ModuleBox>
     )

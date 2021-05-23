@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {BaseContainer} from '../../views/Layout';
+import {BaseContainer, BigContainer, SmallContainer, InfoContainer} from '../../views/Layout';
 import {api, handleError } from '../../helpers/api';
-import {CircleButton, RectButton, RectButtonBig} from '../../views/Button';
+import {RectButton, RectButtonBig, InfoButton, AddDeadlineButton} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
@@ -10,46 +10,11 @@ import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
 import ModuleGroups from "./ModuleGroups";
 import {DeadlinesForModule} from "../task/Task";
-import {AddTaskRodal} from "../task/AddTaskRodal";
+import {AddTaskRodal, ColumnDiv, InputField} from "../task/AddTaskRodal";
+import Rodal from "rodal";
+import {TextField1, BlueLabel, SmallLabel} from "../../views/Labels"
 
 //Constants we need for this page
-const BigContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  border: none;
-  margin-bottom: 20px;
-  display grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 1;
-  grid-column-gap: 1em;
-`;
-
-const SmallContainer = styled.div`
-  width: 100%;
-  height: 50%;
-  padding-left: 3.5%;
-`;
-
-const InfoContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Label = styled.label`
-  margin-bottom: 2%;
-  text-transform: uppercase;
-  line-height:220%;
-  color: ${Colors.COLOR14};
-  font-size: 28px;
-`;
-
-const SmallLabel = styled.label`
-  place-self: center;
-  text-transform: uppercase;
-  color: orange;
-  font-size: 20px;
-`;
-
 const SmallLine = styled.div`
   display grid;
   grid-template-columns: 40% 25% 30%;
@@ -86,23 +51,6 @@ const IconHolder = styled.div`
   border-radius: 50%;
 `;
 
-const TextField1 = styled.label`
-  color: black;
-  text-transform: uppercase;
-  float: left;
-  height: 55px;
-  margin-left: -50%;
-  display: flex;
-  align-items: center;
-`;
-
-export const AddDeadlineButton = styled(CircleButton)`
-    position: absolute; 
-    top: 0px;
-    right: 0px; 
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    z-index: 0; 
-`;
 
 export const Deadlines = (props) => {
     const [displayRodal, setDisplayRodal] = useState(false)
@@ -117,8 +65,8 @@ export const Deadlines = (props) => {
 
     return(
         <DeadlineContainer position={'absolute'}>
-            <Label>Deadlines</Label><br />
-            <DeadlinesForModule tasks={props.tasks}/>
+            <BlueLabel>Deadlines</BlueLabel><br />
+            <DeadlinesForModule tasks={props ? props.tasks : []}/>
             <AddDeadlineButton
                 onClick={() => {
                     setDisplayRodal(true)
@@ -126,15 +74,18 @@ export const Deadlines = (props) => {
                 }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddDeadlineButton>
-            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={props.moduleId}/>
+            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={localStorage.getItem('moduleInfo')}/>
         </DeadlineContainer>
     )
 }
 
 export const Info = (module) => {
+    const [displayDescription, setDisplayDescription] = useState(false)
+    console.log('YYYYYYYY')
+    console.log(module)
     return(
         <InfoContainer>
-            <Label>Info</Label>
+            <BlueLabel>Info</BlueLabel>
             <Line>
                 <IconHolder>
                     <span style={{fontSize: 35}}>
@@ -152,20 +103,28 @@ export const Info = (module) => {
                 <TextField1>Monday, 14.00-16.00</TextField1><br />
             </Line>
             <Line>
-                <IconHolder>
+                <InfoButton
+                    onClick={() => {
+                        setDisplayDescription(true)
+                    }}
+                >
                     <span style={{fontSize: 35}}>
-                        <i className="fas fa-video"/>
+                        <i className="fas fa-info"/>
                     </span>
-                </IconHolder>
-                <TextField1>{module["module"] ? module["module"].zoom_link : 'Not Loaded Yet'}</TextField1><br />
+                </InfoButton>
+                <TextField1>{module["module"]? module["module"].description.slice(0,30)+'...' : 'Not Loaded Yet'}</TextField1><br />
             </Line>
+            <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={displayDescription} border-radius='20px' onClose={() => setDisplayDescription(false)}>
+                <BlueLabel style={{color: 'black'}}>DESCRIPTION</BlueLabel>
+                <p>{module["module"]? module["module"].description : 'Not Loaded Yet'}</p>
+            </Rodal>
         </InfoContainer>
     )
 }
 
-export function ModuleDetail(){
+export function ModuleDetail(props){
 
-    const [module, setModule] = useState();
+    const [module, setModule] = useState(null);
     const [moduleId, setModuleId] = useState('');
     const history = useHistory();
     const [joinableGroups, setJoinableGroups] = useState([]);
@@ -199,8 +158,7 @@ export function ModuleDetail(){
      */
     async function getModuleDetail() {
         try {
-
-            const response = await api.get('modules/'+ moduleId)
+            const response = await api.get('modules/'+ localStorage.getItem('moduleInfo'))
             setModule(response.data)
 
         } catch (error) {
@@ -251,9 +209,7 @@ export function ModuleDetail(){
         console.log("first")
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-
         setModuleId(localStorage.getItem('moduleInfo'));
-
     }, []);
 
     // gets executed second
@@ -273,10 +229,20 @@ export function ModuleDetail(){
                 document.getElementById("container").style.display = "none";
             }
         }
+        console.log('MODULE IN SECOND')
+        console.log(module)
     }, [moduleId, moduleJoined]);
+
+    useEffect(() => {
+        //Change the whole background for just this file
+        document.body.style.backgroundColor = Colors.COLOR11;
+        getModuleDetail()
+    }, [props]);
 
         return (
             <BaseContainer>
+                {console.log('RETURN')}
+                {console.log(module)}
                 <NavBar/>
                 <PageTitle>{module ? module.name: ''}</PageTitle>
                 <BigContainer>
@@ -285,7 +251,7 @@ export function ModuleDetail(){
                         <Deadlines moduleId={moduleId} tasks={module ? module.tasks : []}/>
                     </SmallContainer>
                     <SmallContainer id="container">
-                        <Label>Groups</Label>
+                        <BlueLabel>Groups</BlueLabel>
                         <SmallLine>
                             <SmallLabel>Name</SmallLabel>
                             <SmallLabel>Enroll</SmallLabel>
