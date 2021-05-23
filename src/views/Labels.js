@@ -67,3 +67,28 @@ export const InputFieldPopUp = styled.input`
   background: ${Colors.LIGHT_GREY};
   border-radius: 20px;
 `;
+
+export const TextField1 = styled.label`
+  color: black;
+  text-transform: uppercase;
+  float: left;
+  height: 55px;
+  margin-left: -50%;
+  display: flex;
+  align-items: center;
+`;
+
+export const BlueLabel = styled.label`
+  margin-bottom: 2%;
+  text-transform: uppercase;
+  line-height:220%;
+  color: ${Colors.COLOR14};
+  font-size: 28px;
+`;
+
+export const SmallLabel = styled.label`
+  place-self: center;
+  text-transform: uppercase;
+  color: orange;
+  font-size: 20px;
+`;

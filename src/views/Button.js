@@ -29,6 +29,32 @@ export const CircleButton = styled.button`
 `;
 
 
+export const InfoButton = styled.button` 
+  &:hover {
+    transform: translateY(-2px);
+  }  
+  cursor: pointer; 
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  background: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+`;
+
+export const AddDeadlineButton = styled(CircleButton)`
+    width: 40px;
+    height: 40px;
+    position: absolute; 
+    top: 0px;
+    right: 0px; 
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    z-index: 1; 
+    padding-bottom: 5px;
+`;
+
+
 export const SmallCircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
@@ -69,6 +95,7 @@ export const RectButton = styled.button`
   border: 1px solid #11244E;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
+
 
 export const RectButtonBig = styled.button`
   &:hover {

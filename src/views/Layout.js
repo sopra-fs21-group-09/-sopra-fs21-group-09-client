@@ -31,3 +31,24 @@ export const BaseContainer = styled.div`
   max-width: ${DESKTOP_WIDTH}px;
 `;
 
+export const BigContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  border: none;
+  margin-bottom: 20px;
+  display grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+`;
+
+export const SmallContainer = styled.div`
+  width: 100%;
+  height: 50%;
+  padding-left: 3.5%;
+`;
+
+export const InfoContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
