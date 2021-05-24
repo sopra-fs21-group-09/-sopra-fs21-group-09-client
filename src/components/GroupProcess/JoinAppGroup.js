@@ -57,7 +57,7 @@ export const JoinAppGroup = () => {
             let joinableGroups = await api.get(`/groups`);
 
             //get all groups in which the user is enrolled
-            let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+            let usersGroups = await api.get(`/users/${sessionStorage.getItem('id')}/groups`);
 
             // Get all groups where the user is not in
             for (let i = 0; i < allGroups.data.length; i++){

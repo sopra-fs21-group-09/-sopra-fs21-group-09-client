@@ -36,7 +36,7 @@ export const MyGroups = () => {
     // Load all groups the user is currently a part of
     async function getUserGroups(){
         try {
-            let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+            let usersGroups = await api.get(`/users/${sessionStorage.getItem('id')}/groups`);
 
             setGroups(usersGroups.data)
 

@@ -12,8 +12,6 @@ body {
 }
 
 .container .ql-editor {
-    display: flex;
-    justify-content: center;
     width: 100%;
     min-height: 11in;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5);

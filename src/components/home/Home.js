@@ -42,7 +42,7 @@ const Home = props => {
 
     async function getUser(){
         try {
-            const response = await api.get(`/users/${localStorage.getItem('id')}`);//TODO: get User by Token
+            const response = await api.get(`/users/${sessionStorage.getItem('id')}`);//TODO: get User by Token
             setUser(response.data);
 
             // This is just some data for you to see what is available.
@@ -61,7 +61,7 @@ const Home = props => {
 
     async function getTasks(){
         try {
-            const response = await api.get('/users/'+ localStorage.getItem('id')+'/tasks')
+            const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/tasks')
 
 
             const array = []
@@ -99,12 +99,12 @@ const Home = props => {
             <NavBar/>
             <PageTitle>Welcome Home, {user.username}</PageTitle>
             <CalendarContainer>
-                <NpmCal></NpmCal>
+                <NpmCal/>
             </CalendarContainer>
             <SideBar>
                 <UpcomingContainer>
                     <Label>Upcoming</Label>
-                    <Events></Events>
+                    <Events/>
                 </UpcomingContainer>
                 <hr width="95%"/>
                 <TasksContainer>

@@ -154,7 +154,7 @@ export function HamburgerMenu(props) {
           <BottomButton
               onClick={() =>
                 {history.push('/login');
-                localStorage.clear();}
+                  sessionStorage.clear();}
               }
               initial={false}
               animate={isOpen ? "show" : "hide"}

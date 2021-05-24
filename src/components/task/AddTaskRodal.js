@@ -104,7 +104,7 @@ export function AddTaskRodal(props) {
                     }
                 });
 
-                const response = await api.post('/users/' + localStorage.getItem('id') + '/tasks', requestBody)
+                const response = await api.post('/users/' + sessionStorage.getItem('id') + '/tasks', requestBody)
 
                 setVisible(false)
                 setDisplayRodal(false)

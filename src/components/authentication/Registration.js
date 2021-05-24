@@ -20,7 +20,7 @@ export const Registration = () => {
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, a new user is returned to the front-end
-     * and its token is stored in the localStorage.
+     * and its token is stored in the sessionStorage.
      */
     async function registration() {
         try {
@@ -35,9 +35,9 @@ export const Registration = () => {
             // Get the returned user and update a new object.
             const user = new User(response.data);
 
-            // Store the token into the local storage.
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('id', user.id);
+            // Store the token into the sessionStorage.
+            sessionStorage.setItem('token', user.token);
+            sessionStorage.setItem('id', user.id);
 
             // Login successfully worked --> navigate to the route /game in the GameRouter
             history.push(`/home`);

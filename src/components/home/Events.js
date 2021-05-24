@@ -47,7 +47,7 @@ export default function Events() {
 
   async function getEvents(){
     try {
-      const response = await api.get('/users/'+ localStorage.getItem('id') +'/events')
+      const response = await api.get('/users/'+ sessionStorage.getItem('id') +'/events')
       let todayArray = [];
       let tomorrowArray = [];
       let thisMonthArray = [];

@@ -76,7 +76,7 @@ const AllAppGroups = ({ group }) => {
      */
     async function JoinPublicGroup() {
         try {
-            await api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}`);
+            await api.post(`/users/${sessionStorage.getItem('id')}/groups/${group.id}`);
             history.push('/myGroups');
         } catch (error) {
             alert(`Something went wrong while joining the group: \n${handleError(error)}`);
@@ -93,7 +93,7 @@ const AllAppGroups = ({ group }) => {
                 password: password,
             });
 
-            await api.post(`/users/${localStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
+            await api.post(`/users/${sessionStorage.getItem('id')}/groups/${group.id}/private`, requestBody);
             history.push(`/myGroups`);
 
         } catch (error) {

@@ -97,7 +97,7 @@ const Profile = () => {
      */
     async function getProfileInfo() {
         try {
-            const response = await api.get(`/users/${localStorage.getItem('id')}`);
+            const response = await api.get(`/users/${sessionStorage.getItem('id')}`);
 
             // Check if matrikel number exists
             await checkMatrikelNrExists(response);

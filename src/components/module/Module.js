@@ -32,7 +32,7 @@ const InboxButtonContainer = styled.div`
 
 async function userJoinModule(id){
     try {
-        await api.post('/users/'+localStorage.getItem('id')+'/modules/'+id)
+        await api.post('/users/'+ sessionStorage.getItem('id')+'/modules/'+id)
 
     } catch (error) {
         alert(`Something went wrong during post module: \n${handleError(error)}`);
@@ -49,7 +49,7 @@ function infoButton(history, module){
                     pathname: '/moduleDetail',
                     module: module
                 });
-                localStorage.setItem('moduleInfo', module.id);
+                sessionStorage.setItem('moduleInfo', module.id);
             }}
         >
             Info

@@ -19,7 +19,7 @@ export const Login = () => {
     /**
      * HTTP POST request is sent to the backend.
      * If the request is successful, the user gets logged in
-     * and its token is stored in the localStorage.
+     * and its token is stored in the sessionStorage.
      */
     async function login() {
         try {
@@ -32,8 +32,8 @@ export const Login = () => {
 
             const user = new User(response.data);
 
-            localStorage.setItem('token', user.token);
-            localStorage.setItem('id', user.id);
+            sessionStorage.setItem('token', user.token);
+            sessionStorage.setItem('id', user.id);
 
             // Login successfully worked --> navigate to the route /home
             history.push('/home');

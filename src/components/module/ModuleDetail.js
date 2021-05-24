@@ -74,7 +74,7 @@ export const Deadlines = (props) => {
                 }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddDeadlineButton>
-            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={localStorage.getItem('moduleInfo')}/>
+            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={sessionStorage.getItem('moduleInfo')}/>
         </DeadlineContainer>
     )
 }
@@ -140,7 +140,7 @@ export function ModuleDetail(props){
     async function checkIfJoined(){
 
         // get all modules of user
-        const response = await api.get('/users/'+localStorage.getItem('id')+'/modules');
+        const response = await api.get('/users/'+sessionStorage.getItem('id')+'/modules');
 
         // Check if the user has joined the module he is looking at
         for (let i = 0; i < response.data.length; i++){
@@ -158,7 +158,7 @@ export function ModuleDetail(props){
      */
     async function getModuleDetail() {
         try {
-            const response = await api.get('modules/'+ localStorage.getItem('moduleInfo'))
+            const response = await api.get('modules/'+ sessionStorage.getItem('moduleInfo'))
             setModule(response.data)
 
         } catch (error) {
@@ -182,7 +182,7 @@ export function ModuleDetail(props){
                 console.log(joinableGroups.data)
 
                 //get all groups in which the user is enrolled
-                let usersGroups = await api.get(`/users/${localStorage.getItem('id')}/groups`);
+                let usersGroups = await api.get(`/users/${sessionStorage.getItem('id')}/groups`);
 
                 // Get all groups where the user is not in
                 for (let i = 0; i < allModuleGroups.data.groups.length; i++){
@@ -209,7 +209,7 @@ export function ModuleDetail(props){
         console.log("first")
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-        setModuleId(localStorage.getItem('moduleInfo'));
+        setModuleId(sessionStorage.getItem('moduleInfo'));
     }, []);
 
     // gets executed second

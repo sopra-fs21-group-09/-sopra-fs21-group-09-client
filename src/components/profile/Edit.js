@@ -88,7 +88,7 @@ export const Edit = () => {
     async function editName() {
         try {
             // get Userinfo to fill out the missing variables in put requests
-            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+            const current = await api.get(`/users/${sessionStorage.getItem('id')}`);
 
             const requestBody = JSON.stringify({
                 name: name,
@@ -97,7 +97,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${sessionStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
@@ -111,7 +111,7 @@ export const Edit = () => {
     async function editUsername() {
         try {
             // get Userinfo to fill out the missing variables in put requests
-            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+            const current = await api.get(`/users/${sessionStorage.getItem('id')}`);
 
             const requestBody = JSON.stringify({
                 name: current.data.name,
@@ -120,7 +120,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${sessionStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);
@@ -137,7 +137,7 @@ export const Edit = () => {
             CheckMatrikelNrFormat();
 
             // get Userinfo to fill out the missing variables in put requests
-            const current = await api.get(`/users/${localStorage.getItem('id')}`);
+            const current = await api.get(`/users/${sessionStorage.getItem('id')}`);
 
             const requestBody = JSON.stringify({
                 name: current.data.name,
@@ -146,7 +146,7 @@ export const Edit = () => {
             });
 
             // Edit is sent to backend
-            await api.put(`/users/${localStorage.getItem('id')}`, requestBody);
+            await api.put(`/users/${sessionStorage.getItem('id')}`, requestBody);
 
         } catch (error) {
             alert(`Something went wrong while editing the user: \n${handleError(error)}`);

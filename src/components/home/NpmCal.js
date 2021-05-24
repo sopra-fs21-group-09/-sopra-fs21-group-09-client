@@ -142,7 +142,7 @@ export default function NpmCal() {
   
   async function getEvents(){
     try {
-      const response = await api.get('/users/'+ localStorage.getItem('id') +'/events')
+      const response = await api.get('/users/'+ sessionStorage.getItem('id') +'/events')
       
       for (let i = 0; i < response.data.length; i++) {
         response.data[i].start= new Date(response.data[i].start.replace('\"','\''));
@@ -183,7 +183,7 @@ export default function NpmCal() {
               label: event.label,
           });
 
-          api.post('/users/'+ localStorage.getItem('id') +'/events', requestBody)
+          api.post('/users/'+ sessionStorage.getItem('id') +'/events', requestBody)
 
       } catch (error) {
           alert(`postEvent-Error: \n${handleError(error)}`);

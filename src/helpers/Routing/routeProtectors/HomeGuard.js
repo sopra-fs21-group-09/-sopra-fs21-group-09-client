@@ -4,7 +4,7 @@ import { Redirect } from "react-router-dom";
 /**
  * routeProtectors interfaces can tell the router whether or not it should allow navigation to a requested route.
  * They are functional components. Based on the props passed, a route gets rendered.
- * In this case, if the user is authenticated (i.e., a token is stored in the local storage)
+ * In this case, if the user is authenticated (i.e., a token is stored in the session storage)
  * {props.children} are rendered --> The content inside the <GameGuard> in the App.js file, i.e. the user is able to access the main app.
  * If the user isn't authenticated, the components redirects to the /login screen
  * @Guard
@@ -13,7 +13,7 @@ import { Redirect } from "react-router-dom";
 
 
 export const HomeGuard = props => {
-  if (localStorage.getItem("token")) {
+  if (sessionStorage.getItem("token")) {
     return props.children;
   }
   return <Redirect to={"/login"} />;

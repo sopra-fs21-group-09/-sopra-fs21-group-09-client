@@ -56,7 +56,7 @@ export function JoinModules() {
             const allModules = await api.get('/modules');
             const joinableModules = await api.get('/modules');
 
-            const joinedModules = await api.get('/users/'+localStorage.getItem('id')+'/modules');
+            const joinedModules = await api.get('/users/'+sessionStorage.getItem('id')+'/modules');
 
             // Get all modules where the user is not in
             for (let i = 0; i < allModules.data.length; i++){

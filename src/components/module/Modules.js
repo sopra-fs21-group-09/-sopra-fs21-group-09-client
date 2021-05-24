@@ -54,7 +54,7 @@ export function Modules() {
      */
     async function getModules() {
         try {
-            const response = await api.get('/users/'+localStorage.getItem('id')+'/modules')
+            const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/modules')
 
             setModules(response.data)
 
