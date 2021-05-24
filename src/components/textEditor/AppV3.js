@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import SockJsClient from "react-stomp";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
+//import 'react-quill/dist/quill.snow.css';
+//import 'react-quill/dist/quill.bubble.css';
 
 
 class AppV3 extends Component {
@@ -61,13 +60,16 @@ class AppV3 extends Component {
     console.log(this.state.editor)
   }
 
-  render () {
-    return (
-        <div>
-          <ReactQuill theme="snow"  modules={this.modules}
+  /*
+  <ReactQuill theme="snow"  modules={this.modules}
                       formats={this.formats} onChange={this.rteChange}
                       value={this.state.content}
           />
+   */
+  render () {
+    return (
+        <div>
+
           <SockJsClient url='http://localhost:8080/websocket-chat/'
                         topics={['/topic/user']}
                         onConnect={() => {
@@ -88,4 +90,4 @@ class AppV3 extends Component {
   }
 }
 
-export default AppV3;
+//export default AppV3;

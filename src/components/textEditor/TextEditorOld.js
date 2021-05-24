@@ -48,7 +48,7 @@ function showSharedDoc(){
 
 }
 
-function TextEditor(props) {
+function TextEditorOld(props) {
 
     connect(props.children);
 
@@ -59,4 +59,4 @@ function TextEditor(props) {
     );
 }
 
-export default TextEditor;
+export default TextEditorOld;

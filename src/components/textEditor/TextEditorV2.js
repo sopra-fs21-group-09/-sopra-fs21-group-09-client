@@ -11,7 +11,6 @@ TODO: fix bug, where input is duplicated...
 
  for further reference check out: https://www.youtube.com/watch?v=iRaelG7v0OU&t=1856s
 
- Vill Spass, Jonas!
  */
 
 const TOOLBAR_OPTIONS = [
@@ -26,7 +25,11 @@ const TOOLBAR_OPTIONS = [
   ["clean"],
 ]
 
-export default function TextEditor() {
+/**
+ * @FunctionalComponent
+ * This displays the TextEditorOld in GroupDetails
+ */
+export function TextEditor(){
   const [quill, setQuill] = useState()
   const [clientRef, setClientRef] = useState()
 
@@ -38,17 +41,19 @@ export default function TextEditor() {
   }
 
   useEffect(() => {
+
+    console.log("we are here")
     if (clientRef == null || quill == null) return
 
     const handler = (delta, oldDelta, source) => {
       if (source !== 'user') return
       console.log(delta)
-      sendMessage(delta)
+      //sendMessage(delta)
     }
-    quill.on('text-change', handler)
+    quill.on('text-change', handler);
 
     return () => {
-      quill.off('text-change', handler)
+      quill.off('text-change', handler);
     }
   }, [clientRef, quill])
 
@@ -77,7 +82,7 @@ export default function TextEditor() {
                       }}
                       onMessage={(msg) => {
                         console.log(JSON.parse(msg.message))
-                        quill.updateContents(JSON.parse(msg.message))
+                        //quill.updateContents(JSON.parse(msg.message))
                       }}
                       ref={(client) => {
                         setClientRef(client)

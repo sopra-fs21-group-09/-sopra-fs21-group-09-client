@@ -10,7 +10,8 @@ import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
 import {AddTaskRodal} from "../task/AddTaskRodal";
-import TextEditor from "../textEditor/TextEditor";
+import {TextEditor} from "../textEditor/TextEditorV2";
+import ShadowScrollbars from "../../views/design/Scrollbars";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -25,12 +26,12 @@ const LeftContainer = styled.div`
 
 const RightContainer = styled.div`
   width: 100%;
-  padding-left: 5%;
-  border: 1px solid #11244E;
+  background: yellow;
+  border: 1px solid orange;
+  margin-bottom: 5%;
 `;
 
 const AddButton = styled(CircleButton)`
-    position: 'absolute';
     display: flex;
     justify-content: center;
     top: 22px;
@@ -115,9 +116,7 @@ export const GroupDetail = props => {
                     </div>
                 </LeftContainer>
                 <RightContainer>
-                    <TextEditor>
-                        {props.location.detail ? props.location.detail.id : ''}
-                    </TextEditor>
+                    <TextEditor/>
                 </RightContainer>
             </BigContainer>
         </BaseContainer>

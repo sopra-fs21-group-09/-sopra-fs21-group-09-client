@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Editor, EditorState, convertToRaw, convertFromRaw } from 'draft-js'
+//import { Editor, EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import SockJsClient from "react-stomp";
-import j from 'jsondiffpatch'
+//import j from 'jsondiffpatch'
 
 class AppV2 extends Component {
   state = {
