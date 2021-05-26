@@ -69,8 +69,10 @@ export default function NpmCal() {
 
   //rerendering when calendar constant changes
   const [calendar, setCalendar] = useState(0);
+  const [render, setRender] = useState(false);
   useEffect(() => {getEvents()}, []);
-  useEffect(() => {getEvents(); console.log('mounted or updated');}, [calendar]);
+  useEffect(() => {getEvents(); setRender(!render); console.log('mounted or updated');}, [calendar]);
+  useEffect(() => {getEvents()}, [render]);
 
   const initialState = {
     id: "",
@@ -126,12 +128,11 @@ export default function NpmCal() {
       postEvent();
       setApproval(event.title + " has been created!");
     }
+    setCalendar(calendar+1);
     setAddVisible(false);
     setEditVisible(false);
     setApprovalVisible(true);
     resetEvent();
-    getEvents();
-    setCalendar(calendar+1);
   }
   
   async function getEvents(){
