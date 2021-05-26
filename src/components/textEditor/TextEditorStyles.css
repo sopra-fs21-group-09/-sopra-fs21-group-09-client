@@ -7,13 +7,9 @@ body {
     margin: 0;
 }
 
-.container {
-
-}
-
 .container .ql-editor {
     width: 100%;
-    min-height: 11in;
+    min-height: 500px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, .5);
     background-color: white;
 }
@@ -26,12 +22,12 @@ body {
 }
 
 .container .ql-editor.ql-blank{
-    height: 500px;
+    min-height: 500px;
 }
 
 .container .ql-toolbar.ql-snow {
     width: 100%;
-    height: 90px;
+    height: 70px;
     display: flex;
     justify-content: center;
     position: sticky;

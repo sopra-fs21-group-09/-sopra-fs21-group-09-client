@@ -123,16 +123,16 @@ export function AddTaskRodal(props) {
 
     //this runs whenever props change
     useEffect(() => {
-        console.log('#2 PROPS changed')
+        //console.log('#2 PROPS changed')
         //if props are set and displayRodal is true
         if (props && props.displayRodal){
             //set visible to true
             setVisible(true)
-            console.log('#2.1 DisplayRodal is True')
+            //console.log('#2.1 DisplayRodal is True')
         }
         //if displayRodal is false
         if (!props.displayRodal){
-            console.log('#2.2 FIRST RENDER: do not show rodal')
+            //console.log('#2.2 FIRST RENDER: do not show rodal')
             //show Rodal next time
             if (props){
                 setVisible(false)
@@ -142,7 +142,7 @@ export function AddTaskRodal(props) {
     },[props]);
 
     return(
-    <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' onClose={() => setVisible(false)}>
+    <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc={true} onClose={() => setVisible(false)}>
         <Label style={{color: 'black'}}>NEW TASK</Label>
         <ColumnDiv>
             <TextLabel> Title: </TextLabel>

@@ -46,9 +46,9 @@ const UserGroups = ({ userGroup }) => {
             className={"Box"}
             onClick={() => {
                 history.push({
-                    pathname: '/groupDetail',
-                    detail: userGroup
+                    pathname: '/groupDetail'
                 });
+                sessionStorage.setItem('groupId', userGroup.id);
             }}
         >
             <GroupName>{userGroup.name}</GroupName>

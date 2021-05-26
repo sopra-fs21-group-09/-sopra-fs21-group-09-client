@@ -21,7 +21,7 @@ const EventInfo = styled.div`
   margin-top: 5px;
 `;
 
-const DoubleButton = styled.div`
+export const DoubleButton = styled.div`
   bottom: 0px;
   display: grid;
   grid-template-columns: 50% 50%;
@@ -319,7 +319,7 @@ export default function NpmCal() {
       </Rodal>
 
       {/*Overlay for DELETING event*/}
-      <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
+      <Rodal height={220} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
         <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
         <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete {event.title}?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>

@@ -25,26 +25,28 @@ const TOOLBAR_OPTIONS = [
   ["clean"],
 ]
 
-/**
- * @FunctionalComponent
- * This displays the TextEditorOld in GroupDetails
- */
-export function TextEditor(){
-  const [quill, setQuill] = useState()
-  const [clientRef, setClientRef] = useState()
+export const TextEditor = () =>{
+  const [quill, setQuill] = useState();
+  const [clientRef, setClientRef] = useState();
+  const [message, setMessage] = useState('You server message here.');
 
+  // sends each change to the backend
   const sendMessage = (delta) => {
+    console.log("Message sending")
     clientRef.sendMessage('/app/user-all', JSON.stringify({
       name: "some name",
       message: JSON.stringify(delta)
     }));
+    console.log("Message sending v2");
   }
 
+  //
   useEffect(() => {
-
-    console.log("we are here")
+    console.log("Use effect executed");
+    console.log(quill);
+    console.log(clientRef);
     if (clientRef == null || quill == null) return
-
+    console.log(" Use effect if statement passed");
     const handler = (delta, oldDelta, source) => {
       if (source !== 'user') return
       console.log(delta)
@@ -58,8 +60,9 @@ export function TextEditor(){
   }, [clientRef, quill])
 
   const wrapperRef= useCallback(wrapper => {
+    console.log("Wrapper Ref executed");
     if (wrapper == null) return
-
+    console.log("Wrapper Ref if statement executed");
     wrapper.innerHTML = ""
     const editor = document.createElement(("div"))
     wrapper.append(editor)
@@ -67,27 +70,29 @@ export function TextEditor(){
       theme: "snow",
       modules: { toolbar: TOOLBAR_OPTIONS },
     })
-    setQuill(q)
+    setQuill(q);
   }, [])
 
+  let onMessageReceived = (msg) => {
+    console.log(JSON.parse(msg.message));
+    setMessage(msg.message);
+  }
+
+
   return (
-      <div className="container" ref={wrapperRef} >
-        <SockJsClient url='http://localhost:8080/websocket-chat/'
-                      topics={['/topic/user']}
-                      onConnect={() => {
-                        console.log("connected");
-                      }}
-                      onDisconnect={() => {
-                        console.log("Disconnected");
-                      }}
-                      onMessage={(msg) => {
-                        console.log(JSON.parse(msg.message))
-                        //quill.updateContents(JSON.parse(msg.message))
-                      }}
-                      ref={(client) => {
-                        setClientRef(client)
-                      }}
-        />
+      <div className="container" ref={wrapperRef}>
+          <SockJsClient url='http://localhost:8080/websocket-chat'
+                        topics={['/topic/user']}
+                        onConnect={console.log("Connected!!")}
+                        //onDisconnect={console.log("Disconnected!")}
+                        //onMessage={msg => onMessageReceived(msg)}
+                        ref={(client) => {
+                          setClientRef(client);
+                          console.log("Client Ref set");
+                        }}
+          />
+
       </div>
+
   )
 }
