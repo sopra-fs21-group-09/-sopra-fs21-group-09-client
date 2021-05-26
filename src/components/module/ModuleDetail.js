@@ -152,7 +152,7 @@ export function ModuleDetail(props){
 
         // Check if the user has joined the module he is looking at
         for (let i = 0; i < response.data.length; i++){
-            if (response.data[i].id == moduleId){
+            if (response.data[i].id === moduleId){
                 moduleJoined = true;
                 document.getElementById("container").style.display = "block";
                 document.getElementById("button").style.display = "block";
@@ -187,19 +187,14 @@ export function ModuleDetail(props){
                 let allModuleGroups = await api.get('/modules/'+moduleId);
                 let joinableGroups = await api.get('/modules/'+moduleId);
 
-                console.log(allModuleGroups.data.groups)
-                console.log(joinableGroups.data.groups)
                 //get all groups in which the user is enrolled
                 let usersGroups = await api.get(`/users/${sessionStorage.getItem('id')}/groups`);
 
-                console.log(usersGroups.data)
                 // Get all groups where the user is not in
                 for (let i = 0; i < allModuleGroups.data.groups.length; i++){
                     for (let z = 0; z < usersGroups.data.length; z++){
                         if (allModuleGroups.data.groups[i].id === usersGroups.data[z].id){
-                            console.log(allModuleGroups.data.groups[i])
-                            console.log(usersGroups.data[z])
-                            console.log(joinableGroups.data.groups[z])
+                            delete joinableGroups.data.groups[i]
                         }
                     }
                 }
@@ -233,8 +228,8 @@ export function ModuleDetail(props){
             checkIfJoined();
 
             if (moduleJoined !== true){
-                document.getElementById("container").style.display = "none";
-                document.getElementById("button").style.display = "none";
+                //document.getElementById("container").style.display = "none";
+                //document.getElementById("button").style.display = "none";
             }
         }
     }, [moduleId, moduleJoined]);
