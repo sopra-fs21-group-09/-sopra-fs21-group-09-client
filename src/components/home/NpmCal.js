@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Component} from 'react'
 import styled from 'styled-components'
 import { Calendar, Views, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
@@ -57,7 +57,7 @@ function getEventColor(e) {
   if (e.label === 'MEETING') {return Colors.MEETING}
   if (e.label === 'LECTURE') {return Colors.LECTURES}
   if (e.label === 'EXERCISE') {return Colors.EXERCISES}
-  if (e.label === 'EXAM') {return Colors.EXAMS}
+  if (e.label === 'EXAM' || e.label == 'DEADLINE') {return Colors.EXAMS}
   if (e.label === 'PRIVATE') {return Colors.PRIVATE}
   else {return Colors.DARK_GREY}
 }
@@ -118,19 +118,13 @@ export default function NpmCal() {
 
   //check if event is valid -> required: title, start, end, label, start<end
   function checkEvent(method) {
-    {/*if(event.title && event.start && event.end && event.start<event.end){
-      
-    } else {
-      setWarning("Make sure you filled out title, start, end and selected a label!");
-      setWarningVisible(true);
-    }*/}
     if(method==='put'){
       putEvent();
-      setApproval(event.title + " Has been updated!");
+      setApproval(event.title + " has been updated!");
     }
     if(method==='post'){
       postEvent();
-      setApproval(event.title + " Has been created!");
+      setApproval(event.title + " has been created!");
     }
     setAddVisible(false);
     setEditVisible(false);
@@ -142,14 +136,17 @@ export default function NpmCal() {
   
   async function getEvents(){
     try {
-      const response = await api.get('/users/'+ sessionStorage.getItem('id') +'/events')
+      const response_events = await api.get('/users/'+ sessionStorage.getItem('id') +'/events')
+      const response_deadlines = await api.get('/users/'+ sessionStorage.getItem('id') + '/deadlines')
       
-      for (let i = 0; i < response.data.length; i++) {
-        response.data[i].start= new Date(response.data[i].start.replace('\"','\''));
-        response.data[i].end = new Date(response.data[i].end.replace('\"','\''));
+      let response = response_events.data.concat(response_deadlines.data)
+
+      for (let e of response) {
+        e.start= new Date(e.start.replace('\"','\''));
+        e.end = new Date(e.end.replace('\"','\''));
       }
 
-      setEvents(response.data);
+      setEvents(response);
 
     } catch (error) {
       alert(`getEvent-Error: \n${handleError(error)}`);
@@ -229,8 +226,9 @@ export default function NpmCal() {
       selectable
       events={events}
       views={Views.week}
-      step={60}
-      showMultiDayTimes
+      step={15}
+      timeslots={8}
+      defaultView={Views.WEEK}
       defaultDate={new Date()}
       eventPropGetter={ColoredEventWrapper}
       components={{
@@ -238,17 +236,17 @@ export default function NpmCal() {
       }}
       localizer={localizer}
       onSelectEvent={e => {setEvent(e); setEventVisible(true); }}
-      onSelectSlot={e => {setEvent({...event, start:e.start, end:e.end}); setAddVisible(true);}}
+      onSelectSlot={e => {setEvent({...event, title:'', start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
       style={{position: 'absolute', bottom: 0, right: 0, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
-      onClick={() => setAddVisible(true)}><i className="fas fa-plus fa-2x"/></CircleButton>
+      onClick={() => {resetEvent(); setAddVisible(true);}}><i className="fas fa-plus fa-2x"/></CircleButton>
 
       {/*Overlay for ADDING Event */}
       <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={addVisible} closeOnEsc={true} onClose={() => setAddVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Add Event</div><br/>
         <EventInfo>
-          <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' onChange={e => setEvent({ ...event, title: e.target.value})}/>
+          <EventLabel>Title:</EventLabel><InputField placeholder='Enter title here' value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
@@ -272,11 +270,10 @@ export default function NpmCal() {
     <Rodal height={290} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
         <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis'}}>{event.title}</div><br/>
         <EventInfo>
-          <div>Start:</div><div>{event.start.toLocaleString()}</div>
-          <div>End:</div><div>{event.end.toLocaleString()}</div>
-          <div>All Day:</div><div>{event.allDay.toString()}</div>
-          <div>Label:</div><div>{event.label}</div>
-          <div>Description:</div><ShadowScrollbars style={{height: 70}}><div className="Desc">{event.desc}</div></ShadowScrollbars>
+          <div style={{fontWeight:'bold'}}>Start:</div><div>{event.start.toLocaleString()}</div>
+          <div style={{fontWeight:'bold'}}>End:</div><div>{event.end.toLocaleString()}</div>
+          <div style={{fontWeight:'bold'}}>Label:</div><div>{event.label}</div>
+          <div style={{fontWeight:'bold'}}>Description:</div><ShadowScrollbars style={{height: 70}}><div style={{whiteSpace: 'pre-line'}}>{event.desc}</div></ShadowScrollbars>
         </EventInfo>
         <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
           <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
@@ -287,21 +284,25 @@ export default function NpmCal() {
     </Rodal>
 
     {/*Overlay for EDITING event*/}
-    <Rodal height={385} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
+    <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
         <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
         <EventInfo>
-          <div>Title:</div><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}/>
+          <EventLabel>Title:</EventLabel><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}/>
+          <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
+            {event.allDay? 
+              <input type='checkbox' checked style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}/> : 
+              <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}/>}
           <EventLabel>Start:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.start)} onChange={e => setEvent({ ...event, start: e.target.value})}/>
           <EventLabel>End:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
-          <div>Label:</div><div>
-          <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} onChange={e => setEvent({ ...event, label: e.target.value})}>
+          <EventLabel>Label:</EventLabel><div>
+          <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} value={event.label} onChange={e => setEvent({ ...event, label: e.target.value})}>
             {eventLabels.map(({ label, value }) => (
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>
-          <div>Description:</div><InputArea placeholder='Enter description here' onChange={e => setEvent({ ...event, desc: e.target.value})}/>
+          <EventLabel>Description:</EventLabel><InputArea placeholder='Enter description here' value={event.desc} onChange={e => setEvent({ ...event, desc: e.target.value})}/>
         </EventInfo>
         <RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall>
       </Rodal>

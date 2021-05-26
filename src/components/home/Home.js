@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { SideBar, HomeContainer } from '../../views/Layout'
 import {withRouter} from "react-router-dom"
-import {CalendarContainer} from "./Calendar"
 import {Upcoming, UpcomingContainer} from "./HomeContainers"
 import {Task, TasksContainer} from "../task/Task"
 import Events from '../home/Events' 
@@ -33,6 +32,16 @@ const AddButton = styled(CircleButton)`
     bottom: 0;
     right: 0;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+`;
+
+export const CalendarContainer = styled.div`
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 70%;
+  height: 85%;
+  display: flex;
+  justify-content : space-around;
 `;
 
 const Home = props => {
