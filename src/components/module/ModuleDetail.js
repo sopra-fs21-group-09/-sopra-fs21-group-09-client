@@ -152,7 +152,7 @@ export function ModuleDetail(props){
 
         // Check if the user has joined the module he is looking at
         for (let i = 0; i < response.data.length; i++){
-            if (response.data[i].id === moduleId){
+            if (response.data[i].id == moduleId){
                 moduleJoined = true;
                 document.getElementById("container").style.display = "block";
                 document.getElementById("button").style.display = "block";
@@ -228,8 +228,8 @@ export function ModuleDetail(props){
             checkIfJoined();
 
             if (moduleJoined !== true){
-                //document.getElementById("container").style.display = "none";
-                //document.getElementById("button").style.display = "none";
+                document.getElementById("container").style.display = "none";
+                document.getElementById("button").style.display = "none";
             }
         }
     }, [moduleId, moduleJoined]);
