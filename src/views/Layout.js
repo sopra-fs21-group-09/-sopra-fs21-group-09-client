@@ -33,7 +33,7 @@ export const BaseContainer = styled.div`
 
 export const BigContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 500px;
   border: none;
   margin-bottom: 20px;
   display grid;
@@ -42,13 +42,3 @@ export const BigContainer = styled.div`
   grid-column-gap: 1em;
 `;
 
-export const SmallContainer = styled.div`
-  width: 100%;
-  height: 50%;
-  padding-left: 3.5%;
-`;
-
-export const InfoContainer = styled.div`
-  width: 100%;
-  height: 100%;
-`;

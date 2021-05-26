@@ -20,9 +20,15 @@ const ModuleBox = styled.div`
 `;
 
 const InboxLabel = styled.div`
+  margin-left: 2%;
   color: black;
   font-size: 25px;
   place-self: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  font-size: 1vw;
+  z-index: 1;
 `;
 
 const InboxButtonContainer = styled.div`
@@ -33,7 +39,6 @@ const InboxButtonContainer = styled.div`
 async function userJoinModule(id){
     try {
         await api.post('/users/'+ sessionStorage.getItem('id')+'/modules/'+id)
-
     } catch (error) {
         alert(`Something went wrong during post module: \n${handleError(error)}`);
     }
@@ -74,7 +79,6 @@ export const Module = props => {
 
 export const JoinModule = props => {
     const history = useHistory()
-
     return (
         <ModuleBox>
             <InboxLabel>{props.module.name}</InboxLabel>

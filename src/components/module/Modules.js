@@ -72,7 +72,7 @@ export function Modules() {
 
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Second')
+        console.log('Second MyModules useEffect')
         getModules();
     }, [history]);
 
