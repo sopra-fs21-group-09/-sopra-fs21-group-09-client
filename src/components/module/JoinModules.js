@@ -94,7 +94,10 @@ export function JoinModules() {
                     <RectButtonBig
                         width="100%"
                         onClick={() => {
-                            history.push('/modules');
+                            history.push({
+                                pathname: '/modules',
+                                changeProps: true
+                            });
                         }}
                     >
                         GET BACK TO MY MODULES

@@ -44,7 +44,7 @@ const ButtonContainer = styled.div`
 
 
 
-export function Modules() {
+export function Modules(props) {
     const [modules, setModules] = useState([])
     const history = useHistory()
 
@@ -75,6 +75,12 @@ export function Modules() {
         console.log('Second MyModules useEffect')
         getModules();
     }, [history]);
+
+    useEffect(() => {
+        document.body.style.backgroundColor = Colors.COLOR11;
+        console.log('Props changed --> rerender')
+        getModules();
+    }, [props]);
 
         return (
             <BaseContainer>

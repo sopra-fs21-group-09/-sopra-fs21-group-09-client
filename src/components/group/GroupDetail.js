@@ -10,7 +10,7 @@ import {CircleButton, DeleteButton, RectButton, RectButtonSmall} from "../../vie
 import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
-import {AddTaskRodal} from "../task/AddTaskRodal";
+import {TaskOverlay} from "../task/TaskOverlay";
 import {TextEditor} from "../textEditor/TextEditorV2";
 import Rodal from "rodal";
 import {DoubleButton} from "../home/NpmCal";
@@ -50,7 +50,6 @@ const LeaveButton = styled(CircleButton)`
 export const GroupDetail = () => {
     const [displayRodal, setDisplayRodal] = useState(false)
     const [displayWarningRodal, setDisplayWarningRodal] = useState(false)
-    const [changeOccurred, setChangeOccurred] = useState(false)
     const [tasks, setTasks] = useState([])
     const [group, setGroup] = useState();
     const history = useHistory();
@@ -124,7 +123,7 @@ export const GroupDetail = () => {
             <BigContainer>
                 <LeftContainer>
                     <div style={{padding: '0px'}}>
-                        <AddTaskRodal displayRodal={displayRodal}  groupId={group ? group.id : ''} closeOnEsc={true} onClose={() => setDisplayRodal(false)}/>
+                        <TaskOverlay displayRodal={displayRodal} groupId={group ? group.id : ''} closeOnEsc={true} onClose={() => setDisplayRodal(false)}/>
                         <GroupTaskList tasks={tasks}/>
                         <ButtonContainer>
                             <RectButton

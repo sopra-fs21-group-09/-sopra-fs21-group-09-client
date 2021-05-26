@@ -86,7 +86,10 @@ export const JoinModule = props => {
                 <RectButtonSmall
                     onClick={() => {
                         userJoinModule(props.module.id);
-                        history.push('/modules');
+                        history.push({
+                            pathname: '/modules',
+                            changeProps: true
+                        });
                     }}
                 >
                     Join

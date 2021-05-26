@@ -31,11 +31,6 @@ export function GroupTaskList(props) {
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
     );
 
-    const otherGroupTaskItem = otherGroupTasks(props).map((task) =>
-        <GroupTask name={task.name} description={task.description}
-              time={task.deadline ? task.deadline.time : ""} id={task.id}/>
-    );
-
     const nxtMonthsGroupTaskItem = nxtMonthsGroupTasks(props).map((task) =>
         <GroupTask name={task.name} description={task.description}
               time={task.deadline ? task.deadline.time : ""} id={task.id}/>
