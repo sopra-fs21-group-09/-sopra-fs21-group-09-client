@@ -152,6 +152,8 @@ export function ModuleDetail(props){
 
         // Check if the user has joined the module he is looking at
         for (let i = 0; i < response.data.length; i++){
+
+            //It must be == here, with === it doesn't work!!!!
             if (response.data[i].id == moduleId){
                 moduleJoined = true;
                 document.getElementById("container").style.display = "block";
