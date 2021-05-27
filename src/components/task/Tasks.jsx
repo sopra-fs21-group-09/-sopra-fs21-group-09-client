@@ -48,7 +48,6 @@ export function Tasks(props){
         document.body.style.backgroundColor = Colors.COLOR13;
         console.log('Runs only when initialized')
         getTasks()
-
     }, []);
 
     useEffect(() => {
@@ -60,8 +59,6 @@ export function Tasks(props){
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR13;
         getTasks()
-        console.log('displayRodal changed')
-        console.log('displayRodal: '+ displayRodal)
     }, [displayRodal]);
 
 

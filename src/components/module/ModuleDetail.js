@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {BaseContainer, BigContainer} from '../../views/Layout';
 import {api, handleError } from '../../helpers/api';
-import {RectButton, RectButtonBig, AddDeadlineButton, RectButtonInfo} from '../../views/Button';
+import {RectButton, RectButtonBig, AddDeadlineButton, RectButtonInfo, InfoButton} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
@@ -109,18 +109,17 @@ export const Info = (module) => {
                 <TextField1>Monday, 14.00-16.00</TextField1><br />
             </Line>
             <Line>
-                <IconHolder>
-                    <span style={{fontSize: 35}}>
-                        <i className="fas fa-info"/>
-                    </span>
-                </IconHolder>
-                <TextField1/>
-                <RectButtonInfo
+                <InfoButton
                     onClick={() => {
                         setDisplayDescription(true)
                     }}
-                > View Info
-                </RectButtonInfo><br />
+                >
+                    <span style={{fontSize: 35}}>
+                        <i className="fas fa-info"/>
+                    </span>
+                </InfoButton>
+                <TextField1/>
+                <br />
             </Line>
             <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={displayDescription} border-radius='20px' onClose={() => setDisplayDescription(false)}>
                 <BlueLabel style={{color: 'black'}}>DESCRIPTION</BlueLabel>

@@ -104,7 +104,7 @@ export function TaskOverlay(props) {
                     }
                 });
 
-                const response = await api.post('/users/' + sessionStorage.getItem('id') + '/tasks', requestBody)
+                await api.post('/users/' + sessionStorage.getItem('id') + '/tasks', requestBody)
 
                 setVisible(false)
                 setDisplayRodal(false)

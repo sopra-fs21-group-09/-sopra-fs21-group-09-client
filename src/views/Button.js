@@ -32,6 +32,8 @@ export const CircleButton = styled.button`
 export const InfoButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
+    background: ${Colors.BUTTON};
+    color: white; 
   }  
   cursor: pointer; 
   font-weight: 700;
