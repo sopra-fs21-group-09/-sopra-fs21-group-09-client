@@ -11,7 +11,7 @@ import {GroupTaskList} from "./GroupTaskList";
 import {api, handleError} from "../../helpers/api";
 import {ButtonContainer} from "../../views/design/logo/AuthConstants";
 import {TaskOverlay} from "../task/TaskOverlay";
-import {TextEditor} from "../textEditor/TextEditorV2";
+import TextEditor from "../textEditor/TextEditor";
 import Rodal from "rodal";
 import {DoubleButton} from "../home/NpmCal";
 
