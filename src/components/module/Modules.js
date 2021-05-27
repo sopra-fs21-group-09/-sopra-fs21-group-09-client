@@ -76,9 +76,7 @@ export function Modules(props) {
         }, 1000)
 
         if (!loading) return null
-
         getModules()
-
     }, [loading]);
 
     useEffect(() => {
@@ -95,7 +93,7 @@ export function Modules(props) {
                     <BigContainer>
                         <Line>
                             <Label>Module Name</Label>
-                            <Label>Description</Label>
+                            <Label>TYPE OF MODULE</Label>
                         </Line>
                         <ModuleList modules={modules}/>
                         <ButtonContainer>

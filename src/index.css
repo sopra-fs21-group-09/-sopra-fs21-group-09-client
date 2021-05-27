@@ -20,6 +20,10 @@ button {
   outline: none;
 }
 
+.fa-info:hover {
+  color: white;
+}
+
 *:focus {
   outline: none;
 }

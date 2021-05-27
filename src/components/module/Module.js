@@ -66,12 +66,13 @@ function infoButton(history, module){
 export const Module = props => {
     const history = useHistory()
 
-    console.log(props)
+    console.log('MODULE')
+    console.log(props.module)
 
     return (
         <ModuleBox>
             <InboxLabel>{props.module.name}</InboxLabel>
-            <InboxLabel>{props.module.description.slice(0, 30)+'...'}</InboxLabel>
+            <InboxLabel>{props.module.category}</InboxLabel>
             {infoButton(history, props.module)}
         </ModuleBox>
     )

@@ -48,11 +48,12 @@ const LeaveButton = styled(CircleButton)`
     z-index: 1000; 
 `;
 
-export const GroupDetail = () => {
+export const GroupDetail = (props) => {
     const [displayRodal, setDisplayRodal] = useState(false)
     const [displayWarningRodal, setDisplayWarningRodal] = useState(false)
     const [tasks, setTasks] = useState([])
     const [group, setGroup] = useState();
+    const [changeOccurred, setChangeOccurred] = useState(false);
     const history = useHistory();
 
     async function getGroupInfo(){
@@ -92,16 +93,16 @@ export const GroupDetail = () => {
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
-
         getGroupInfo();
-
         getGroupTasks();
     }, [group]);
 
-    useEffect(()=>{
-        document.body.style.backgroundColor = Colors.COLOR11;
+
+    useEffect(() => {
+        setDisplayRodal(false)
         getGroupTasks()
-    }, [group])
+    }, [props]);
+
 
     return (
         <BaseContainer>
@@ -124,12 +125,13 @@ export const GroupDetail = () => {
             <BigContainer>
                 <LeftContainer>
                     <div style={{padding: '0px'}}>
-                        <TaskOverlay displayRodal={displayRodal} groupId={group ? group.id : ''} closeOnEsc={true} onClose={() => setDisplayRodal(false)}/>
+                        <TaskOverlay displayRodal={displayRodal} groupId={group ? group.id : ''} changedOccured={changeOccurred}/>
                         <GroupTaskList tasks={tasks}/>
                         <ButtonContainer>
                             <RectButton
                                 onClick={() => {
                                     setDisplayRodal(true)
+                                    setChangeOccurred(!changeOccurred)//props have to change
                                 }}>
                                 Add Task
                             </RectButton>
