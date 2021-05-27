@@ -3,11 +3,6 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {CircleButton} from "../../views/Button";
 
-const Button = styled.div`
-  z-index: 99;
-  cursor: pointer;
-`;
-
 const Path = (props) => (
   <motion.path
     fill="transparent"
@@ -20,8 +15,6 @@ const Path = (props) => (
 const transition = { duration: 0.3 };
 
 export function MenuToggle({ toggle, isOpen }) {
-
-    const [shadow, setShadow]  = useState(true)
 
   return (
     <CircleButton onClick={toggle} style={{filter: isOpen ? '' : 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))'}}>

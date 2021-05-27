@@ -14,13 +14,6 @@ const HamburgerMenuContainer = styled.div`
   z-index: 99;
 `;
 
-const HamburgerIcon = styled.div`
-  color: ${({ reverseColor }) => (reverseColor ? "#000" : "#fff")};
-  cursor: pointer;
-  z-index: 99;
-  transition: all 250ms ease-in-out;
-`;
-
 /*change size here*/
 const MenuContainer = styled(motion.div)`
   min-width: 300px;
@@ -47,11 +40,6 @@ const BottomContainer = styled.div`
   padding: 1.5em 2em;
 `;
 
-const IconContainer = styled.div`
-  font-size: 16px;
-  color: #555;
-  padding-left: 15px;
-`;
 
 const BottomButton = styled(motion.button)`
   border: 0;

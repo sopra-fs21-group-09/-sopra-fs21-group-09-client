@@ -6,7 +6,7 @@ import "./Task.css"
 import Header from "../../views/design/Header";
 import {CircleButton} from "../../views/Button";
 import {api, handleError} from '../../helpers/api';
-import {AddTaskRodal} from "./AddTaskRodal";
+import {TaskOverlay} from "./TaskOverlay";
 
 //Constants we need for this page
 export const AddButton = styled(CircleButton)`
@@ -72,7 +72,7 @@ export function Tasks(props){
 
     return (
         <div style={{padding: '0px'}}>
-            <AddTaskRodal displayRodal={displayRodal} changedOccured={changeOccurred}/>
+            <TaskOverlay displayRodal={displayRodal} changedOccured={changeOccurred}/>
             <AddButton
                 onClick={() => {
                     setDisplayRodal(true)

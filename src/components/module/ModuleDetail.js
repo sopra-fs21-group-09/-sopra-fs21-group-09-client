@@ -10,7 +10,7 @@ import ShadowScrollbars from "../../views/design/Scrollbars";
 import {useHistory} from "react-router-dom";
 import ModuleGroups from "./ModuleGroups";
 import {DeadlinesForModule} from "../task/Task";
-import {AddTaskRodal} from "../task/AddTaskRodal";
+import {TaskOverlay} from "../task/TaskOverlay";
 import Rodal from "rodal";
 import {TextField1, BlueLabel, SmallLabel} from "../../views/Labels"
 
@@ -82,7 +82,7 @@ export const Deadlines = (props) => {
                 }}>
                 <i className="fas fa-plus fa-2x"/>
             </AddDeadlineButton>
-            <AddTaskRodal displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={sessionStorage.getItem('moduleInfo')}/>
+            <TaskOverlay displayRodal={displayRodal} changeOccurred={changeOccurred} moduleId={sessionStorage.getItem('moduleInfo')}/>
         </DeadlineContainer>
     )
 }
@@ -154,7 +154,7 @@ export function ModuleDetail(props){
         for (let i = 0; i < response.data.length; i++){
 
             //It must be == here, with === it doesn't work!!!!
-            if (response.data[i].id == moduleId){
+            if (response.data[i].id === moduleId){
                 moduleJoined = true;
                 document.getElementById("container").style.display = "block";
                 document.getElementById("button").style.display = "block";
