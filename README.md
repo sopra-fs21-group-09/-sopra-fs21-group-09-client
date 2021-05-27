@@ -41,22 +41,22 @@ The following diagrams show the basic architecture of the software as well as so
 ## User Interface
 
 ### Homepage with calendar
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-homepage.jpg)
+![homepage](./img/ui-homepage.jpg)
 
 ### Module page
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-mymodules)
+![mymodules](./img/ui-mymodules.jpg)
 
 ### MyGroups page
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-)
+![mygroups](./img/ui-mygroups.jpg)
 
 ## Group details
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-)
+![groupdetail](./img/ui-groupdetail.jpg)
 
 ### Tasks page
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-)
+![taskpage](./img/ui-taskpage.jpg)
 
 ### Brofile
-![](https://github.com/sopra-fs21-group-09/sopra-fs21-group-09-client/tree/main/img/ui-)
+![brofile](./img/ui-brofile.jpg)
 
 ## Roadmap
 Some of the features to implement in the future:
