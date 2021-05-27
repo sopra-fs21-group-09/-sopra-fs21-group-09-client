@@ -33,10 +33,13 @@ export const TextEditor = () =>{
   // sends each change to the backend
   const sendMessage = (delta) => {
     console.log("Message sending")
+    /*
     clientRef.sendMessage('/app/user-all', JSON.stringify({
       name: "some name",
       message: JSON.stringify(delta)
     }));
+
+     */
     console.log("Message sending v2");
   }
 

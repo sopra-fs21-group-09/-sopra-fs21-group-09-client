@@ -19,7 +19,8 @@ import {DoubleButton} from "../home/NpmCal";
 const BigContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 35% 53%;
+  grid-column-gap: 5%;
 `;
 
 const LeftContainer = styled.div`

@@ -150,8 +150,9 @@ const CreateGroup = (props) => {
                     <input
                         type="text"
                         className="input"
-                        maxlength="10"
-                        placeholder="Enter group name..."
+                        style={{width: 330}}
+                        maxLength="10"
+                        placeholder="Enter group name (Max. characters: 10)"
                         onChange={e => {setName(e.target.value);}}
                     />
                 </FirstLine>

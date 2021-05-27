@@ -8,6 +8,7 @@ import {PageTitle} from '../../views/Labels';
 import { Colors } from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
 import {ModuleList} from "./Module";
+import {Spinner} from "../../views/design/Spinner";
 
 //Constants we need for this page
 const BigContainer = styled.div`
@@ -46,6 +47,7 @@ const ButtonContainer = styled.div`
 
 export function Modules(props) {
     const [modules, setModules] = useState([])
+    const [loading, setLoading] = useState(false)
     const history = useHistory()
 
     /**
@@ -56,6 +58,7 @@ export function Modules(props) {
         try {
             const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/modules')
 
+            console.log(response.data)
             setModules(response.data)
 
         } catch (error) {
@@ -66,43 +69,47 @@ export function Modules(props) {
     // this will run, when the component is first initialized
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('MyModules initialized')
-        getModules();
-    }, []);
+
+        setTimeout(() => {
+            setLoading(true)
+
+        }, 1000)
+
+        if (!loading) return null
+
+        getModules()
+
+    }, [loading]);
 
     useEffect(() => {
         document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Second MyModules useEffect')
-        getModules();
     }, [history]);
-
-    useEffect(() => {
-        document.body.style.backgroundColor = Colors.COLOR11;
-        console.log('Props changed --> rerender')
-        getModules();
-    }, [props]);
 
         return (
             <BaseContainer>
                 <NavBar/>
                 <PageTitle>My Modules</PageTitle>
-                <BigContainer>
-                    <Line>
-                        <Label>Module Name</Label>
-                        <Label>Description</Label>
-                    </Line>
-                    <ModuleList modules={modules}/>
-                    <ButtonContainer>
-                        <RectButtonBig
-                            width="100%"
-                            onClick={() => {
-                                history.push('/joinModules');
-                            }}
-                        >
-                            Join a Module!
-                        </RectButtonBig>
-                    </ButtonContainer>
-                </BigContainer>
+                {!loading ? (
+                    <Spinner />
+                ) : (
+                    <BigContainer>
+                        <Line>
+                            <Label>Module Name</Label>
+                            <Label>Description</Label>
+                        </Line>
+                        <ModuleList modules={modules}/>
+                        <ButtonContainer>
+                            <RectButtonBig
+                                width="100%"
+                                onClick={() => {
+                                    history.push('/joinModules');
+                                }}
+                            >
+                                Join a Module!
+                            </RectButtonBig>
+                        </ButtonContainer>
+                    </BigContainer>
+                )}
             </BaseContainer>
         )
 }
