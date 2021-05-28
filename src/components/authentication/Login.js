@@ -34,6 +34,7 @@ export const Login = () => {
 
             sessionStorage.setItem('token', user.token);
             sessionStorage.setItem('id', user.id);
+            sessionStorage.setItem('intro', 'false');
 
             // Login successfully worked --> navigate to the route /home
             history.push('/home');

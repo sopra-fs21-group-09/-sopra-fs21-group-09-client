@@ -38,6 +38,7 @@ export const Registration = () => {
             // Store the token into the sessionStorage.
             sessionStorage.setItem('token', user.token);
             sessionStorage.setItem('id', user.id);
+            sessionStorage.setItem('intro', 'true');
 
             // Login successfully worked --> navigate to the route /game in the GameRouter
             history.push(`/home`);

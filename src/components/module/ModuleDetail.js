@@ -2,14 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {BaseContainer, BigContainer} from '../../views/Layout';
 import {api, handleError } from '../../helpers/api';
-import {
-    RectButton,
-    RectButtonBig,
-    AddDeadlineButton,
-    RectButtonInfo,
-    InfoButton,
-    DeleteButton, RectButtonSmall, CircleButton
-} from '../../views/Button';
+import {RectButton, RectButtonBig, AddDeadlineButton, InfoButton, DeleteButton, RectButtonSmall, CircleButton} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
@@ -287,7 +280,7 @@ export function ModuleDetail(props){
                 }}>
                     Leave Module
                 </LeaveButton>
-                {/*Overlay for leaving group*/}
+                {/*Overlay for leaving module*/}
                 <Rodal height={245} width={250} customStyles={{borderRadius: '20px', padding:'20px'}} visible={displayWarningRodal} closeOnEsc={true} onClose={() => setDisplayWarningRodal(false)}>
                     <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
                     <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>
