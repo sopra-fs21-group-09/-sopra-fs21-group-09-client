@@ -2,7 +2,14 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {BaseContainer, BigContainer} from '../../views/Layout';
 import {api, handleError } from '../../helpers/api';
-import {RectButton, RectButtonBig, AddDeadlineButton, RectButtonInfo, InfoButton} from '../../views/Button';
+import {
+    RectButton,
+    RectButtonBig,
+    AddDeadlineButton,
+    RectButtonInfo,
+    InfoButton,
+    DeleteButton, RectButtonSmall, CircleButton
+} from '../../views/Button';
 import {PageTitle} from '../../views/Labels';
 import {Colors} from "../../views/design/Colors";
 import {NavBar} from "../navigation/navBar";
@@ -13,6 +20,7 @@ import {DeadlinesForModule} from "../task/Task";
 import {TaskOverlay} from "../task/TaskOverlay";
 import Rodal from "rodal";
 import {TextField1, BlueLabel, SmallLabel} from "../../views/Labels"
+import {DoubleButton} from "../home/NpmCal";
 
 //Constants we need for this page
 const SmallLine = styled.div`
@@ -61,6 +69,19 @@ const IconHolder = styled.div`
   border-radius: 50%;
 `;
 
+const LeaveButton = styled(CircleButton)`
+    position: absolute;
+    top: 35px;
+    right: 45px;
+    padding-top: 1px;
+    width: 105px;
+    height: 30px;
+    border-radius: 20px;
+    background: ${Colors.BUTTON};
+    color: white;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    z-index: 1000;
+`;
 
 export const Deadlines = (props) => {
     const [displayRodal, setDisplayRodal] = useState(false)
@@ -135,6 +156,7 @@ export function ModuleDetail(props){
     const [moduleId, setModuleId] = useState('');
     const history = useHistory();
     const [joinableGroups, setJoinableGroups] = useState([]);
+    const [displayWarningRodal, setDisplayWarningRodal] = useState(false)
     let moduleJoined;
 
 
@@ -210,6 +232,22 @@ export function ModuleDetail(props){
         }
     }
 
+    /**
+     * HTTP Delete request is sent to the backend.
+     * If the request is successful, the user leaves the module and gets signed out of all the module
+     * groups he is currently in.
+     */
+    async function leaveModule(){
+        try {
+            if (moduleId !== undefined){
+                await api.delete(`/users/${sessionStorage.getItem('id')}/modules/${moduleId}`)
+                history.push(`/modules`);
+            }
+        } catch (error) {
+            alert(`Something went wrong while leaving the module: \n${handleError(error)}`);
+        }
+    }
+
     // gets executed first
     useEffect(() => {
         //Change the whole background for just this file
@@ -244,6 +282,22 @@ export function ModuleDetail(props){
             <BaseContainer>
                 <NavBar/>
                 <PageTitle>{module ? module.name: ''}</PageTitle>
+                <LeaveButton onClick={() => {
+                    setDisplayWarningRodal(true)
+                }}>
+                    Leave Module
+                </LeaveButton>
+                {/*Overlay for leaving group*/}
+                <Rodal height={245} width={250} customStyles={{borderRadius: '20px', padding:'20px'}} visible={displayWarningRodal} closeOnEsc={true} onClose={() => setDisplayWarningRodal(false)}>
+                    <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
+                    <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                        Are you sure you want to leave this module?
+                        You will be signed out of all the module groups as well!</div>
+                    <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
+                        <DeleteButton onClick={() => leaveModule()}>YES</DeleteButton>
+                        <RectButtonSmall style={{marginLeft: '12px'}} onClick={() => setDisplayWarningRodal(false)}>NO</RectButtonSmall>
+                    </DoubleButton>
+                </Rodal>
                 <BigContainer>
                     <SmallContainer>
                         <Info module={module}/>

@@ -29,7 +29,6 @@ const LeftContainer = styled.div`
 
 const RightContainer = styled.div`
   width: 116%;
-  background: yellow;
   border: 1px solid orange;
   margin-bottom: 5%;
 `;
@@ -80,6 +79,11 @@ export const GroupDetail = (props) => {
         }
     }
 
+    /**
+     * HTTP Delete request is sent to the backend.
+     * If the request is successful, the user leaves the group. If the group is empty afterwards,
+     * it gets deleted.
+     */
     async function leaveGroup(){
         try {
             await api.delete(`/users/${sessionStorage.getItem('id')}/groups/${sessionStorage.getItem('groupId')}`)
@@ -95,6 +99,7 @@ export const GroupDetail = (props) => {
         document.body.style.backgroundColor = Colors.COLOR11;
         getGroupInfo();
         getGroupTasks();
+
     }, [group]);
 
 
