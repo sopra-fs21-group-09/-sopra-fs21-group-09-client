@@ -60,7 +60,8 @@ export const AddDeadlineButton = styled(CircleButton)`
 export const SmallCircleButton = styled.button` 
   &:hover {
     transform: translateY(-2px);
-    background: ${Colors.BUTTON};
+    background: white;
+    color: ${Colors.BUTTON};
   }
   font-weight: 700;
   display: flex;
@@ -70,11 +71,11 @@ export const SmallCircleButton = styled.button`
   margin-top: 10%;
   cursor: ${props => (props.disabled ? "default" : "pointer")};
   transition: all 0.3s ease;
-  background: white;
+  background: ${Colors.BUTTON};
+  color: white;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  border: 1px solid black;
+  border-radius: 50%;;
 `;
 
 export const RectButton = styled.button`

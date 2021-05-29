@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { SideBar, HomeContainer } from '../../views/Layout'
-import {withRouter} from "react-router-dom"
+import {withRouter, useHistory} from "react-router-dom"
 import { UpcomingContainer } from "./HomeContainers"
 import { TasksContainer, TasksForHome} from "../task/Task"
-import Events from '../home/Events' 
+import Events from '../home/Events'
+import {RectButton, RectButtonSmall, SmallCircleButton} from '../../views/Button'
 import {BlueLabel, Label} from "../../views/Labels"
 import { Colors } from "../../views/design/Colors"
 import ShadowScrollbars from "../../views/design/Scrollbars"
@@ -24,7 +25,7 @@ const PageTitle = styled.h1`
   position: fixed;
 `;
 
-export const CalendarContainer = styled.div`
+const CalendarContainer = styled.div`
   position: absolute;
   top: 100px;
   left: 100px;
@@ -34,10 +35,23 @@ export const CalendarContainer = styled.div`
   justify-content : space-around;
 `;
 
+const Grid = styled.div`
+  display grid;
+  grid-template-columns: 75% 25%;
+  grid-template-rows: 1;
+  grid-column-gap: 1em;
+`;
+
 const Home = () => {
     const [user, setUser] = useState({username: ''});
     const [tasks, setTasks] = useState([])
     const [displayIntro, setDisplayIntro] = useState(false)
+    
+    const history = useHistory();
+    const routeChange = () =>{ 
+        let path = `tasks`; 
+        history.push(path);
+    }
 
     async function getUser(){
         try {
@@ -135,12 +149,17 @@ const Home = () => {
                     <Label>Upcoming</Label>
                     <Events/>
                 </UpcomingContainer>
-                <hr width="95%"/>
                 <TasksContainer>
-                    <Label>TO-DO</Label>
+                    <Grid>
+                        <Label style={{paddingTop:'10px'}}>TO-DO</Label>
+                        <SmallCircleButton onClick={routeChange} style={{marginTop:0, width:'30px', height:'30px'}}>
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </SmallCircleButton>
+                    </Grid>
                     <ShadowScrollbars style={{ height: 320 }}>
                             <TasksForHome tasks={tasks}/>
                     </ShadowScrollbars>
+                    
                 </TasksContainer>
             </SideBar>
         </HomeContainer>

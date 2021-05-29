@@ -6,11 +6,6 @@ import ShadowScrollbars from '../../views/design/Scrollbars'
 import { DateLabelHome } from '../../views/Labels'
 
 const Event = styled.div`
-  &:hover {
-    transform: translateY(-2px);
-    background: white;
-    color: black;
-  }
   width: 90%;
   height: 30px;
   margin-top: 5px;
@@ -64,7 +59,7 @@ export default function Events() {
             else if (e.start.getDate() === today.getDate() + 1){
               tomorrowArray.push(e);
             }
-            else {
+            else if(e.start>today) {
               thisMonthArray.push(e);
             }
           }

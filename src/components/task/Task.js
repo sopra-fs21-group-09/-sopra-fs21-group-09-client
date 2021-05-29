@@ -188,19 +188,19 @@ export function TaskList(props) {
             <div className='column'>
                 <DateLabel>Today</DateLabel>
                 <ShadowScrollbars style={{height: 250}}>
-                    <InfoLabel>{todaysTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
+                    <InfoLabel>{todaysTaskItem.length === 0? 'No tasks yet!': ''}</InfoLabel>
                     {todaysTaskItem}
                 </ShadowScrollbars>
                 <DateLabel>{tomorrowsTaskItem? 'Tomorrow': ''}</DateLabel>
                 <ShadowScrollbars style={{height: 250}}>
-                    <InfoLabel>{tomorrowsTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
+                    <InfoLabel>{tomorrowsTaskItem.length === 0? 'No tasks yet!': ''}</InfoLabel>
                     {tomorrowsTaskItem}
                 </ShadowScrollbars>
             </div>
             <div className='column'>
                 <DateLabel>{nxtMonthsTaskItem? 'Later': ''}</DateLabel>
                 <ShadowScrollbars style={{height: 500}}>
-                    <InfoLabel>{nxtMonthsTaskItem.length === 0? '-> No tasks yet!': ''}</InfoLabel>
+                    <InfoLabel>{nxtMonthsTaskItem.length === 0? 'No tasks yet!': ''}</InfoLabel>
                     {nxtMonthsTaskItem}
                 </ShadowScrollbars>
 
