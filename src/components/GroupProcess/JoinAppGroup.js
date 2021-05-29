@@ -87,7 +87,6 @@ export const JoinAppGroup = () => {
         document.body.style.backgroundColor = Colors.COLOR11;
     });
 
-    //TODO: too long group name is problematic
     return (
         <BaseContainer>
             <NavBar/>

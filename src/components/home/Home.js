@@ -56,7 +56,7 @@ const Home = () => {
 
     async function getUser(){
         try {
-            const response = await api.get(`/users/${sessionStorage.getItem('id')}`);//TODO: get User by Token
+            const response = await api.get(`/users/${sessionStorage.getItem('id')}`);
             setUser(response.data);
 
             // This is just some data for you to see what is available.

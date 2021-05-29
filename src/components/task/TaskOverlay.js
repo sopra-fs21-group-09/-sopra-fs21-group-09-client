@@ -103,6 +103,7 @@ export function TaskOverlay(props) {
                         visible: deadline
                     }
                 });
+                console.log(requestBody)
 
                 await api.post('/users/' + sessionStorage.getItem('id') + '/tasks', requestBody)
 
@@ -115,6 +116,7 @@ export function TaskOverlay(props) {
             }
 
             document.getElementById("input").value = null;
+            setDeadline(false)
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);

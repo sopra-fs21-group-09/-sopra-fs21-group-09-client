@@ -118,7 +118,7 @@ export default function NpmCal() {
   const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
 
   //event-label dropdown menu 
-  const [eventLabels] = React.useState([ //TODO: Set default event type
+  const [eventLabels] = React.useState([
       {label: "Event", value: "EVENT"},
       {label: "Lecture", value: "LECTURE"},
       {label: "Exercise", value: "EXERCISE"},
@@ -202,6 +202,7 @@ export default function NpmCal() {
           });
 
           api.post('/users/'+ sessionStorage.getItem('id') +'/events', requestBody)
+          setRender(true)
 
       } catch (error) {
           alert(`postEvent-Error: \n${handleError(error)}`);
@@ -239,6 +240,8 @@ export default function NpmCal() {
 
     return YYYY+'-'+MM+'-'+DD+'T'+HH+':'+II;
   }
+
+  useEffect(() => {getEvents(); console.log('rerendering')}, [approvalVisible]);
 
   return (
     <div>

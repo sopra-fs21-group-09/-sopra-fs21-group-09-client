@@ -95,7 +95,7 @@ const CreateGroup = (props) => {
                 memberLimit: memberLimit
             });
 
-            //CREATES GROUP FOR MODULE TODO: The group doesn't get displayed in module details
+            //CREATES GROUP FOR MODULE
             if (moduleId){
                 await api.post(`/modules/${moduleId}/users/${sessionStorage.getItem('id')}/groups`, requestBody);
                 history.push(`/moduleDetail`);
