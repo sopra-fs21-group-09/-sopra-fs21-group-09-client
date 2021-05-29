@@ -251,7 +251,7 @@ export default function NpmCal() {
       onSelectSlot={e => {setEvent({...event, title:'', start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
-      style={{position: 'absolute', bottom: 0, right: 0, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
+      style={{position: 'absolute', bottom: 5, right: 5, filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)'}}
       onClick={() => {resetEvent(); setAddVisible(true);}}><i className="fas fa-plus fa-2x"/></CircleButton>
 
       {/*Overlay for ADDING Event */}

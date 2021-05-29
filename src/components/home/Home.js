@@ -32,6 +32,7 @@ export const CalendarContainer = styled.div`
   height: 85%;
   display: flex;
   justify-content : space-around;
+  z-Index: 1;
 `;
 
 const Home = () => {

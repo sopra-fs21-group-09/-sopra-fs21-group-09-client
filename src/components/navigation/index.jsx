@@ -5,6 +5,11 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { MenuToggle } from "./menuToggle";
 import { NavMenu } from "./navMenu";
+import {IntroButton} from "../../views/Button";
+import "../../views/design/StyleSheet.css"
+import Rodal from "rodal";
+import {BlueLabel} from "../../views/Labels";
+import ShadowScrollbars from "../../views/design/Scrollbars";
 
 const HamburgerMenuContainer = styled.div`
   display: flex;
@@ -63,7 +68,7 @@ const BottomButton = styled(motion.button)`
     outline: none;
   }
 `;
-/* to display a line inbetween
+/* to display a line in between
 &:not(:last-of-type) {
     border-left: 1px solid #b4b4b4;
   }*/
@@ -108,8 +113,9 @@ const commonVariants = {
 
 const commonTransition = { type: "spring", duration: 0.05 };
 
-export function HamburgerMenu(props) {
+export function HamburgerMenu() {
   const [isOpen, setOpen] = useState(false);
+  const [intro, setIntro] = useState(false);
 
   const toggleMenu = () => {
     setOpen(!isOpen);
@@ -130,6 +136,36 @@ export function HamburgerMenu(props) {
           <NavMenu isOpen={isOpen} />
         </ContentContainer>
         <BottomContainer>
+          <IntroButton
+              onClick={() =>
+                setIntro(true)
+              }
+              initial={false}
+              animate={isOpen ? "show" : "hide"}
+              variants={commonVariants}
+              transition={commonTransition}
+          ><i className="fas fa-question"/>
+          </IntroButton>
+          {/*Intro Overlay*/}
+          <Rodal height={350} customStyles={{borderRadius: '20px', marginLeft: '400px'}} visible={intro} closeOnEsc={true}
+                 onClose={() => setIntro(false)}>
+            <BlueLabel  style={{color: 'orange'}}>Welcome to Brolat</BlueLabel>
+            <ShadowScrollbars style={{height: 250}}>
+              <h3>Thank you for using our website!</h3>
+              <p>You are currently having a look at your personal Home Screen. Here you can find a calendar,
+                where all your tasks, meetings, lectures and more will be displayed.</p>
+              <p> On the right you can see two sections.
+                Calendar entries that are due very closely will be displayed in "Upcoming". And all your tasks that you set for yourself
+                are being shown to you in "To-Do", where you can also mark them as done.</p>
+              <h4>Please check out the menu on the left where you can find many more functions!</h4>
+              <p>Visit "Modules", to join the modules you are attending and create or join study groups inside that module.
+                All the corresponding lectures and meetings will be automatically displayed in your calendar as well.</p>
+              <p>Looking for a study group? <br/>Create or join one via "Groups" and share tasks as well
+                as a text editor.</p>
+              <p>Got some personal tasks to do? <br/>Set them in "Tasks" and they will be added to your To-Do List.</p>
+              <h3>Have fun studying with Brolat!</h3>
+            </ShadowScrollbars>
+          </Rodal>
           <BottomButton
               onClick={() => history.push('/profile')}
               initial={false}

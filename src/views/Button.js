@@ -20,12 +20,16 @@ export const CircleButton = styled.button`
   position: fixed;
   margin-top: 0.7%;
   margin-left: -1%;
+  padding-bottom: 5px;
   background: white;
   width: 55px;
   height: 55px;
   border-radius: 50%;
   padding-top: 7.5px;
   z-index: 1000; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 
@@ -43,6 +47,26 @@ export const InfoButton = styled.button`
   width: 55px;
   height: 55px;
   border-radius: 50%;
+`;
+
+export const IntroButton = styled.button` 
+  &:hover {
+    transform: translateY(-2px);
+    color: white; 
+  }  
+  cursor: pointer; 
+  background: white;
+  border: 2px solid black;
+  color: white;
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 5px;
 `;
 
 export const AddDeadlineButton = styled(CircleButton)`
