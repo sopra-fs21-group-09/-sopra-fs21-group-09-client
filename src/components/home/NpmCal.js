@@ -68,6 +68,8 @@ const localizer = momentLocalizer(moment)
 
 export default function NpmCal() {
 
+  const [approval, setApproval] = useState(false);
+
   //rerendering when calendar constant changes
   const [calendar, setCalendar] = useState(0);
   const [render, setRender] = useState(0);
@@ -112,7 +114,7 @@ export default function NpmCal() {
 
   //show approval for successful state
   const [approvalVisible, setApprovalVisible] = useState(false);
-  const [approval, setApproval] = useState(false);
+
 
   //show deletion warning
   const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);

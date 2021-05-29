@@ -50,9 +50,6 @@ export function Tasks(props){
                 array.push(response.data[i]);
             }
 
-            console.log('TASKS')
-            console.log(response.data)
-
             setTasks(array)
 
         } catch (error) {
@@ -71,9 +68,6 @@ export function Tasks(props){
                 array.push(response.data[i]);
             }
 
-            console.log('Done Tasks')
-            console.log(response.data)
-
             setDoneTasks(array)
 
         } catch (error) {
@@ -87,10 +81,6 @@ export function Tasks(props){
         console.log('Runs only when initialized')
         getTasks()
         getDoneTasks()
-        console.log('Display set tasks')
-        console.log(tasks)
-        console.log('Display done tasks')
-        console.log(doneTasks)
     }, []);
 
     useEffect(() => {
