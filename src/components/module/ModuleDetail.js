@@ -120,7 +120,7 @@ export const Info = (module) => {
                         <i className="far fa-calendar"/>
                     </span>
                 </IconHolder>
-                <TextField1>Monday, 14.00-16.00</TextField1><br />
+                <TextField1>{module["module"] ? module["module"].lectureTimeStart.slice(0,3)+" "+module["module"].lectureTimeStart.slice(10,16)+" - "+module["module"].lectureTimeEnd.slice(10,16) : 'Not Loaded Yet'}</TextField1><br />
             </Line>
             <Line>
                 <InfoButton

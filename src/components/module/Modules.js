@@ -58,6 +58,7 @@ export function Modules(props) {
         try {
             const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/modules')
 
+            console.log('MODULES')
             console.log(response.data)
             setModules(response.data)
 
