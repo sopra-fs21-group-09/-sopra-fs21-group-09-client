@@ -72,7 +72,8 @@ export default function NpmCal() {
   const [render, setRender] = useState(false);
   useEffect(() => {getEvents()}, []);
   useEffect(() => {getEvents(); setRender(!render); console.log('mounted or updated');}, [calendar]);
-  useEffect(() => {getEvents()}, [render]);
+  useEffect(() => {getEvents(); console.log('rerendering')}, [render]);
+  useEffect(() => {getEvents()}, [approval]);
 
   const initialState = {
     id: "",
