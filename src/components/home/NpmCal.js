@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Calendar, Views, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
@@ -35,7 +35,7 @@ export const DoubleButton = styled.div`
 const EventLabel = styled.div`
   padding-top: 8px;
   font-weight: bold;
-`;
+`; 
 
 const ColoredDateCellWrapper = ({ children }) =>
   React.cloneElement(React.Children.only(children), {
@@ -120,19 +120,30 @@ export default function NpmCal() {
 
   //check if event is valid -> required: title, start, end, label, start<end
   function checkEvent(method) {
-    if(method==='put'){
-      putEvent();
-      setApproval(event.title + " has been updated!");
+    if(event.title){
+      if(new Date(event.start)<new Date(event.end)){
+        if(method==='put'){
+          putEvent();
+          setApproval(event.title + " has been updated!");
+        }
+        if(method==='post'){
+          postEvent();
+          setApproval(event.title + " has been created!");
+        }
+        setCalendar(calendar+1);
+        setRender(!render);
+        setAddVisible(false);
+        setEditVisible(false);
+        setApprovalVisible(true);
+        resetEvent();
+      } else {
+        setWarning('Start date must be earlier than end time!');
+        setWarningVisible(true);
+      }
+    } else {
+        setWarning('Please enter a title!');
+        setWarningVisible(true);
     }
-    if(method==='post'){
-      postEvent();
-      setApproval(event.title + " has been created!");
-    }
-    setCalendar(calendar+1);
-    setAddVisible(false);
-    setEditVisible(false);
-    setApprovalVisible(true);
-    resetEvent();
   }
   
   async function getEvents(){

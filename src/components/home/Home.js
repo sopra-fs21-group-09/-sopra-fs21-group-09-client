@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { SideBar, HomeContainer } from '../../views/Layout'
 import {withRouter} from "react-router-dom"
 import { UpcomingContainer } from "./HomeContainers"
-import { TasksContainer } from "../task/Task"
+import { TasksContainer, TasksForHome} from "../task/Task"
 import Events from '../home/Events' 
 import {BlueLabel, Label} from "../../views/Labels"
 import { Colors } from "../../views/design/Colors"
@@ -12,7 +12,6 @@ import styled from "styled-components"
 import NpmCal from './NpmCal'
 import { api, handleError } from '../../helpers/api';
 import 'rodal/lib/rodal.css';
-import {TasksForHome} from "../task/Task";
 import Rodal from "rodal";
 
 //Constants we need for this page
@@ -64,9 +63,9 @@ const Home = () => {
             const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/tasks')
 
 
-            const array = []
-            for ( let i = 0; i < response.data.length; i++) {
-                array.push(response.data[i]);
+            const array = [];
+            for (let e of response.data) {
+                array.push(e)
             }
 
             setTasks(array)

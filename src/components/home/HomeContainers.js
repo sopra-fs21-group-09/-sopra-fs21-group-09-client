@@ -23,3 +23,12 @@ export const Upcoming = styled.div`
   background-color: ${Colors.LECTURES}; 
 `;
 
+export const CalendarContainer = styled.div`
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 70%;
+  height: 85%;
+  display: flex;
+  justify-content : space-around;
+`;
