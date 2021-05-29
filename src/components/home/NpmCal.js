@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {useHistory} from "react-router-dom"
 import styled from 'styled-components'
 import { Calendar, Views, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
@@ -69,10 +70,17 @@ export default function NpmCal() {
 
   //rerendering when calendar constant changes
   const [calendar, setCalendar] = useState(0);
-  const [render, setRender] = useState(false);
+  const [render, setRender] = useState(0);
   useEffect(() => {getEvents()}, []);
-  useEffect(() => {getEvents(); setRender(!render); console.log('mounted or updated');}, [calendar]);
-  useEffect(() => {getEvents()}, [render]);
+  useEffect(() => {getEvents(); setRender(render+1); console.log('mounted or updated');}, [calendar]);
+  useEffect(() => {getEvents(); console.log('rerendering')}, [render]);
+  useEffect(() => {getEvents()}, [approval]);
+
+  const history = useHistory();
+  const routeChange = () =>{ 
+    let path = `tasks`; 
+    history.push(path);
+  }
 
   const initialState = {
     id: "",
@@ -95,6 +103,7 @@ export default function NpmCal() {
   //constants for rodal-overlay visibility 
   const [addVisible, setAddVisible] = useState(false);
   const [eventVisible, setEventVisible] = useState(false);
+  const [taskVisible, setTaskVisible] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
 
   //show warning for invalid inputs
@@ -124,14 +133,14 @@ export default function NpmCal() {
       if(new Date(event.start)<new Date(event.end)){
         if(method==='put'){
           putEvent();
-          setApproval(event.title + " has been updated!");
+          setApproval("Your event has been updated!");
         }
         if(method==='post'){
           postEvent();
-          setApproval(event.title + " has been created!");
+          setApproval("Your event has been created!");
         }
         setCalendar(calendar+1);
-        setRender(!render);
+        setRender(render+1);
         setAddVisible(false);
         setEditVisible(false);
         setApprovalVisible(true);
@@ -247,7 +256,7 @@ export default function NpmCal() {
         timeSlotWrapper: ColoredDateCellWrapper
       }}
       localizer={localizer}
-      onSelectEvent={e => {setEvent(e); setEventVisible(true); }}
+      onSelectEvent={e => {setEvent(e); (event.label=='DEADLINE'? setTaskVisible(true) : setEventVisible(true)); console.log(event.instanceOfModule);}}
       onSelectSlot={e => {setEvent({...event, title:'', start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
@@ -278,26 +287,39 @@ export default function NpmCal() {
         <RectButtonSmall onClick={() => checkEvent('post')}>Submit</RectButtonSmall>
       </Rodal>
 
-    {/*Overlay for giving DETAILS of an event*/}
-    <Rodal height={290} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
-        <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis'}}>{event.title}</div><br/>
+    {/*Overlay for giving DETAILS of an EVENT*/}
+    <Rodal height={270} customStyles={{borderRadius: '20px', padding:'20px'}} visible={eventVisible} closeOnEsc={true} onClose={() => {setEventVisible(false)}}>
+        <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{event.title}</div><br/>
         <EventInfo>
           <div style={{fontWeight:'bold'}}>Start:</div><div>{event.start.toLocaleString()}</div>
           <div style={{fontWeight:'bold'}}>End:</div><div>{event.end.toLocaleString()}</div>
           <div style={{fontWeight:'bold'}}>Label:</div><div>{event.label}</div>
           <div style={{fontWeight:'bold'}}>Description:</div><ShadowScrollbars style={{height: 70}}><div style={{whiteSpace: 'pre-line'}}>{event.desc}</div></ShadowScrollbars>
         </EventInfo>
-        <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
-          <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
-          <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
-            <i className="far fa-trash-alt" aria-hidden="true"/>
-          </DeleteButton>
-        </DoubleButton>
+        {event.instanceOfModule? '':
+          <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
+            <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
+            <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
+              <i className="far fa-trash-alt" aria-hidden="true"/>
+            </DeleteButton>
+          </DoubleButton>
+        }
+    </Rodal>
+
+    {/*giving DETAILS of a TASK*/}
+    <Rodal height={240} customStyles={{borderRadius: '20px', padding:'20px'}} visible={taskVisible} closeOnEsc={true} onClose={() => {setTaskVisible(false)}}>
+        <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{event.title}</div><br/>
+        <EventInfo>
+          <div style={{fontWeight:'bold'}}>Date:</div><div>{event.start.toLocaleDateString('de-DE')}</div>
+          <div style={{fontWeight:'bold'}}>Label:</div><div>{event.label}</div>
+          <div style={{fontWeight:'bold'}}>Description:</div><ShadowScrollbars style={{height: 70}}><div style={{whiteSpace: 'pre-line'}}>{event.desc}</div></ShadowScrollbars>
+        </EventInfo>
+        <RectButtonSmall onClick={routeChange}>Go to Tasks</RectButtonSmall>
     </Rodal>
 
     {/*Overlay for EDITING event*/}
     <Rodal height={430} customStyles={{borderRadius: '20px', padding:'20px'}} visible={editVisible} closeOnEsc={true} onClose={() => setEditVisible(false)}>
-        <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit {event.title}</div><br/>
+        <div style={{fontSize: '20px', fontWeight: 'bold'}}>Edit event</div><br/>
         <EventInfo>
           <EventLabel>Title:</EventLabel><InputField value={event.title} onChange={e => setEvent({ ...event, title: e.target.value})}/>
           <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
@@ -310,7 +332,7 @@ export default function NpmCal() {
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
           <EventLabel>Label:</EventLabel><div>
           <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} value={event.label} onChange={e => setEvent({ ...event, label: e.target.value})}>
-            {eventLabels.map(({ label, value }) => (
+            {eventLabels.map(({ label, value }) => ( 
             <option key={value} value={value}>{label}</option>))}
           </select>
           </div>
@@ -319,7 +341,7 @@ export default function NpmCal() {
         <RectButtonSmall onClick={() => checkEvent('put')}>Submit</RectButtonSmall>
       </Rodal>
 
-      {/*Overlay for warnings of some sort. Not used yet.*/}
+      {/*Overlay for warnings of some sort.*/}
       <Rodal height={200} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={warningVisible} closeOnEsc={true} onClose={() => setWarningVisible(false)}>
         <i className="fas fa-exclamation-circle fa-5x" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
         <div style={{textAlign:'center', marginTop: '10px'}}>{warning}</div>
@@ -332,9 +354,9 @@ export default function NpmCal() {
       </Rodal>
 
       {/*Overlay for DELETING event*/}
-      <Rodal height={220} width={200} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
+      <Rodal height={200} width={300} customStyles={{borderRadius: '20px', padding:'20px'}} visible={deleteWarningVisible} closeOnEsc={true} onClose={() => setDeleteWarningVisible(false)}>
         <i className="far fa-trash-alt fa-4x" aria-hidden="true" style={{color: 'red', display: 'flex', alignItems: 'center', justifyContent:'center'}}/>
-        <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete {event.title}?</div>
+        <div style={{textAlign:'center', marginTop: '10px', overflow: 'hidden', textOverflow: 'ellipsis'}}>Are you sure you want to delete this event?</div>
         <DoubleButton  style={{gridTemplateColumns: '40% 40%'}}>
           <DeleteButton onClick={() => deleteEvent()}>YES</DeleteButton>
           <RectButtonSmall style={{marginLeft: '12px'}} onClick={() => setDeleteWarningVisible(false)}>NO</RectButtonSmall>
