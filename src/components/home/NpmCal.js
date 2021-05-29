@@ -256,7 +256,7 @@ export default function NpmCal() {
         timeSlotWrapper: ColoredDateCellWrapper
       }}
       localizer={localizer}
-      onSelectEvent={e => {setEvent(e); (event.label=='DEADLINE'? setTaskVisible(true) : setEventVisible(true));}}
+      onSelectEvent={e => {setEvent(e); (event.label=='DEADLINE'? setTaskVisible(true) : setEventVisible(true)); console.log(event.instanceOfModule);}}
       onSelectSlot={e => {setEvent({...event, title:'', start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
@@ -296,12 +296,14 @@ export default function NpmCal() {
           <div style={{fontWeight:'bold'}}>Label:</div><div>{event.label}</div>
           <div style={{fontWeight:'bold'}}>Description:</div><ShadowScrollbars style={{height: 70}}><div style={{whiteSpace: 'pre-line'}}>{event.desc}</div></ShadowScrollbars>
         </EventInfo>
-        <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
-          <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
-          <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
-            <i className="far fa-trash-alt" aria-hidden="true"/>
-          </DeleteButton>
-        </DoubleButton>
+        {event.instanceOfModule? '':
+          <DoubleButton style={{gridTemplateColumns: '80% 15%'}}>
+            <RectButtonSmall onClick={() => {setEventVisible(false); setEditVisible(true);}}>Edit</RectButtonSmall>
+            <DeleteButton onClick={() => setDeleteWarningVisible(true)}>
+              <i className="far fa-trash-alt" aria-hidden="true"/>
+            </DeleteButton>
+          </DoubleButton>
+        }
     </Rodal>
 
     {/*giving DETAILS of a TASK*/}
