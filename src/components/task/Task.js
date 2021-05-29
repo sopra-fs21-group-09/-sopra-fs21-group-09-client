@@ -60,14 +60,15 @@ const InfoLabel = styled.label`
 export const Task = props => {
     const [open, setClosed] = React.useState(true)
 
-    //deletes task
+    //mark task as done
     async function markAsDone(){
         try {
             console.log('markAsDone '+ props.id)
-            await api.delete('/tasks/'+props.id);
+            await api.patch(`users/${sessionStorage.getItem('id')}/tasks/${props.id}`);
+
 
         } catch (error) {
-            alert(`Something went wrong during deleting the task: \n${handleError(error)}`);
+            alert(`Something went wrong during marking the task as done: \n${handleError(error)}`);
         }
     }
 

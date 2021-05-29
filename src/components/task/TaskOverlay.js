@@ -148,11 +148,12 @@ export function TaskOverlay(props) {
             <TextLabel> Title: </TextLabel>
             <InputField
                 id='input'
+                maxLength="18"
                 style={{width: '75%'}}
                 onChange={e => {
                     setTaskName(e.target.value);
                 }}
-                placeholder='Title ...'/>
+                placeholder='Title ... (Max. 18 characters long)'/>
         </ColumnDiv>
         <ColumnDiv>
             <TextLabel> Date: </TextLabel>

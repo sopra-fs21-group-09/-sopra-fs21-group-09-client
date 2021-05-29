@@ -65,8 +65,8 @@ const IconHolder = styled.div`
 const LeaveButton = styled(CircleButton)`
     position: absolute;
     top: 35px;
-    right: 45px;
-    padding-top: 1px;
+    right: 30px;
+    padding-top: 5px;
     width: 105px;
     height: 30px;
     border-radius: 20px;
