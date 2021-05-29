@@ -9,9 +9,10 @@ const NavbarContainer = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 0 2em;
+  z-Index: 1000;
 `;
 
-export function NavBar(props) {
+export function NavBar() {
   return (
     <NavbarContainer>
       <HamburgerMenu />

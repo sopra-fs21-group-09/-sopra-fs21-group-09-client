@@ -51,7 +51,7 @@ li{
 
 .fa-check{
     color:black;
-    positon: relative;
+    position: relative;
     margin: 0;
 }
 
@@ -77,6 +77,10 @@ li{
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
+}
+
+.fa-question {
+    color: black;
 }
 
 
