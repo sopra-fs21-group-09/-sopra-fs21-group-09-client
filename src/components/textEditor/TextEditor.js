@@ -7,7 +7,6 @@ import SockJsClient from "react-stomp";
 /*
 TODO: fix bug, where input is duplicated...
  every change is sent to the server an thus received by the author too, duplicating his code
-
  for further reference check out: https://www.youtube.com/watch?v=iRaelG7v0OU&t=1856s
  */
 
@@ -29,7 +28,7 @@ export default function TextEditor() {
 
   const sendMessage = (delta) => {
     clientRef.sendMessage('/app/user-all', JSON.stringify({
-      name: "some name",
+      name: sessionStorage.getItem("token"),
       message: JSON.stringify(delta)
     }));
   }
@@ -73,8 +72,10 @@ export default function TextEditor() {
                         console.log("Disconnected");
                       }}
                       onMessage={(msg) => {
-                        console.log(JSON.parse(msg.message))
-                        quill.updateContents(JSON.parse(msg.message))
+                        if (msg.name !== sessionStorage.getItem("token")){
+                          console.log(JSON.parse(msg.message))
+                          quill.updateContents(JSON.parse(msg.message))
+                        }
                       }}
                       ref={(client) => {
                         setClientRef(client)

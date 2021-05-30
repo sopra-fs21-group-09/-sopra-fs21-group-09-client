@@ -100,7 +100,7 @@ export const GroupDetail = (props) => {
         getGroupInfo();
         getGroupTasks();
 
-    }, [group]);
+    }, []);
 
 
     useEffect(() => {

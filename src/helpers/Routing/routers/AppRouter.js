@@ -16,6 +16,8 @@ import JoinAppGroup from "../../../components/GroupProcess/JoinAppGroup";
 import CreateGroup from "../../../components/GroupProcess/CreateGroup";
 import Home from "../../../components/home/Home";
 import {Tasks} from "../../../components/task/Tasks";
+import TextEditor from "../../../components/textEditor/TextEditor"
+import { v4 as uuidV4 } from "uuid"
 
 class AppRouter extends React.Component {
   render() {
@@ -23,6 +25,12 @@ class AppRouter extends React.Component {
       <BrowserRouter>
         <Switch>
           <div>
+              <Route path="/textEditor" exact>
+                  <Redirect to={`/documents/${uuidV4()}`} />
+              </Route>
+              <Route path="/documents/:id">
+                  <TextEditor />
+              </Route>
             <Route
               path="/registration"
               render={() => (
