@@ -3,6 +3,7 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css"
 import "./TextEditorStyles.css"
 import SockJsClient from "react-stomp";
+import {getDomain} from "../../helpers/getDomain";
 
 /*
 TODO: fix bug, where input is duplicated...
@@ -63,7 +64,7 @@ export default function TextEditor() {
 
   return (
       <div className="container" ref={wrapperRef} >
-        <SockJsClient url='https://sopra-fs21-group-09-server.herokuapp.com/websocket-chat'
+        <SockJsClient url={getDomain() + '/websocket-chat'}
                       topics={['/topic/user']}
                       onConnect={() => {
                         console.log("connected");
