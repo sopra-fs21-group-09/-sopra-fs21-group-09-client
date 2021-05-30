@@ -75,7 +75,7 @@ const Home = () => {
 
     async function getTasks(){
         try {
-            const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/tasks')
+            const response = await api.get('/users/'+ sessionStorage.getItem('id')+'/tasks?completed=false')
 
 
             const array = [];
