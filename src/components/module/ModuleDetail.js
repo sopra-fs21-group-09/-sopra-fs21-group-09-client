@@ -173,6 +173,7 @@ export function ModuleDetail(props){
 
             //It must be == here, with === it doesn't work!!!!
             if (response.data[i].id == moduleId){
+                console.log("Makes the components visible again")
                 moduleJoined = true;
                 document.getElementById("container").style.display = "block";
                 document.getElementById("button").style.display = "block";
@@ -265,6 +266,7 @@ export function ModuleDetail(props){
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
 
+        console.log(loading)
         if (!loading) return null
 
         if (moduleId !== undefined){
@@ -272,12 +274,14 @@ export function ModuleDetail(props){
             getModuleGroups();
             checkIfJoined();
 
+            console.log(moduleJoined)
             if (moduleJoined !== true){
+                console.log("Hides the components")
                 document.getElementById("container").style.display = "none";
                 document.getElementById("button").style.display = "none";
             }
         }
-    }, [moduleId, moduleJoined]);
+    }, [moduleId, moduleJoined, loading]);
 
     useEffect(() => {
         //Change the whole background for just this file
