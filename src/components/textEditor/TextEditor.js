@@ -28,7 +28,7 @@ export default function TextEditor() {
   const [clientRef, setClientRef] = useState()
 
   const sendMessage = (delta) => {
-    clientRef.sendMessage('/app/user-all', JSON.stringify({
+    clientRef.sendMessage(`/app/${sessionStorage.getItem("groupId")}/user-all`, JSON.stringify({
       name: sessionStorage.getItem("token"),
       message: JSON.stringify(delta)
     }));
@@ -64,8 +64,8 @@ export default function TextEditor() {
 
   return (
       <div className="container" ref={wrapperRef} >
-        <SockJsClient url={getDomain() + '/websocket-chat'}
-                      topics={['/topic/user']}
+        <SockJsClient url={getDomain() + '/ws-document'}
+                      topics={[`/topic/${sessionStorage.getItem("groupId")}/user`]}
                       onConnect={() => {
                         console.log("connected");
                       }}

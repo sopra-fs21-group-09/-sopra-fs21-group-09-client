@@ -1,3 +1,4 @@
+![logo](./img/logo.png)
 # SoPra FS21 - BROLAT
 
 ## Introduction

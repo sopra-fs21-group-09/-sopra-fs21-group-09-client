@@ -34,11 +34,18 @@ export const InputField = styled.input`
 export function TaskOverlay(props) {
     const [visible, setVisible] = useState(false)
     const [taskName, setTaskName] = useState()
-    const [taskDate, setTaskDate] = useState()
+    const [taskDate, setTaskDate] = useState(toDateLocal(new Date()))
     const [deadline, setDeadline] = useState(false)
     const [displayRodal, setDisplayRodal] = useState(false)
     const [description, setDescription] = useState('')
     const history = useHistory()
+
+    function resetTask() {
+        setTaskName('');
+        setTaskDate(toDateLocal(new Date()));
+        setDeadline(false);
+        setDescription('');
+    }
 
     //POST:/users/{userId}/tasks
     async function postTask(){
@@ -116,7 +123,8 @@ export function TaskOverlay(props) {
             }
 
             document.getElementById("input").value = null;
-            setDeadline(false)
+            document.getElementById('deadlineCheck').checked = false;
+            resetTask();
 
         } catch (error) {
             alert(`Something went wrong during postTasks: \n${handleError(error)}`);
@@ -143,6 +151,18 @@ export function TaskOverlay(props) {
         }
     },[props]);
 
+    function toDateLocal(d){
+        let date = new Date(d);
+        let
+        YYYY = date.getFullYear(),
+        MM = addZero(date.getMonth() + 1),
+        DD = addZero(date.getDate())
+    
+        return YYYY+'-'+MM+'-'+DD;
+    }
+
+    function addZero(i) { if (i < 10) { i = "0" + i; } return i; }
+
     return(
     <Rodal height={350} customStyles={{borderRadius: '20px'}} visible={visible} border-radius='20px' closeOnEsc={true} onClose={() => setVisible(false)}>
         <Label style={{color: 'black'}}>NEW TASK</Label>
@@ -162,7 +182,8 @@ export function TaskOverlay(props) {
             <InputField
                 id='input'
                 style={{width: '75%'}}
-                type="date"
+                type='date'
+                value={toDateLocal(taskDate)}
                 onChange={e => {
                     setTaskDate(e.target.value)
                 }}
@@ -170,7 +191,7 @@ export function TaskOverlay(props) {
         </ColumnDiv>
         <ColumnDiv>
             <TextLabel>Display in Calendar:</TextLabel>
-            <input type='checkbox' onClick={() => setDeadline(true)}/>
+            <input id='deadlineCheck' type='checkbox' onClick={e => setDeadline(!deadline)}/>
         </ColumnDiv>
         <div>
             <InputField
