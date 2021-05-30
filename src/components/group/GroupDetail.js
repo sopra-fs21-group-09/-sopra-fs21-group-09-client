@@ -47,6 +47,15 @@ const LeaveButton = styled(CircleButton)`
     z-index: 1000; 
 `;
 
+const InfoMessage = styled.div`
+  width: 100%;
+  height: 30px;
+  font-size: 11px;
+  margin-left: 1%;
+  margin-top: 4px;
+  margin-bottom: -10px;
+`;
+
 export const GroupDetail = (props) => {
     const [displayRodal, setDisplayRodal] = useState(false)
     const [displayWarningRodal, setDisplayWarningRodal] = useState(false)
@@ -144,6 +153,9 @@ export const GroupDetail = (props) => {
                     </div>
                 </LeftContainer>
                 <RightContainer>
+                    <InfoMessage>
+                        IMPORTANT: To save your file, please hit the "Browser back" button and don't reload the page or select another in-App page.
+                    </InfoMessage>
                     <TextEditor/>
                 </RightContainer>
             </BigContainer>
