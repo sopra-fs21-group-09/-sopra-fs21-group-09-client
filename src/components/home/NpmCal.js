@@ -100,6 +100,7 @@ export default function NpmCal() {
   //reset event so when one event submitted, initial values appear in add-overlay
   function resetEvent(){
     setEvent(initialState);
+    document.getElementById('allDayCheck').checked = false;
   }
 
   //constants for rodal-overlay visibility 
@@ -159,6 +160,7 @@ export default function NpmCal() {
   
   async function getEvents(){
     try {
+
       const response_events = await api.get('/users/'+ sessionStorage.getItem('id') +'/events')
       const response_deadlines = await api.get('/users/'+ sessionStorage.getItem('id') + '/deadlines')
       
@@ -261,7 +263,7 @@ export default function NpmCal() {
         timeSlotWrapper: ColoredDateCellWrapper
       }}
       localizer={localizer}
-      onSelectEvent={e => {setEvent(e); (event.label=='DEADLINE'? setTaskVisible(true) : setEventVisible(true)); console.log(event.instanceOfModule);}}
+      onSelectEvent={e => {setEvent(e); (e.label=='DEADLINE'? setTaskVisible(true) : setEventVisible(true)); console.log(event.instanceOfModule);}}
       onSelectSlot={e => {setEvent({...event, title:'', start:e.start, end:e.end}); setAddVisible(true);}}
     />
     <CircleButton
@@ -278,7 +280,7 @@ export default function NpmCal() {
           <EventLabel>End:</EventLabel>
             <InputField type='datetime-local' value={toDatetimeLocal(event.end)} onChange={e => setEvent({ ...event, end: e.target.value})}/>
           <EventLabel style={{marginBottom:'10px'}}>All Day:</EventLabel>
-            <input type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}/>
+            <input id='allDayCheck' type='checkbox' style={{position: 'relative', top:'30%'}} onClick={() => setEvent({ ...event, allDay: !event.allDay})}/>
           <EventLabel>Label:</EventLabel>
           <div>
             <select style={{height: '35px', paddingLeft:'3%', border:'#E5E5E5', borderRadius: '20px', background:'#E5E5E5', marginBottom:'5px'}} 
@@ -315,7 +317,7 @@ export default function NpmCal() {
     <Rodal height={240} customStyles={{borderRadius: '20px', padding:'20px'}} visible={taskVisible} closeOnEsc={true} onClose={() => {setTaskVisible(false)}}>
         <div style={{fontSize: '20px', fontWeight: 'bold', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>{event.title}</div><br/>
         <EventInfo>
-          <div style={{fontWeight:'bold'}}>Date:</div><div>{event.start.toLocaleDateString('de-DE')}</div>
+          <div style={{fontWeight:'bold'}}>Date:</div><div>{event.start.toLocaleString('de-DE')}</div>
           <div style={{fontWeight:'bold'}}>Label:</div><div>{event.label}</div>
           <div style={{fontWeight:'bold'}}>Description:</div><ShadowScrollbars style={{height: 70}}><div style={{whiteSpace: 'pre-line'}}>{event.desc}</div></ShadowScrollbars>
         </EventInfo>
@@ -368,4 +370,4 @@ export default function NpmCal() {
         </DoubleButton>
       </Rodal>
   </div>
-)} 
+)}
