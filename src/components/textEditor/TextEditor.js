@@ -63,7 +63,7 @@ export default function TextEditor() {
 
   return (
       <div className="container" ref={wrapperRef} >
-        <SockJsClient url='http://localhost:8080/websocket-chat/'
+        <SockJsClient url='https://sopra-fs21-group-09-server.herokuapp.com/websocket-chat'
                       topics={['/topic/user']}
                       onConnect={() => {
                         console.log("connected");
