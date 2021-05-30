@@ -64,7 +64,7 @@ export default function TextEditor() {
 
   return (
       <div className="container" ref={wrapperRef} >
-        <SockJsClient url={getDomain() + '/websocket-chat'}
+        <SockJsClient url={getDomain() + '/ws-document'}
                       topics={[`/topic/${sessionStorage.getItem("groupId")}/user`]}
                       onConnect={() => {
                         console.log("connected");
