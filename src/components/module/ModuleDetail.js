@@ -14,6 +14,7 @@ import {TaskOverlay} from "../task/TaskOverlay";
 import Rodal from "rodal";
 import {TextField1, BlueLabel, SmallLabel} from "../../views/Labels"
 import {DoubleButton} from "../home/NpmCal";
+import {Spinner} from "../../views/design/Spinner";
 
 //Constants we need for this page
 const SmallLine = styled.div`
@@ -147,10 +148,13 @@ export function ModuleDetail(props){
 
     const [module, setModule] = useState(null);
     const [moduleId, setModuleId] = useState('');
+    const [loading, setLoading] = useState(false)
     const history = useHistory();
     const [joinableGroups, setJoinableGroups] = useState([]);
     const [displayWarningRodal, setDisplayWarningRodal] = useState(false)
     let moduleJoined;
+
+    console.log(props)
 
 
     /**
@@ -246,12 +250,22 @@ export function ModuleDetail(props){
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
         setModuleId(sessionStorage.getItem('moduleInfo'));
+
+        setTimeout(() => {
+            setLoading(true)
+
+        }, 1000)
+
+        if (!loading) return null
+
     }, []);
 
     // gets executed second
     useEffect(() => {
         //Change the whole background for just this file
         document.body.style.backgroundColor = Colors.COLOR11;
+
+        if (!loading) return null
 
         if (moduleId !== undefined){
             getModuleDetail();
@@ -291,39 +305,43 @@ export function ModuleDetail(props){
                         <RectButtonSmall style={{marginLeft: '12px'}} onClick={() => setDisplayWarningRodal(false)}>NO</RectButtonSmall>
                     </DoubleButton>
                 </Rodal>
-                <BigContainer>
-                    <SmallContainer>
-                        <Info module={module}/>
-                        <Deadlines moduleId={moduleId} tasks={module ? module.tasks : []}/>
-                    </SmallContainer>
-                    <SmallContainer id="container">
-                        <BlueLabel>Groups</BlueLabel>
-                        <SmallLine>
-                            <SmallLabel>Name</SmallLabel>
-                            <SmallLabel>Enroll</SmallLabel>
-                        </SmallLine>
-                        <ShadowScrollbars style={{height: 350}}>
-                            {joinableGroups.map(group => {
-                                return (
-                                    <ModuleGroups group={group}/>
-                                );
-                            })}
-                        </ShadowScrollbars>
-                        <ButtonContainer>
-                            <RectButton
-                                width="100%"
-                                onClick={() => {
-                                    history.push({
-                                        pathname: '/createGroup',
-                                        moduleId: moduleId
-                                    })
-                                }}
-                            >
-                                Create your own group
-                            </RectButton>
-                        </ButtonContainer>
-                    </SmallContainer>
-                </BigContainer>
+                {!loading ? (
+                    <Spinner />
+                ) : (
+                    <BigContainer>
+                        <SmallContainer>
+                            <Info module={module}/>
+                            <Deadlines moduleId={moduleId} tasks={module ? module.tasks : []}/>
+                        </SmallContainer>
+                        <SmallContainer id="container">
+                            <BlueLabel>Groups</BlueLabel>
+                            <SmallLine>
+                                <SmallLabel>Name</SmallLabel>
+                                <SmallLabel>Enroll</SmallLabel>
+                            </SmallLine>
+                            <ShadowScrollbars style={{height: 350}}>
+                                {joinableGroups.map(group => {
+                                    return (
+                                        <ModuleGroups group={group}/>
+                                    );
+                                })}
+                            </ShadowScrollbars>
+                            <ButtonContainer>
+                                <RectButton
+                                    width="100%"
+                                    onClick={() => {
+                                        history.push({
+                                            pathname: '/createGroup',
+                                            moduleId: moduleId
+                                        })
+                                    }}
+                                >
+                                    Create your own group
+                                </RectButton>
+                            </ButtonContainer>
+                        </SmallContainer>
+                    </BigContainer>
+                )}
                 <ButtonContainer>
                     <RectButtonBig
                         width="100%"
