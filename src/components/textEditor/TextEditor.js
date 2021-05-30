@@ -4,12 +4,7 @@ import "quill/dist/quill.snow.css"
 import "./TextEditorStyles.css"
 import SockJsClient from "react-stomp";
 import {getDomain} from "../../helpers/getDomain";
-
-/*
-TODO: fix bug, where input is duplicated...
- every change is sent to the server an thus received by the author too, duplicating his code
- for further reference check out: https://www.youtube.com/watch?v=iRaelG7v0OU&t=1856s
- */
+import { api, handleError } from '../../helpers/api';
 
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -26,6 +21,31 @@ const TOOLBAR_OPTIONS = [
 export default function TextEditor() {
   const [quill, setQuill] = useState()
   const [clientRef, setClientRef] = useState()
+  const [data, setData] = useState();
+
+  const saveDocument = () => {
+    console.log('saving Document');
+    try {
+      const requestBody = JSON.stringify({
+        id: sessionStorage.getItem('groupId'), 
+        data: JSON.stringify(quill.getContents())
+      })
+      console.log(requestBody)
+
+      api.patch(`/documents/`, requestBody);
+
+    } catch (error) {
+      alert(`Something went wrong during saving document: \n${handleError(error)}`);
+    }
+  }
+
+  async function loadDocument() {
+    const response = await api.get(`/documents/${sessionStorage.getItem('groupId')}`);
+    const firstParse = JSON.parse(response.data);
+    const secondParse = JSON.parse(firstParse.data);
+    console.log('get response: ' + secondParse);
+    quill.setContents(secondParse);
+  }
 
   const sendMessage = (delta) => {
     clientRef.sendMessage(`/app/${sessionStorage.getItem("groupId")}/user-all`, JSON.stringify({
@@ -64,12 +84,14 @@ export default function TextEditor() {
 
   return (
       <div className="container" ref={wrapperRef} >
-        <SockJsClient url={getDomain() + '/websocket-chat'}
+        <SockJsClient url={getDomain() + '/ws-document'}
                       topics={[`/topic/${sessionStorage.getItem("groupId")}/user`]}
                       onConnect={() => {
+                        loadDocument();
                         console.log("connected");
                       }}
                       onDisconnect={() => {
+                        saveDocument();
                         console.log("Disconnected");
                       }}
                       onMessage={(msg) => {
