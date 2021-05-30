@@ -21,14 +21,13 @@ const TOOLBAR_OPTIONS = [
 export default function TextEditor() {
   const [quill, setQuill] = useState()
   const [clientRef, setClientRef] = useState()
-  const [data, setData] = useState();
 
   const saveDocument = () => {
     console.log('saving Document');
     try {
       const requestBody = JSON.stringify({
         id: sessionStorage.getItem('groupId'), 
-        data: JSON.stringify(quill.getContents())
+        data: JSON.stringify(quill.getContents().ops)
       })
       console.log(requestBody)
 
@@ -41,10 +40,15 @@ export default function TextEditor() {
 
   async function loadDocument() {
     const response = await api.get(`/documents/${sessionStorage.getItem('groupId')}`);
-    const firstParse = JSON.parse(response.data);
-    const secondParse = JSON.parse(firstParse.data);
-    console.log('get response: ' + secondParse);
-    quill.setContents(secondParse);
+    console.log(response)
+    try {
+      const contents = JSON.parse(response.data.data);
+      console.log(contents);
+      quill.setContents(contents);
+    } catch (error) {
+      alert(`Something went wrong during loading document: \n${handleError(error)}`);
+    }
+
   }
 
   const sendMessage = (delta) => {
@@ -91,8 +95,10 @@ export default function TextEditor() {
                         console.log("connected");
                       }}
                       onDisconnect={() => {
-                        saveDocument();
                         console.log("Disconnected");
+                        sessionStorage.setItem("socket", "disconnected")
+                        saveDocument();
+
                       }}
                       onMessage={(msg) => {
                         if (msg.name !== sessionStorage.getItem("token")){
